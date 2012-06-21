@@ -12,7 +12,7 @@ security:
             providers: [in_memory, in_db]
         in_memory:
             users:
-                admin: { password: admin }
+                admin: { password: admin, roles: 'ROLE_ADMIN' }
         in_db:
             entity: { class PlanITBundle:User, property: username }
 
