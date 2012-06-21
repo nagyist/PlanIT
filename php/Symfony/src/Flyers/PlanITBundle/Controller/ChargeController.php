@@ -39,7 +39,7 @@ class ChargeController extends Controller
 {
     
     /**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function listChargeAction(Request $request)
     {
@@ -65,7 +65,7 @@ class ChargeController extends Controller
     }
     
     /**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function addChargeAction(Request $request, $idassignment = null)
     {

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
- * « Copyright 2012 BEN GHMISS Nassim »  
+ * ï¿½ Copyright 2012 BEN GHMISS Nassim ï¿½  
  * 
  */
 
@@ -38,7 +38,7 @@ class JobController extends Controller
 {
     
     /**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
     public function addJobAction(Request $request, $idjob = null)
     {

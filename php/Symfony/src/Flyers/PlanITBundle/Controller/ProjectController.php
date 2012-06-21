@@ -39,7 +39,7 @@ class ProjectController extends Controller
 {
     
     /**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function listProjectAction(Request $request)
     {
@@ -66,7 +66,7 @@ class ProjectController extends Controller
     }
     
     /**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
     public function delProjectAction(Request $request, $idproject = null)
     {
@@ -85,7 +85,7 @@ class ProjectController extends Controller
     }
     
     /**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function addProjectAction(Request $request, $idproject = null)
     {

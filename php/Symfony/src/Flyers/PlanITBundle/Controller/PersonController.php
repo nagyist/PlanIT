@@ -39,7 +39,7 @@ class PersonController extends Controller
 {
     
 	/**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function listPersonAction(Request $request)
     {
@@ -66,7 +66,7 @@ class PersonController extends Controller
     }
     
     /**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
     public function addPersonAction(Request $request, $idperson = null)
     {
@@ -117,7 +117,7 @@ class PersonController extends Controller
     }
     
 	/**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function delPersonAction(Request $request, $idperson = null)
     {

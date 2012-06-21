@@ -44,7 +44,7 @@ class FeedbackController extends Controller
 {
 	
 	/**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function ganttFeedbackAction(Request $request, $idproject = null)
     {
@@ -65,7 +65,7 @@ class FeedbackController extends Controller
     }
     
     /**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function pertFeedbackAction(Request $request)
     {
@@ -73,7 +73,7 @@ class FeedbackController extends Controller
     }
    
 	/**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function listFeedbackAction(Request $request, $idproject = null)
     {

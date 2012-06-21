@@ -39,7 +39,7 @@ class TaskController extends Controller
 {
     
     /**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function listTaskAction(Request $request)
     {
@@ -65,7 +65,7 @@ class TaskController extends Controller
     }
     
     /**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function addTaskAction(Request $request, $idassignment = null)
     {
@@ -115,7 +115,7 @@ class TaskController extends Controller
     }
     
     /**
-    * @Secure(roles="ROLE_ADMIN")
+    * @Secure(roles="ROLE_USER")
     */
 	public function delTaskAction(Request $request, $idassignment = null)
     {
