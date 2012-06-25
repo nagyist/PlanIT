@@ -25,7 +25,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\SecurityContext;
-//use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
@@ -49,7 +48,7 @@ class ProjectController extends Controller
 		
 		$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user); 
     	
-        return $this->render('PlanITBundle:Default:project.list.html.php', array("projects", $projects));
+        return $this->render('PlanITBundle:Default:project.list.html.php', array("projects" => $projects));
     }
     
     /**

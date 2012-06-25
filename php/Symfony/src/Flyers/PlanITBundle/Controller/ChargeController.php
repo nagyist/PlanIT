@@ -49,7 +49,7 @@ class ChargeController extends Controller
 		
 		$charges = $em->getRepository("PlanITBundle:Charge")->findAllByUser($user); 
     	
-        return $this->render('PlanITBundle:Default:charge.list.html.php', array('charges', $charges));
+        return $this->render('PlanITBundle:Default:charge.list.html.php', array('charges' => $charges));
     }
     
     /**

@@ -49,7 +49,7 @@ class PersonController extends Controller
 		
 		$persons = $em->getRepository("PlanITBundle:Person")->findAllByUser($user); 
     	
-        return $this->render('PlanITBundle:Default:person.list.html.php', array('persons', $persons));
+        return $this->render('PlanITBundle:Default:person.list.html.php', array('persons' => $persons));
     }
     
     /**

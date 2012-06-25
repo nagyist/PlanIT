@@ -49,7 +49,7 @@ class TaskController extends Controller
 		
 		$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByUser($user); 
     	
-        return $this->render('PlanITBundle:Default:task.list.html.php', array('tasks', $tasks));
+        return $this->render('PlanITBundle:Default:task.list.html.php', array('tasks' => $tasks));
     }
     
     /**
