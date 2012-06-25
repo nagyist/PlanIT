@@ -43,26 +43,13 @@ class PersonController extends Controller
     */
 	public function listPersonAction(Request $request)
     {
+    	$em = $this->getDoctrine()->getEntityManager();
+		
     	$user = $this->get('security.context')->getToken()->getUser();
+		
+		$persons = $em->getRepository("PlanITBundle:Person")->findAllByUser($user); 
     	
-    	$source = new SrcPerson('PlanITBundle:Person', $user);
-    	
-    	$grid = $this->get('grid');
-    	
-    	$grid->setSource($source);
-    	
-    	$editColumn = new ActionsColumn('edit_column','Edit');
-    	$editRowAction = new RowAction('Edit', 'PlanITBundle_editPerson');
-    	$editRowAction->setColumn('edit_column');
-    	$deleteColumn = new ActionsColumn('del_column','Delete');
-    	$deleteRowAction = new RowAction('Delete', 'PlanITBundle_delPerson', true);
-    	$deleteRowAction->setColumn('del_column');
-    	$grid->addColumn($editColumn, -1);
-    	$grid->addColumn($deleteColumn, -2);
-        $grid->addRowAction($editRowAction);
-        $grid->addRowAction($deleteRowAction);
-    	
-        return $this->render('PlanITBundle:Default:grid.html.twig', array('data' => $grid));
+        return $this->render('PlanITBundle:Default:person.list.html.php', array('persons', $persons));
     }
     
     /**

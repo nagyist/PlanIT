@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+//use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
@@ -43,26 +43,13 @@ class ProjectController extends Controller
     */
 	public function listProjectAction(Request $request)
     {
+    	$em = $this->getDoctrine()->getEntityManager();
+		
     	$user = $this->get('security.context')->getToken()->getUser();
+		
+		$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user); 
     	
-    	$source = new SrcProject('PlanITBundle:Project', $user);
-    	
-    	$grid = $this->get('grid');
-    	    	
-    	$grid->setSource($source);
-    	
-    	$editColumn = new ActionsColumn('edit_column','Edit');
-    	$editRowAction = new RowAction('Edit', 'PlanITBundle_editProject');
-    	$editRowAction->setColumn('edit_column');
-    	$deleteColumn = new ActionsColumn('del_column','Delete');
-    	$deleteRowAction = new RowAction('Delete', 'PlanITBundle_delProject', true);
-    	$deleteRowAction->setColumn('del_column');
-    	$grid->addColumn($editColumn, -1);
-    	$grid->addColumn($deleteColumn, -2);
-        $grid->addRowAction($editRowAction);
-        $grid->addRowAction($deleteRowAction);
-    	
-        return $this->render('PlanITBundle:Default:grid.html.twig', array('data' => $grid));
+        return $this->render('PlanITBundle:Default:project.list.html.php', array("projects", $projects));
     }
     
     /**

@@ -32,8 +32,8 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Flyers\PlanITBundle\Entity\Role;
 use Flyers\PlanITBundle\Entity\User;
 use Flyers\PlanITBundle\Form\UserType;
-use Flyers\PlanITBundle\Entity\Assignment;
-use Flyers\PlanITBundle\Form\AssignmentType;
+use Flyers\PlanITBundle\Entity\Charge;
+use Flyers\PlanITBundle\Form\ChargeType;
 
 class ChargeController extends Controller
 {
@@ -43,43 +43,31 @@ class ChargeController extends Controller
     */
 	public function listChargeAction(Request $request)
     {
+    	$em = $this->getDoctrine()->getEntityManager();
+		
     	$user = $this->get('security.context')->getToken()->getUser();
+		
+		$charges = $em->getRepository("PlanITBundle:Charge")->findAllByUser($user); 
     	
-    	$source = new SrcCharge('PlanITBundle:Assignment', $user);
-    	
-    	$grid = $this->get('grid');
-    	$grid->setSource($source);
-    	
-    	$editColumn = new ActionsColumn('edit_column','Edit');
-    	$editRowAction = new RowAction('Edit', 'PlanITBundle_editCharge');
-    	$editRowAction->setColumn('edit_column');
-    	$deleteColumn = new ActionsColumn('del_column','Delete');
-    	$deleteRowAction = new RowAction('Delete', 'PlanITBundle_delCharge', true);
-    	$deleteRowAction->setColumn('del_column');
-    	$grid->addColumn($editColumn, -1);
-    	$grid->addColumn($deleteColumn, -2);
-        $grid->addRowAction($editRowAction);
-        $grid->addRowAction($deleteRowAction);
-    	
-        return $this->render('PlanITBundle:Default:grid.html.twig', array('data' => $grid));
+        return $this->render('PlanITBundle:Default:charge.list.html.php', array('charges', $charges));
     }
     
     /**
     * @Secure(roles="ROLE_USER")
     */
-	public function addChargeAction(Request $request, $idassignment = null)
+	public function addChargeAction(Request $request, $idcharge = null)
     {
     	$em = $this->getDoctrine()->getEntityManager();
 
     	$user = $this->get('security.context')->getToken()->getUser();
     	
-    	if (is_null($idassignment))
-    		$charge	= new Assignment();
+    	if (is_null($idcharge))
+    		$charge	= new Charge();
     	else
-    		$charge = $this->getDoctrine()->getRepository("PlanITBundle:Assignment")->find($idassignment);
+    		$charge = $this->getDoctrine()->getRepository("PlanITBundle:Charge")->find($idcharge);
     		
     	
-    	$form = $this->createForm(new AssignmentType($user), $charge);
+    	$form = $this->createForm(new ChargeType($user), $charge);
     			
     	if ($request->getMethod() == 'POST')
     	{
@@ -105,10 +93,10 @@ class ChargeController extends Controller
     	}
     	else 
     	{
-    		if ( is_null($idassignment))
+    		if ( is_null($idcharge))
     			$action = $this->get("router")->generate('PlanITBundle_addCharge');
     		else
-    			$action = $this->get("router")->generate('PlanITBundle_editCharge', array('idassignment'=>$idassignment));
+    			$action = $this->get("router")->generate('PlanITBundle_editCharge', array('idcharge'=>$idcharge));
     		
         	return $this->render('PlanITBundle:Default:charge.form.html.php', array('action'=>$action, 'form'=>$form->createView()));
     	}

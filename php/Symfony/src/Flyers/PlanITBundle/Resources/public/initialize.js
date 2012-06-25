@@ -38,6 +38,7 @@ $(document).ready( function () {
 	$("#project").mouseover(function(e) {$("#subproject").css("visibility","visible");});
 	$("#team").mouseover(function(e) {$("#subteam").css("visibility","visible");});
 	$("#task").mouseover(function(e) {$("#subtask").css("visibility","visible");});
+	$("#charge").mouseover(function(e) {$("#subcharge").css("visibility","visible");});
 	$("#feedback").mouseover(function(e) {$("#subfeedback").css("visibility","visible");});
 	
 	

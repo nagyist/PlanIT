@@ -1,5 +1,5 @@
 PlanITBundle_index:
-    pattern:  /index
+    pattern:  /
     defaults: { _controller: PlanITBundle:User:login }
 
 PlanITBundle_homepage:
@@ -91,11 +91,11 @@ PlanITBundle_listCharge:
     
 PlanITBundle_addCharge:
     pattern:  /planIT/charge/add
-    defaults: { _controller: PlanITBundle:Task:addCharge, idassignment: null  }
+    defaults: { _controller: PlanITBundle:Charge:addCharge, idcharge: null  }
     
 PlanITBundle_editCharge:
     pattern:  /planIT/charge/edit/{idassignment}
-    defaults: { _controller: PlanITBundle:Task:addCharge }
+    defaults: { _controller: PlanITBundle:Charge:addCharge }
     
 PlanITBundle_listFeedback:
     pattern:  /planIT/feedback

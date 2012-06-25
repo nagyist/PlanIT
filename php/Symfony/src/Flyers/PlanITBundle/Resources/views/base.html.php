@@ -62,8 +62,8 @@
 	        	</ul>
 	        </li>
 	        <li>
-	        	<a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_listCharge'); ?>" title="Manage charges" id="task" class="dialog">Charges</a>
-	        	<ul class="submenu" id="subtask">
+	        	<a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_listCharge'); ?>" title="Manage charges" id="charge" class="dialog">Charges</a>
+	        	<ul class="submenu" id="subcharge">
 	        		<li><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_addCharge'); ?>" title="Add a charge" class="dialog">Add</a></li>
 	        		<li><a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_listCharge'); ?>" title="Manage charges" class="dialog">List</a></li>
 	        	</ul>
