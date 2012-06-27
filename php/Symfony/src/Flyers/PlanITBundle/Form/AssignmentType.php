@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
- * « Copyright 2012 BEN GHMISS Nassim »  
+ * ï¿½ Copyright 2012 BEN GHMISS Nassim ï¿½  
  * 
  */
 
@@ -57,7 +57,7 @@ class AssignmentType extends AbstractType
             		'class' => 'PlanITBundle:Assignment',
             		'property' => 'name',
             		'query_builder' => function(AssignmentRepository  $qb) use ($user) {
-            			return  $qb	->findAllByUser($user);
+            			return  $qb	->findAllByUserQuery($user);
             		},
             	))
             ->add('project', 'entity', 
@@ -65,7 +65,7 @@ class AssignmentType extends AbstractType
             		'class' => 'PlanITBundle:Project',
             		'property' => 'name',
             		'query_builder' => function(ProjectRepository  $qb) use ($user) {
-            			return  $qb	->findAllByUser($user);
+            			return  $qb	->findAllByUserQuery($user);
             		},
             	))
             ->add('persons', 'entity', 
@@ -75,7 +75,7 @@ class AssignmentType extends AbstractType
             		'multiple' => true,
             		'expanded' => true,
             		'query_builder' => function(PersonRepository  $qb) use ($user) {
-            			return  $qb	->findAllByUser($user);
+            			return  $qb	->findAllByUserQuery($user);
             		},
             	))
         ;

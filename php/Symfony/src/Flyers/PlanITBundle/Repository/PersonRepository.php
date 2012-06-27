@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
- * « Copyright 2012 BEN GHMISS Nassim »  
+ * ï¿½ Copyright 2012 BEN GHMISS Nassim ï¿½  
  * 
  */
 
@@ -34,6 +34,17 @@ class PersonRepository extends EntityRepository
 {
 	
 	public function findAllByUser($user) 
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		$qb	->select("p")
+			->from("PlanITBundle:Person", "p")
+			->join("p.projects", "a")
+			->where("a.user = :id" )
+			->setParameter( "id", $user->getId() );
+		return $qb->getQuery()->getResult();
+	}
+	
+	public function findAllByUserQuery($user) 
 	{
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		$qb	->select("p")

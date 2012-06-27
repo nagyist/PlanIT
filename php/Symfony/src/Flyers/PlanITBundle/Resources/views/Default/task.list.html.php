@@ -11,13 +11,13 @@
 	<tbody>
 		<?php foreach( $tasks as $task) : ?>
 		<tr>
-			<td><?php echo $task->parent->name ?></td>
-			<td><?php echo $task->project->name ?></td>
-			<td><?php echo $task->name ?></td>
-			<td><?php echo $task->description ?></td>
-			<td><?php echo $task->begin ?></td>
-			<td><?php echo $task->end ?></td>
-			<td><a href="/planIT/task/delete/<?php echo $task->id ?>">Delete</a></td>
+			<td><?php if ( $task->getParent() ) { echo $task->getParent()->getName(); } ?></td>
+			<td><?php echo $task->getProject()->getName() ?></td>
+			<td><?php echo $task->getName() ?></td>
+			<td><?php echo $task->getDescription() ?></td>
+			<td><?php echo $task->getBegin()->format("d-m-Y H:i:s") ?></td>
+			<td><?php echo $task->getEnd()->format("d-m-Y H:i:s") ?></td>
+			<td><a href="/planIT/task/delete/<?php echo $task->getIdassignment() ?>">Delete</a></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

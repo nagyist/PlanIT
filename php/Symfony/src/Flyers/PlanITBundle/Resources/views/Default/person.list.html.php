@@ -10,16 +10,12 @@
 	<tbody>
 		<?php foreach( $persons as $person) : ?>
 		<tr>
-			<td><?php echo $person->firstname ?> <?php echo $person->lastname ?></td>
-			<td><?php echo $person->mail ?></td>
-			<td><?php echo $person->phone ?></td>
-			<td><?php echo $person->salary ?></td>
-			<td>
-				<?php foreach ($person->jobs as $job) : ?>
-					<?php echo $job->name; ?>
-				<?php endforeach; ?>
-			</td>
-			<td><a href="/planIT/person/delete/<?php echo $person->id ?>">Delete</a></td>
+			<td align="center"><?php echo $person->getFirstname() ?> <?php echo $person->getLastname() ?></td>
+			<td align="center"><?php echo $person->getMail() ?></td>
+			<td align="center"><?php echo $person->getPhone() ?></td>
+			<td align="center"><?php echo $person->getSalary() ?></td>
+			<td align="center"><?php echo $person->getJob()->getName() ?></td>
+			<td align="center"><a href="/planIT/person/delete/<?php echo $person->getIdperson() ?>">Delete</a></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

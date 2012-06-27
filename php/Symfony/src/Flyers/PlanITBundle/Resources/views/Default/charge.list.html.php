@@ -8,10 +8,10 @@
 	<tbody>
 		<?php foreach( $charges as $charge) : ?>
 		<tr>
-			<td><?php echo $charge->description ?></td>
-			<td><?php echo $charge->begin ?></td>
-			<td><?php echo $charge->end ?></td>
-			<td><a href="/planIT/charge/delete/<?php echo $charge->id ?>">Delete</a></td>
+			<td><?php echo $charge->getDescription() ?></td>
+			<td><?php echo $charge->getBegin()->format("d-m-Y H:i:s") ?></td>
+			<td><?php echo $charge->getEnd()->format("d-m-Y H:i:s") ?></td>
+			<td><a href="/planIT/charge/edit/<?php echo $charge->getIdcharge() ?>">Edit</a></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

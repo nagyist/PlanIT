@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
- * « Copyright 2012 BEN GHMISS Nassim »  
+ * ï¿½ Copyright 2012 BEN GHMISS Nassim ï¿½  
  * 
  */
 
@@ -53,7 +53,7 @@ class APIController extends Controller
     	$colors = array("blue","green","red","black","yellow");
     	
     	$user = $this->get('security.context')->getToken()->getUser();
-    	$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user)->getQuery()->getResult();
+    	$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
     	
     	$idx = 0;
     	foreach( $projects as $project )

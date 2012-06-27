@@ -9,11 +9,11 @@
 	<tbody>
 		<?php foreach( $projects as $project) : ?>
 		<tr>
-			<td><?php echo $project->name ?></td>
-			<td><?php echo $project->description ?></td>
-			<td><?php echo $project->begin ?></td>
-			<td><?php echo $project->end ?></td>
-			<td><a href="/planIT/project/delete/<?php echo $project->id ?>">Delete</a></td>
+			<td align="center"><?php echo $project->getName() ?></td>
+			<td align="center"><?php echo $project->getDescription() ?></td>
+			<td align="center"><?php echo $project->getBegin()->format("d-m-Y") ?></td>
+			<td align="center"><?php echo $project->getEnd()->format("d-m-Y") ?></td>
+			<td align="center"><a href="/planIT/project/delete/<?php echo $project->getIdproject() ?>">Delete</a></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

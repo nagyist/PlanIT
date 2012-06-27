@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
- * « Copyright 2012 BEN GHMISS Nassim »  
+ * ï¿½ Copyright 2012 BEN GHMISS Nassim ï¿½  
  * 
  */
 
@@ -53,6 +53,19 @@ class AssignmentRepository extends EntityRepository
 	}
 	
 	public function findAllByUser($user)
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		$qb	->select('a')
+			->from('PlanITBundle:Assignment', 'a')
+			->join('a.project', 'p')
+			->where($qb->expr()->andx('a.project = p.idproject', 'p.user = :id'))
+			->leftjoin('a.parent', 'c')
+			->orderBy('c.idassignment', 'ASC')
+			->setParameter('id', $user->getId() );
+		return $qb->getQuery()->getResult();
+	}
+	
+	public function findAllByUserQuery($user)
 	{
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		$qb	->select('a')

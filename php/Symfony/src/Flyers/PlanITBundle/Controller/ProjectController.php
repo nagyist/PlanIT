@@ -90,11 +90,9 @@ class ProjectController extends Controller
     	{
     		$form->bindRequest($request);
     		
-    		$project->setUser( $this->get('security.context')->getToken()->getUser() );
-    		var_dump($form);
-    		
     		if ($form->isValid() && !$form->isEmpty())
     		{
+    			$project->setUser( $this->get('security.context')->getToken()->getUser() );
     			$em->persist($project);
     			$em->flush();
     			return new Response(json_encode(array('message' => 'Your project has been successfully saved')));

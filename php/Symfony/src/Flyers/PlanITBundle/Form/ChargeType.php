@@ -36,7 +36,7 @@ class ChargeType extends AbstractType
             		'class' => 'PlanITBundle:Assignment',
             		'property' => 'name',
             		'query_builder' => function(AssignmentRepository  $qb) use ($user) {
-            			return  $qb	->findAllByUser($user);
+            			return  $qb	->findAllByUserQuery($user);
             		},
             	))
             ->add('persons', 'entity', 
@@ -46,7 +46,7 @@ class ChargeType extends AbstractType
             		'multiple' => true,
             		'expanded' => true,
             		'query_builder' => function(PersonRepository  $qb) use ($user) {
-            			return  $qb	->findAllByUser($user);
+            			return  $qb	->findAllByUserQuery($user);
             		},
             	))
         ;

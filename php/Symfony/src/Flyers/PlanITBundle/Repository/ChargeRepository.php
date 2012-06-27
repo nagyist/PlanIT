@@ -35,12 +35,12 @@ class ChargeRepository extends EntityRepository
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		$qb	->select('c')
 			->from('PlanITBundle:Charge', 'c')
-			->join('c.assignment', 'a')
+			->leftjoin('c.assignment', 'a')
 			->join('a.project', 'p')
 			->where($qb->expr()->andx('a.project = p.idproject', 'p.user = :id'))
 			->leftjoin('a.parent', 'c')
 			->orderBy('c.idassignment', 'ASC')
 			->setParameter('id', $user->getId() );
-		return $qb;
+		return $qb->getQuery()->getResult();
 	}
 }

@@ -52,7 +52,7 @@ class FeedbackController extends Controller
     	
     	$user = $this->get('security.context')->getToken()->getUser();
     	
-    	$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user)->getQuery()->getResult();
+    	$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
     	
     	$idproject = $request->query->get("idproject");
     	
@@ -86,7 +86,7 @@ class FeedbackController extends Controller
     	
     	$user = $this->get('security.context')->getToken()->getUser();
 
-    	$vars['projects'] = $em->getRepository("PlanITBundle:Project")->findAllByUser($user)->getQuery()->getResult();
+    	$vars['projects'] = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
 		
     	if ( ! is_null($idproject))
     	{

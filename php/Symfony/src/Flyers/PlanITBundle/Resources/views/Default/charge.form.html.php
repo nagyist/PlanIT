@@ -33,7 +33,7 @@
 	    <td colspan="2">&nbsp;</td>
 	  </tr>
 	  <tr>
-	    <td>Assigned persons<br/><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_addPerson'); ?>" title="Add a Person" class="dialog lower">Add a person</a></td>
+	    <td>Charged persons<br/><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_addPerson'); ?>" title="Add a Person" class="dialog lower">Add a person</a></td>
 	    <td><?php echo $view['form']->widget($form['persons']) ?></td>
 	  </tr>
 	</table>

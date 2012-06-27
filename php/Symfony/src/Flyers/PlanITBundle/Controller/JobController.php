@@ -44,10 +44,10 @@ class JobController extends Controller
     {
     	$em = $this->getDoctrine()->getEntityManager();
     	
-   		if (isset($idjob))
-    		$job = $this->getDoctrine()->getRepository("PlanITBundle:Job")->find($idjob);
+   		if (is_null($idjob))
+    		$job = new Job();
     	else
-	    	$job = new Job();
+			$job = $this->getDoctrine()->getRepository("PlanITBundle:Job")->find($idjob);
     	
     	$form = $this->createForm(new JobType(), $job);
     	

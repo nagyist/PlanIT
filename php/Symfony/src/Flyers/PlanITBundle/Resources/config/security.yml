@@ -30,7 +30,7 @@ security:
             anonymous: false
 
     access_control:
-        - { path: /planIT.*, role: IS_AUTHENTICATED_FULLY }
+        - { path: /planIT.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

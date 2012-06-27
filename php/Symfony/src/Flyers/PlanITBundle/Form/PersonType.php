@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
- * « Copyright 2012 BEN GHMISS Nassim »  
+ * ï¿½ Copyright 2012 BEN GHMISS Nassim ï¿½  
  * 
  */
 
@@ -55,7 +55,7 @@ private $user;
             		'multiple' => true,
             		'expanded' => false,
             		'query_builder' => function(ProjectRepository  $qb) use ($user) {
-            			return  $qb	->findAllByUser($user);
+            			return  $qb	->findAllByUserQuery($user);
             		},
             	))
         ;
