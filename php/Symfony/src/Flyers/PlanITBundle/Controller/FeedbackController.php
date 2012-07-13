@@ -71,69 +71,13 @@ class FeedbackController extends Controller
     {
         return $this->render('PlanITBundle:Default:feedback.html.php');
     }
-   
-	/**
+	
+	    /**
     * @Secure(roles="ROLE_USER")
     */
-	public function listFeedbackAction(Request $request, $idproject = null)
+	public function burndownFeedbackAction(Request $request)
     {
-		$vars = array();
-		$cost = 0;
-		$tthours = 0;
-		$thours = 0;
-    	
-    	$em = $this->getDoctrine()->getEntityManager();
-    	
-    	$user = $this->get('security.context')->getToken()->getUser();
-
-    	$vars['projects'] = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
-		
-    	if ( ! is_null($idproject))
-    	{
-	    	$project = $em->getRepository("PlanITBundle:Project")->find($idproject);
-	    	
-	    	$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByProject($idproject);
-	    	$real_end = clone $project->getBegin();
-	    	foreach($tasks as $task)
-	    	{
-	    		$time = $task->getBegin()->diff($task->getEnd());
-	    		$real_end->add($time);
-	    		
-	    		$hours = $this->IntervalToHours($time);
-	    		
-	    		$cost += $hours*$em->getRepository("PlanITBundle:Assignment")->getSalaryForTask($task->getIdassignment());
-	    		$tthours += $hours;
-	    	}
-	    	
-	    	$thours = $this->IntervalToHours( $project->getBegin()->diff($project->getEnd()) );
-	    	
-	    	$vars['ntasks'] = $em->getRepository("PlanITBundle:Project")->countTasks($idproject);
-	    	$vars['npersons'] = $em->getRepository("PlanITBundle:Project")->countPersons($idproject);
-	    	$vars['pbegin'] = $project->getBegin()->format('Y-m-d');
-	    	$vars['pend'] = $project->getEnd()->format('Y-m-d');
-	    	$vars['tend'] = $real_end->format('Y-m-d');
-	    	$vars['toccupy'] = intval( ($tthours/$vars['npersons']) * 100 / $thours);
-	    	$vars['cost'] = $cost;
-	    	
-	    	return $this->render('PlanITBundle:Default:feedback.result.html.php', $vars);
-    	}
-    	else
-    	{
-    		return $this->render('PlanITBundle:Default:feedback.html.php', $vars);
-    	}
-        
+        return $this->render('PlanITBundle:Default:feedback.html.php');
     }
-    
-    private function IntervalToHours(\DateInterval $interval)
-    {
-    	$hours = 0;
-    	if ( $interval->m > 0 )
-    		$hours += $interval->m *30*24;
-    	if ( $interval->d > 0 )
-    		$hours += $interval->d * 24;
-    	else
-    		$hours += $interval->h;
-    	return $hours;
-    }
-    
+   
 }

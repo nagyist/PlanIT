@@ -1,4 +1,4 @@
-<form id="project" name="project_choose" method="post" action="<?php echo $view['router']->generate('PlanITBundle_listFeedback'); ?>">
+<form id="project" name="project_choose" method="post" action="<?php echo $view['router']->generate('PlanITBundle_ganttFeedback'); ?>">
   <label for="project">Choose your project :</label>
   <select name="project" id="project">
   <?php foreach ($projects as $p) : ?>

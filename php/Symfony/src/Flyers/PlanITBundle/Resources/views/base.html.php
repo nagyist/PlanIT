@@ -69,10 +69,11 @@
 	        	</ul>
 	        </li>
 	        <li>
-	        	<a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_listFeedback'); ?>" title="Manage feedbacks" id="feedback" class="dialog">Feedback</a>
+	        	<a href="" id="feedback">Status</a>
 	        	<ul class="submenu" id="subfeedback">
+	        		<li><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_burndownFeedback'); ?>" title="Get the Burndown for the specified project">Burndown</a></li>
 	        		<li><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_ganttFeedback'); ?>" title="Get the Gantt for the specified project">Gantt</a></li>
-	        		<!-- <li><a href="<?php echo $view['router']->generate('PlanITBundle_pertFeedback'); ?>" title="Get the Pert diagram from the specified project">PERT</a></li>  -->
+	        		<li><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_pertFeedback'); ?>" title="Get the PERT for the specified project">PERT</a></li>
 	        	</ul>
 	        </li>
 	    </ul>

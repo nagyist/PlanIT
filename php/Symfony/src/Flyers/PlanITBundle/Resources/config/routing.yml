@@ -44,6 +44,12 @@ PlanITBundle_editProject:
 PlanITBundle_delProject:
     pattern:  /planIT/project/delete/{idproject}
     defaults: { _controller: PlanITBundle:Project:delProject }
+
+PlanITBundle_detailProject:
+    pattern:  /planIT/project/details/{idproject}
+    defaults: {_controller: PlanITBundle:Project:detailsProject, idproject: null }
+    requirements:
+       idproject: \d+
     
 PlanITBundle_listTask:
     pattern:  /planIT/task
@@ -96,17 +102,11 @@ PlanITBundle_addCharge:
 PlanITBundle_editCharge:
     pattern:  /planIT/charge/edit/{idassignment}
     defaults: { _controller: PlanITBundle:Charge:addCharge }
-    
-PlanITBundle_listFeedback:
-    pattern:  /planIT/feedback
-    defaults: {_controller: PlanITBundle:Feedback:listFeedback, idproject: null }
-    
-PlanITBundle_resultFeedback:
-    pattern:  /planIT/feedback/{idproject}
-    defaults: {_controller: PlanITBundle:Feedback:listFeedback, idproject: null }
-    requirements:
-       idproject: \d+
-    
+   
+PlanITBundle_burndownFeedback:
+    pattern:  /planIT/feedback/burndown
+    defaults: {_controller: PlanITBundle:Feedback:burndownFeedback }
+   
 PlanITBundle_ganttFeedback:
     pattern:  /planIT/feedback/gantt/{idproject}
     defaults: {_controller: PlanITBundle:Feedback:ganttFeedback, idproject: null }

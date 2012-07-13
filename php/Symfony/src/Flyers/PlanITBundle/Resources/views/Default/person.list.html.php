@@ -15,7 +15,11 @@
 			<td align="center"><?php echo $person->getPhone() ?></td>
 			<td align="center"><?php echo $person->getSalary() ?></td>
 			<td align="center"><?php echo $person->getJob()->getName() ?></td>
-			<td align="center"><a href="/planIT/person/delete/<?php echo $person->getIdperson() ?>">Delete</a></td>
+			<td align="center">
+				<a class="dialog" title="Edit an employee" rel="section" href="<?php echo $view['router']->generate('PlanITBundle_editPerson', array('idperson' => $person->getIdperson())); ?>">Edit</a>
+				&nbsp;|&nbsp;
+				<a href="<?php echo $view['router']->generate('PlanITBundle_delPerson', array('idperson' => $person->getIdperson())); ?>">Delete</a>
+			</td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>
