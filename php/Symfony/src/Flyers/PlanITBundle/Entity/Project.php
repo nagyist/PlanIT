@@ -174,4 +174,29 @@ class Project
     {
         return $this->user;
     }
+    /**
+     * @var date $realend
+     */
+    private $realend;
+
+
+    /**
+     * Set realend
+     *
+     * @param date $realend
+     */
+    public function setRealend($realend)
+    {
+        $this->realend = $realend;
+    }
+
+    /**
+     * Get realend
+     *
+     * @return date 
+     */
+    public function getRealend()
+    {
+        return $this->realend;
+    }
 }

@@ -54,11 +54,9 @@ class FeedbackController extends Controller
     	
     	$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
     	
-    	$idproject = $request->query->get("idproject");
-    	
     	if (is_null($idproject))
     	{
-    		$idproject = 0;
+    		return $this->render('PlanITBundle:Default:gantt.html.php', array("projects"=>$projects, "idproject" => $idproject));
     	}
     	
         return $this->render('PlanITBundle:Default:gantt.html.php', array("projects"=>$projects, "idproject" => $idproject));
@@ -67,17 +65,74 @@ class FeedbackController extends Controller
     /**
     * @Secure(roles="ROLE_USER")
     */
-	public function pertFeedbackAction(Request $request)
+	public function pertFeedbackAction(Request $request, $idproject = null)
     {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	
+    	$user = $this->get('security.context')->getToken()->getUser();
+    	
+    	$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
+    	
+    	if (is_null($idproject))
+    	{
+    		return $this->redirect($this->generateUrl('PlanITBundle_index'));
+    	}
+		
+		
+		
         return $this->render('PlanITBundle:Default:feedback.html.php');
     }
 	
-	    /**
+    /**
     * @Secure(roles="ROLE_USER")
     */
-	public function burndownFeedbackAction(Request $request)
+	public function burndownFeedbackAction(Request $request, $idproject = null)
     {
-        return $this->render('PlanITBundle:Default:feedback.html.php');
+    	$em = $this->getDoctrine()->getEntityManager();
+    	
+    	$user = $this->get('security.context')->getToken()->getUser();
+		
+		$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
+		
+		if (is_null($idproject))
+    	{
+    		return $this->render('PlanITBundle:Default:burndown.html.php', array("projects"=>$projects, "idproject" => $idproject, 'graphic' => ''));
+    	}
+    	
+		$project = $this->getDoctrine()->getRepository("PlanITBundle:Project")->find($idproject);
+		
+		$graph = array();
+		
+		$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByProject($idproject);
+		$task_iterator = $tasks[0]->getBegin();
+		$task_begin = clone $task_iterator;
+		foreach($tasks as $task) {
+			$graph_task = array();
+			$diff_task = $task->getBegin()->diff($task->getEnd());
+			$task_iterator->add($diff_task);
+			$total_estimated = $task_begin->diff($task_iterator);
+			$total_estimated_charge = $total_estimated->h + $total_estimated->days *24;
+			$graph_task[] = array($task_begin->format('Y-m-d H:i:s'), $total_estimated_charge);
+		}
+		
+		foreach($tasks as $task) {
+			$charges = $em->getRepository("PlanITBundle:Charge")->findAllByAssignment($task);
+			$charge_begin = clone $task_iterator;
+			foreach ($charges as $charge) {
+				$diff_charge = $charge->getBegin()->diff($charge->getEnd());
+				$task_iterator->sub($diff_charge);
+				$total_done = $charge_begin->diff($task_iterator);
+				$total_charge = $total_estimated_charge - ($total_done->h + $total_done->days * 24);
+				
+				$graph_task[] = array($charge->getBegin()->format('Y-m-d H:i:s'), $total_charge);
+			}
+		}
+		
+		$graph[] = $graph_task;
+		
+		$graph_json = json_encode($graph);
+		
+        return $this->render('PlanITBundle:Default:burndown.html.php', array("projects"=>$projects, "idproject" => $idproject, "graphic" => $graph_json));
     }
    
 }

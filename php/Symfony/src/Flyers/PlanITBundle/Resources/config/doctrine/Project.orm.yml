@@ -24,6 +24,9 @@ Flyers\PlanITBundle\Entity\Project:
     end:
       type: date
       nullable: false
+    realend:
+      type: date
+      nullable: true
   manyToOne:
     user:
       targetEntity: User

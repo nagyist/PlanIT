@@ -8,6 +8,7 @@
 		    		'bundles/planit/jquery-ui/css/flick/jquery-ui-1.8.16.custom.css',
 		    		'bundles/planit/jquery-ui/css/flick/jquery-ui-timepicker-addon.css',
 		    		'bundles/planit/jquery-gantt/style.css',
+		    		'bundles/planit/jquery-jqplot/jquery.jqplot.min.css',
 		    		'bundles/planit/fullcalendar/fullcalendar.css',
 		    		'bundles/planit/planit-style.css',
 		    	),
@@ -23,6 +24,8 @@
 		    	'bundles/planit/jquery-ui/js/jquery-ui-1.8.16.custom.min.js',
 		    	'bundles/planit/jquery-ui/js/jquery-ui-timepicker-addon.js',
 		    	'bundles/planit/jquery-gantt/jquery.fn.gantt.js',
+		    	'bundles/planit/jquery-jqplot/jquery.jqplot.min.js',
+		    	'bundles/planit/jquery-jqplot/plugins/jqplot.dateAxisRenderer.js',
 		    	'bundles/planit/fullcalendar/fullcalendar.js',
 		    	'bundles/planit/initialize.js'
 		    ),
@@ -62,10 +65,9 @@
 	        	</ul>
 	        </li>
 	        <li>
-	        	<a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_listCharge'); ?>" title="Manage charges" id="charge" class="dialog">Charges</a>
+	        	<a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_addCharge'); ?>" title="Manage charges" id="charge" class="dialog">Charges</a>
 	        	<ul class="submenu" id="subcharge">
 	        		<li><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_addCharge'); ?>" title="Add a charge" class="dialog">Add</a></li>
-	        		<li><a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_listCharge'); ?>" title="Manage charges" class="dialog">List</a></li>
 	        	</ul>
 	        </li>
 	        <li>

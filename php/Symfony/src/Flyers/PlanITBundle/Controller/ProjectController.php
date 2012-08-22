@@ -161,7 +161,7 @@ class ProjectController extends Controller
 	    	$vars['pbegin'] = $project->getBegin()->format('Y-m-d');
 	    	$vars['pend'] = $project->getEnd()->format('Y-m-d');
 	    	$vars['tend'] = $real_end->format('Y-m-d');
-	    	$vars['toccupy'] = intval( ($tthours/$vars['npersons']) * 100 / $thours);
+	    	$vars['toccupy'] = ( $vars['npersons'] == 0 ) ? 0 : intval( ($tthours/$vars['npersons']) * 100 / $thours);
 	    	$vars['cost'] = $cost;
 	    	
 	    	return $this->render('PlanITBundle:Default:feedback.result.html.php', $vars);

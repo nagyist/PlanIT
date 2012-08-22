@@ -104,7 +104,7 @@ class UserController extends Controller
 	    			$em->flush();
 					
 					$error = "User created successfully";
-					return $this->render('PlanITBundle:Default:login.html.php', array('error'=>$error, 'form'=>$form->createView()));
+					return $this->redirect($this->generateUrl('PlanITBundle_homepage'));
 				}
 				else {
 					$error = "Password confirmation is invalid";

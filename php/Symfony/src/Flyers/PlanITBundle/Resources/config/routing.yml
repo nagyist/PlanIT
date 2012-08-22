@@ -104,8 +104,10 @@ PlanITBundle_editCharge:
     defaults: { _controller: PlanITBundle:Charge:addCharge }
    
 PlanITBundle_burndownFeedback:
-    pattern:  /planIT/feedback/burndown
-    defaults: {_controller: PlanITBundle:Feedback:burndownFeedback }
+    pattern:  /planIT/feedback/burndown/{idproject}
+    defaults: {_controller: PlanITBundle:Feedback:burndownFeedback, idproject: null }
+    requirements:
+       idproject: \d+
    
 PlanITBundle_ganttFeedback:
     pattern:  /planIT/feedback/gantt/{idproject}
@@ -114,8 +116,10 @@ PlanITBundle_ganttFeedback:
        idproject: \d+
 
 PlanITBundle_pertFeedback:
-    pattern:  /planIT/feedback/pert
-    defaults: {_controller: PlanITBundle:Feedback:pertFeedback }
+    pattern:  /planIT/feedback/pert/{idproject}
+    defaults: {_controller: PlanITBundle:Feedback:pertFeedback, idproject: null }
+    requirements:
+       idproject: \d+
     
 PlanITBundle_jsonevents:
     pattern:  /planIT/api/events

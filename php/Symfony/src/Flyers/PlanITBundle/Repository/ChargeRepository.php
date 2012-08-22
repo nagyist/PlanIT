@@ -43,4 +43,15 @@ class ChargeRepository extends EntityRepository
 			->setParameter('id', $user->getId() );
 		return $qb->getQuery()->getResult();
 	}
+	
+	public function findAllByAssignment($assignment) {
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		$qb  ->select('c')
+			 ->from('PlanITBundle:Charge', 'c')
+			 ->join('c.assignment', 'a')
+			 ->where('a.idassignment = :idassignment')
+			 ->orderBy('c.begin', 'ASC')
+			 ->setParameter('idassignment', $assignment->getIdassignment());
+		return $qb->getQuery()->getResult();
+	}
 }
