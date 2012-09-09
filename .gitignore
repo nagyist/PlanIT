@@ -1,9 +1,0 @@
-## Files
-.DS_Store
-
-## Patterns
-*.ini
-php/Symfony/app/cache/*
-php/Symfony/app/logs/*
-php/Symfony/web/bundles/acmedemo/*
-
