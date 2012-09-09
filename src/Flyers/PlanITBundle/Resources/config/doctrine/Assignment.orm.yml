@@ -1,0 +1,61 @@
+Flyers\PlanITBundle\Entity\Assignment:
+  type: entity
+  table: assignment
+  repositoryClass: Flyers\PlanITBundle\Repository\AssignmentRepository
+  fields:
+    idassignment:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    name:
+      type: string
+      length: 45
+      fixed: false
+      nullable: false
+    description:
+      type: text
+      nullable: true
+    begin:
+      type: datetime
+      nullable: false
+    end:
+      type: datetime
+      nullable: false
+  oneToMany:
+    children:
+      targetEntity: Assignment
+      mappedBy: parent
+      cascade: [ "remove" ]
+  manyToOne:
+    parent:
+      nullable: true
+      targetEntity: Assignment
+      cascade: [ "persist" ]
+      inversedBy: children
+      joinColumns:
+        parent:
+           referencedColumnName: idassignment
+    project:
+      targetEntity: Project
+      cascade: [ "persist" ]
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        project:
+          referencedColumnName: idproject
+      orphanRemoval: false
+  manyToMany:
+    persons:
+      cascade: [ "remove" ]
+      targetEntity: Person
+      joinTable:
+        name: assignment_persons
+        joinColumns:
+          idassignment:
+            referencedColumnName: idassignment
+        inverseJoinColumns:
+          idperson:
+            referencedColumnName: idperson

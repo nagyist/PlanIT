@@ -1,0 +1,31 @@
+security:
+  encoders:
+    Symfony\Component\Security\Core\User\User: plaintext
+    Flyers\PlanITBundle\Entity\User: sha512
+
+  role_hierarchy:
+    ROLE_ADMIN:       ROLE_USER
+    ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN]
+
+  providers:
+    main:
+      entity: { class: PlanITBundle:User, property: username }
+
+  firewalls:
+    entity:
+      pattern: ^/planIT
+      form_login:
+        check_path: /planIT/login_check
+        login_path: /login
+        default_target_path: /planIT
+      logout: 
+        path: /logout
+        target: /login 
+      security: true
+      anonymous: false
+
+  access_control:
+      - { path: /planIT.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: /.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+      #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+      #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

@@ -1,0 +1,7 @@
+parameters:
+#    plan_it_test.example.class: planIT\TestBundle\Example
+
+services:
+#    plan_it_test.example:
+#        class: %plan_it_test.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
