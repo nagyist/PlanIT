@@ -250,4 +250,14 @@ class Person
             $context->addViolationAtSubPath('project', 'You must choose a project', array(), null);
 		}
 	}
+
+    /**
+     * Remove projects
+     *
+     * @param Flyers\PlanITBundle\Entity\Project $projects
+     */
+    public function removeProject(\Flyers\PlanITBundle\Entity\Project $projects)
+    {
+        $this->projects->removeElement($projects);
+    }
 }

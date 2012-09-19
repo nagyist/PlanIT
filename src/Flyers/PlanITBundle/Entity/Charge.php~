@@ -4,8 +4,13 @@ namespace Flyers\PlanITBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
+use Symfony\Component\Validator\ExecutionContext;
+
 /**
  * Flyers\PlanITBundle\Entity\Charge
+ * @Assert\Callback(methods={"isChargeValid"})
  */
 class Charge
 {
@@ -18,16 +23,6 @@ class Charge
      * @var text $description
      */
     private $description;
-
-    /**
-     * @var datetime $begin
-     */
-    private $begin;
-
-    /**
-     * @var datetime $end
-     */
-    private $end;
 
     /**
      * @var Flyers\PlanITBundle\Entity\Assignment
@@ -75,46 +70,6 @@ class Charge
     }
 
     /**
-     * Set begin
-     *
-     * @param datetime $begin
-     */
-    public function setBegin($begin)
-    {
-        $this->begin = $begin;
-    }
-
-    /**
-     * Get begin
-     *
-     * @return datetime 
-     */
-    public function getBegin()
-    {
-        return $this->begin;
-    }
-
-    /**
-     * Set end
-     *
-     * @param datetime $end
-     */
-    public function setEnd($end)
-    {
-        $this->end = $end;
-    }
-
-    /**
-     * Get end
-     *
-     * @return datetime 
-     */
-    public function getEnd()
-    {
-        return $this->end;
-    }
-
-    /**
      * Set assignment
      *
      * @param Flyers\PlanITBundle\Entity\Assignment $assignment
@@ -152,5 +107,58 @@ class Charge
     public function getPersons()
     {
         return $this->persons;
+    }
+	
+	public function isChargeValid(ExecutionContext $context) 
+	{
+		
+		if ( is_null($this->getAssignment()) )
+		{
+            $context->addViolationAtSubPath('assignment', 'You must choose a task', array(), null);
+		}
+		
+		if ( count($this->getPersons()) <= 0)
+		{
+            $context->addViolationAtSubPath('persons', 'You must assign the charge to someone', array(), null);
+		}
+	}
+    /**
+     * @var float $duration
+	 * @Assert\NotBlank()
+     */
+    private $duration;
+
+
+    /**
+     * Set duration
+     *
+     * @param float $duration
+     * @return Charge
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+    
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return float 
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Remove persons
+     *
+     * @param Flyers\PlanITBundle\Entity\Person $persons
+     */
+    public function removePerson(\Flyers\PlanITBundle\Entity\Person $persons)
+    {
+        $this->persons->removeElement($persons);
     }
 }

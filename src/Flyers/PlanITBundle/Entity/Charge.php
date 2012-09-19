@@ -25,20 +25,6 @@ class Charge
     private $description;
 
     /**
-     * @var datetime $begin
-	 * @Assert\NotBlank()
-     * @Assert\DateTime()
-     */
-    private $begin;
-
-    /**
-     * @var datetime $end
-	 * @Assert\NotBlank()
-     * @Assert\DateTime()
-     */
-    private $end;
-
-    /**
      * @var Flyers\PlanITBundle\Entity\Assignment
      */
     private $assignment;
@@ -81,46 +67,6 @@ class Charge
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set begin
-     *
-     * @param datetime $begin
-     */
-    public function setBegin($begin)
-    {
-        $this->begin = $begin;
-    }
-
-    /**
-     * Get begin
-     *
-     * @return datetime 
-     */
-    public function getBegin()
-    {
-        return $this->begin;
-    }
-
-    /**
-     * Set end
-     *
-     * @param datetime $end
-     */
-    public function setEnd($end)
-    {
-        $this->end = $end;
-    }
-
-    /**
-     * Get end
-     *
-     * @return datetime 
-     */
-    public function getEnd()
-    {
-        return $this->end;
     }
 
     /**
@@ -176,4 +122,71 @@ class Charge
             $context->addViolationAtSubPath('persons', 'You must assign the charge to someone', array(), null);
 		}
 	}
+    /**
+     * @var float $duration
+	 * @Assert\NotBlank()
+     */
+    private $duration;
+
+
+    /**
+     * Set duration
+     *
+     * @param float $duration
+     * @return Charge
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+    
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return float 
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Remove persons
+     *
+     * @param Flyers\PlanITBundle\Entity\Person $persons
+     */
+    public function removePerson(\Flyers\PlanITBundle\Entity\Person $persons)
+    {
+        $this->persons->removeElement($persons);
+    }
+    /**
+     * @var \DateTime $date
+     */
+    private $date;
+
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Charge
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
 }

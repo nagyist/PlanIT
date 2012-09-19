@@ -21,16 +21,19 @@ class ChargeType extends AbstractType
     	$user = $this->user;
         $builder
             ->add('description')
-            ->add('begin', 'datetime',
+			->add('duration')
+            ->add('date', 'datetime',
 				array(
 	    			'input'  => 'datetime',
 	    			'widget' => 'single_text',
 	            ))
+			/*
             ->add('end', 'datetime',
 				array(
 	    			'input'  => 'datetime',
 	    			'widget' => 'single_text',
 	            ))
+			 */
             ->add('assignment', 'entity', 
             	array(
             		'class' => 'PlanITBundle:Assignment',

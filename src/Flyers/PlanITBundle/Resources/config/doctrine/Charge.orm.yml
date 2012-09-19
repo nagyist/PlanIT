@@ -13,16 +13,19 @@ Flyers\PlanITBundle\Entity\Charge:
     description:
       type: text
       nullable: true
-    begin:
+    date:
       type: datetime
       nullable: false
-    end:
-      type: datetime
+#    end:
+#      type: datetime
+#      nullable: false
+    duration:
+      type: float
       nullable: false
   manyToOne:
     assignment:
       targetEntity: Assignment
-      cascade: [ "remove" ]
+      cascade: [ "persist" ]
       mappedBy: null
       inversedBy: null
       joinColumns:
@@ -32,7 +35,7 @@ Flyers\PlanITBundle\Entity\Charge:
   manyToMany:
     persons:
       targetEntity: Person
-      cascade: [ "remove" ]
+      cascade: [ "persist" ]
       joinTable:
         name: charge_persons
         joinColumns:

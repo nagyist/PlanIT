@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
- * � Copyright 2012 BEN GHMISS Nassim �  
+ * Copyright 2012 BEN GHMISS Nassim 
  * 
  */
 
@@ -93,17 +93,16 @@ class APIController extends Controller
     	
     	foreach ($tasks as $task)
     	{
-    		
+    		$date_begin = $task->getBegin()->getTimestamp()+$task->getBegin()->getOffset();
+			$date_end = $task->getEnd()->getTimestamp()+$task->getEnd()->getOffset();
     		$vals = array();
     		$vals["name"] = $task->getName();
     		$vals["values"] = array();
     		$vals["values"][0]["label"] = $task->getName();
     		$vals["values"][0]["desc"] = $task->getDescription();
-    		$vals["values"][0]["from"] = "/Date(".$task->getBegin()->getTimestamp()."000)/";
-    		$vals["values"][0]["to"]   = "/Date(".$task->getEnd()->getTimestamp()."000)/";
-    		    		
+    		$vals["values"][0]["from"] = "/Date(".$date_begin."000)/";
+    		$vals["values"][0]["to"]   = "/Date(".$date_end."000)/";
     		$return[] = $vals;
-    		
     	}
 
     	$response = new Response(json_encode($return));

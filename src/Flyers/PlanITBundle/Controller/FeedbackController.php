@@ -40,6 +40,9 @@ use Flyers\PlanITBundle\Form\JobType;
 use Flyers\PlanITBundle\Entity\Person;
 use Flyers\PlanITBundle\Form\PersonType;
 
+define('WORK_DAY_DURATION', 8);
+define('WORK_DAY_BEGINNING', 'T08H00M');
+
 class FeedbackController extends Controller
 {
 	
@@ -125,29 +128,32 @@ class FeedbackController extends Controller
 		$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByProject($idproject);
 		if ( count($tasks) > 0 )
 		{
-			$task_iterator = $tasks[0]->getBegin();
-			$task_begin = clone $task_iterator;
+			$task_total_duration = 0;
+			//$task_begin = clone $task_iterator;
 			foreach($tasks as $task) {
 				$graph_task = array();
-				$diff_task = $task->getBegin()->diff($task->getEnd());
-				$task_iterator->add($diff_task);
-				$total_estimated = $task_begin->diff($task_iterator);
-				$total_estimated_charge = $total_estimated->h + $total_estimated->days *24;
-				$graph_task[] = array($task_begin->format('Y-m-d H:i:s'), $total_estimated_charge);
+				$task_duration = $task->getDuration();
+				//$diff_task = $task->getBegin()->diff($task->getEnd());
+				$task_total_duration += $task_duration;
+				//$total_estimated = $task_begin->diff($task_iterator);
+				//$total_estimated_charge = $total_estimated->h + $total_estimated->days *24;
 			}
+			$graph_task[] = array($project->getBegin()->format('Y-m-d H:i:s'), $task_total_duration);
 			
 			foreach($tasks as $task) {
 				$charges = $em->getRepository("PlanITBundle:Charge")->findAllByAssignment($task);
-				$charge_begin = clone $task_iterator;
+				//$charge_begin = clone $task_iterator;
 				foreach ($charges as $charge) {
-					$diff_charge = $charge->getBegin()->diff($charge->getEnd());
-					$task_iterator->sub($diff_charge);
-					$total_done = $charge_begin->diff($task_iterator);
-					$total_charge = $total_estimated_charge - ($total_done->h + $total_done->days * 24);
+					//$diff_charge = $this->durationToInterval($charge->getDuration());
+					//$task_iterator->sub($diff_charge);
+					$charge_total = $task_total_duration - $charge->getDuration();
+					//$total_done = $charge_begin->diff($task_iterator);
+					//$total_charge = $total_estimated_charge - ($total_done->h + $total_done->days * 24);
 					
-					$graph_task[] = array($charge->getBegin()->format('Y-m-d H:i:s'), $total_charge);
+					$graph_task[] = array($charge->getDate()->format('Y-m-d H:i:s'), $charge_total);
 				}
 			}
+			$graph_task[] = array($project->getEnd()->format('Y-m-d H:i:s'), 0);
 			
 			$graph[] = $graph_task;
 		}
@@ -155,5 +161,15 @@ class FeedbackController extends Controller
 		
         return $this->render('PlanITBundle:Default:burndown.html.php', array("projects"=>$projects, "idproject" => $idproject, "graphic" => $graph_json));
     }
+
+	private function durationToInterval($duration) {
+		$days = floor($duration);
+		$hours_base10 = ( round($duration,2) - $days ) * WORK_DAY_DURATION;
+		$hours = floor( $hours_base10 );
+		$minutes = ( $hours_base10 - $hours ) * 60;
+		
+		$interval = new \DateInterval('P0Y'.$days.'DT'.$hours.'H'.$minutes.'M');
+		return $interval;
+	} 
    
 }

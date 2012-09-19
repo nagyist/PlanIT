@@ -21,7 +21,26 @@
     	</div>
     	<?php if (isset($graphic) && !empty($graphic)) : ?>
     	<script type="text/javascript">
-    		$.jqplot('chartdiv', <?php echo $graphic; ?>, {axes:{xaxis:{renderer:$.jqplot.DateAxisRenderer}}});
+    		$.jqplot('chartdiv', <?php echo $graphic; ?>, {
+    			axes:{
+    				xaxis:{
+    					renderer:$.jqplot.DateAxisRenderer,
+    					/*tickRenderer: $.jqplot.CanvasAxisTickRenderer*/
+    				},
+    				yaxis:{
+    					min: 0,
+    					tickOptions:{
+			            	formatString:'%.1f days'
+			            }
+    				}
+    			},
+    			highlighter: {
+    				show: true
+    			},
+    			trendline: {
+    				shadow: false
+    			}
+    		});
     	</script>
     	<?php endif; ?>
 <?php $view['slots']->stop() ?>

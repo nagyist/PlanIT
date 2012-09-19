@@ -10,17 +10,16 @@
 	    <td colspan="2">&nbsp;</td>
 	  </tr>
 	  <tr>
-	    <td>Beginning date and time for the charge</td>
-	    <td><?php echo $view['form']->widget($form['begin'], 
-	    					array('attr' => array('class' => 'timepick'))) ?></td>
+	    <td>When employee have worked on the task?</td>
+	    <td><?php echo $view['form']->widget($form['date'], 
+	    					array('attr' => array('class' => 'datepick'))) ?></td>
 	  </tr>
 	  <tr>
 	    <td colspan="2">&nbsp;</td>
 	  </tr>
 	  <tr>
-	    <td>Ending date and time for the charge</td>
-	    <td><?php echo $view['form']->widget($form['end'], 
-	    					array('attr' => array('class' => 'timepick'))) ?></td>
+	    <td>Duration in days<br/><span class="helper">you can use floats for hours</span></td>
+	    <td><?php echo $view['form']->widget($form['duration']) ?></td>
 	  </tr>
 	  <tr>
 	    <td colspan="2">&nbsp;</td>

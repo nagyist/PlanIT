@@ -35,9 +35,12 @@ use Flyers\PlanITBundle\Form\UserType;
 use Flyers\PlanITBundle\Entity\Assignment;
 use Flyers\PlanITBundle\Form\AssignmentType;
 
+define('WORK_DAY_DURATION', 8);
+define('WORK_DAY_BEGINNING', 'T08H00M');
+
 class TaskController extends Controller
 {
-    
+	
     /**
     * @Secure(roles="ROLE_USER")
     */
@@ -66,7 +69,6 @@ class TaskController extends Controller
     	else
     		$task = $this->getDoctrine()->getRepository("PlanITBundle:Assignment")->find($idassignment);
     		
-    	
     	$form = $this->createForm(new AssignmentType($user), $task);
     			
     	if ($request->getMethod() == 'POST')
@@ -74,10 +76,37 @@ class TaskController extends Controller
     		$form->bindRequest($request);
     		if ($form->isValid() && !$form->isEmpty())
     		{
+    			$preceeding = $task->getParent();
+				$project = $task->getProject();
+				if ( !is_null($preceeding) ) {
+					$date_begin = $preceeding->getEnd();
+					if ( !is_null($date_begin) ) {
+						$task->setBegin($date_begin);
+					}
+				} else {
+					$date_begin = $project->getBegin();
+					$interval = new \DateInterval('P0Y0D'.WORK_DAY_BEGINNING);
+					$date_begin->add($interval);
+					$task->setBegin( $date_begin );
+				}
+				
+				$duration = $task->getDuration();
+				$days = floor($duration);
+				$hours_base10 = ( round($duration,2) - $days ) * WORK_DAY_DURATION;
+				$hours = floor( $hours_base10 );
+				$minutes = ( $hours_base10 - $hours ) * 60;
+				
+				$interval = new \DateInterval('P0Y'.$days.'DT'.$hours.'H'.$minutes.'M');
+				$date_end = clone $date_begin;
+				$date_end->add($interval);
+				$task->setEnd($date_end);
+				
     			$em->persist($task);
     			$em->flush();
     			
-    			return new Response(json_encode(array('message' => 'Your project has been successfully saved')));
+    			$response = new Response(json_encode(array('message' => 'Your project has been successfully saved'))); 
+				$response->headers->set('Content-Type', 'application/json');
+				return $response;
     		}
     		else 
     		{
@@ -88,7 +117,10 @@ class TaskController extends Controller
     				$tmp["message"] = $error->getMessage();
     				$ret[] = $tmp;
     			}
-    			return new Response( json_encode($ret) );
+				
+				$response = new Response(json_encode($ret)); 
+				$response->headers->set('Content-Type', 'application/json');
+				return $response;
     		}
     	}
     	else 
@@ -118,6 +150,8 @@ class TaskController extends Controller
 	    $em->remove($task);
 		$em->flush();
 		
-		return new Response('');
+		$response = new Response(json_encode(array('message' => 'Task deleted with success'))); 
+		$response->headers->set('Content-Type', 'application/json');
+		return $response;
     }
 }

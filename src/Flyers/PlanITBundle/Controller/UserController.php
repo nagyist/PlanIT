@@ -71,15 +71,16 @@ class UserController extends Controller
 		$user = new User();
 		$form = $this->createForm(new UserType(), $user);
 		
-		$error = "Registrations not allowed for the moment";
-		return $this->render('PlanITBundle:Default:login.html.php', array('error'=>$error, 'form'=>$form->createView()));
-    	
-    	$username = $request->request->get('_username');
+		$username = $request->request->get('_username');
     	$password = $request->request->get('_password');
     	$confirm = $request->request->get('confirm');
 		
 		$factory = $this->container->get('security.encoder_factory');
 		
+		if ( $username != 'nassim.benghmiss@gmail.com') {
+			$error = "Registrations not allowed for the moment";
+			return $this->render('PlanITBundle:Default:login.html.php', array('error'=>$error, 'form'=>$form->createView()));
+		}
 		
     	if ($request->getMethod() == 'POST')
     	{
@@ -104,7 +105,7 @@ class UserController extends Controller
 	    			$em->flush();
 					
 					$error = "User created successfully";
-					return $this->redirect($this->generateUrl('PlanITBundle_homepage'));
+					return $this->render('PlanITBundle:Default:login.html.php', array('error'=>$error, 'form'=>$form->createView()));
 				}
 				else {
 					$error = "Password confirmation is invalid";

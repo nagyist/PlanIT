@@ -77,7 +77,9 @@ class ChargeController extends Controller
     			$em->persist($charge);
     			$em->flush();
     			
-    			return new Response(json_encode(array('message' => 'Your project has been successfully saved')));
+    			$response = new Response(json_encode(array('message' => 'The charge has been successfully created'))); 
+				$response->headers->set('Content-Type', 'application/json');
+				return $response;
     		}
     		else 
     		{
@@ -88,7 +90,9 @@ class ChargeController extends Controller
     				$tmp["message"] = $error->getMessage();
     				$ret[] = $tmp;
     			}
-    			return new Response( json_encode($ret) );
+				$response = new Response(json_encode($ret)); 
+				$response->headers->set('Content-Type', 'application/json');
+				return $response;
     		}
     	}
     	else 

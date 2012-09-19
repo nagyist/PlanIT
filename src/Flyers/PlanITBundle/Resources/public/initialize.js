@@ -1,4 +1,7 @@
 $(document).ready( function () {
+	
+	$.jqplot.config.enablePlugins = true;
+	
 	var tmpDate = new Date;
 	var uniqid = tmpDate.getTime();
 	var objmodal = new Array;
@@ -62,7 +65,7 @@ $(document).ready( function () {
 					data: $(".form").last().serialize(),
 					context: $(this),
 					success: function(e) { 
-						var errors = JSON.parse(e);
+						var errors = e;
 						if (errors.length > 0)	{
 							var msg = '';
 							for ( id in errors)	{

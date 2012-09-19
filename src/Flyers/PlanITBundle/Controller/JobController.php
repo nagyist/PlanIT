@@ -61,7 +61,9 @@ class JobController extends Controller
     			$em->persist($job);
     			$em->flush();
     			
-    			return new Response(json_encode(array('message' => 'The job has been successfully created')));
+				$response = new Response(json_encode(array('message' => 'The job has been successfully created'))); 
+				$response->headers->set('Content-Type', 'application/json');
+				return $response;
     		}
     		else
     		{
@@ -72,7 +74,10 @@ class JobController extends Controller
     				$tmp["message"] = $error->getMessage();
     				$ret[] = $tmp;
     			}
-    			return new Response( json_encode($ret) );
+
+				$response = new Response(json_encode($ret)); 
+				$response->headers->set('Content-Type', 'application/json');
+				return $response;
     		}
     	}
     	else 

@@ -58,20 +58,6 @@ class Assignment
      * @var Flyers\PlanITBundle\Entity\Project
      */
     private $project;
-    
-    /**
-     * @var date $begin
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
-     */
-    private $begin;
-    
-    /**
-     * @var datetime $end
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
-     */
-    private $end;
 
     /**
      * @var Flyers\PlanITBundle\Entity\Person
@@ -218,46 +204,71 @@ class Assignment
     {
         return $this->children;
     }
+	
+	
+    /**
+     * @var float $duration
+	 * @Assert\NotBlank()
+     */
+    private $duration;
+
 
     /**
-     * Set begin
+     * Set duration
      *
-     * @param date $begin
+     * @param float $duration
+     * @return Assignment
      */
-    public function setBegin($begin)
+    public function setDuration($duration)
     {
-        $this->begin = $begin;
+        $this->duration = $duration;
+    
+        return $this;
     }
 
     /**
-     * Get begin
+     * Get duration
      *
-     * @return date 
+     * @return float 
      */
-    public function getBegin()
+    public function getDuration()
     {
-        return $this->begin;
+        return $this->duration;
     }
 
     /**
-     * Set end
+     * Add children
      *
-     * @param datetime $end
+     * @param Flyers\PlanITBundle\Entity\Assignment $children
+     * @return Assignment
      */
-    public function setEnd($end)
+    public function addChildren(\Flyers\PlanITBundle\Entity\Assignment $children)
     {
-        $this->end = $end;
+        $this->children[] = $children;
+    
+        return $this;
     }
 
     /**
-     * Get end
+     * Remove children
      *
-     * @return datetime 
+     * @param Flyers\PlanITBundle\Entity\Assignment $children
      */
-    public function getEnd()
+    public function removeChildren(\Flyers\PlanITBundle\Entity\Assignment $children)
     {
-        return $this->end;
+        $this->children->removeElement($children);
     }
+
+    /**
+     * Remove persons
+     *
+     * @param Flyers\PlanITBundle\Entity\Person $persons
+     */
+    public function removePerson(\Flyers\PlanITBundle\Entity\Person $persons)
+    {
+        $this->persons->removeElement($persons);
+    }
+	
 	
 	public function isAssignmentValid(ExecutionContext $context) 
 	{
@@ -272,4 +283,60 @@ class Assignment
             $context->addViolationAtSubPath('persons', 'You must assign the task to someone', array(), null);
 		}
 	}
+    /**
+     * @var \DateTime $begin
+     */
+    private $begin;
+
+    /**
+     * @var \DateTime $end
+     */
+    private $end;
+
+
+    /**
+     * Set begin
+     *
+     * @param \DateTime $begin
+     * @return Assignment
+     */
+    public function setBegin($begin)
+    {
+        $this->begin = $begin;
+    
+        return $this;
+    }
+
+    /**
+     * Get begin
+     *
+     * @return \DateTime 
+     */
+    public function getBegin()
+    {
+        return $this->begin;
+    }
+
+    /**
+     * Set end
+     *
+     * @param \DateTime $end
+     * @return Assignment
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+    
+        return $this;
+    }
+
+    /**
+     * Get end
+     *
+     * @return \DateTime 
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
 }

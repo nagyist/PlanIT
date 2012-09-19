@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\MinLength;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Collection;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -48,20 +48,33 @@ class DefaultController extends Controller
     {
     	
 		$collectionConstraint = new Collection(array(
-		    'name' => new MinLength(1),
+		    'name' => new NotBlank(),
+		    'email' => new NotBlank(),
 		    'email' => new Email(array('message' => 'Invalid email address')),
-		    'subject' => new MinLength(1),
-		    'message' => new MinLength(1),
+		    'subject' => new NotBlank(),
+		    'message' => new NotBlank(),
 		));
 		
-    	$defaultData = array();
-		$form = $this->createFormBuilder($defaultData, array(
+		$form = $this->createFormBuilder(array()
+						/*array(
 						    'validation_constraint' => $collectionConstraint,
-						))
-				        ->add('name', 'text')
-				        ->add('email', 'email')
-						->add('subject', 'text')
-				        ->add('message', 'textarea')
+						)*/
+						)->add(	'name', 'text', array(
+								'required' => true,
+								'error_bubbling' => true)
+						)
+				        ->add(  'email', 'email', array(
+								'required' => true,
+								'error_bubbling' => true)
+						)
+						->add(  'subject', 'text', array(
+								'required' => true,
+								'error_bubbling' => true)
+						)
+				        ->add(  'message', 'textarea', array(
+								'required' => true,
+								'error_bubbling' => true)
+						)
 				        ->getForm();
 		
     	if ($request->getMethod() == 'POST')
@@ -71,6 +84,21 @@ class DefaultController extends Controller
 			
 			$data = $form->getData();
 			
+			$errorList = $this->get('validator')->validateValue($data, $collectionConstraint);
+			
+			if (count($errorList) > 0) {
+				$ret = array();
+				foreach ($errorList as $error) {
+					$tmp["field"] = substr($error->getPropertyPath(), 1, -1);
+    				$tmp["message"] = $error->getMessageTemplate();
+					$ret[] = $tmp;
+				}
+				
+				$response = new Response(json_encode($ret));
+		    	$response->headers->set('Content-Type', 'application/json');
+		    	return $response;
+			}
+			
 			try {
 	    		$message = \Swift_Message::newInstance()
 	    					->setFrom($data['email'])
@@ -79,7 +107,9 @@ class DefaultController extends Controller
 	    					->setBody($data['name']."<br />".$data['message']);
     			$this->get('mailer')->send($message);
 			} catch (Exception $e) {
-				$e->getMessage();
+				$response = new Response(json_encode($e->getMessage()));
+	    		$response->headers->set('Content-Type', 'application/json');
+				return $response;
 			}
     		
 			$return = "Message envoyé avec succès";
@@ -89,7 +119,6 @@ class DefaultController extends Controller
     	}
     	else 
 		{
-			
     		return $this->render('PlanITBundle:Default:contact.html.php', array('form'=>$form->createView()));
 		}
     }

@@ -17,17 +17,8 @@
 	    <td colspan="2">&nbsp;</td>
 	  </tr>
 	  <tr>
-	    <td>Beginning date and time for the task</td>
-	    <td><?php echo $view['form']->widget($form['begin'], 
-	    					array('attr' => array('class' => 'timepick'))) ?></td>
-	  </tr>
-	  <tr>
-	    <td colspan="2">&nbsp;</td>
-	  </tr>
-	  <tr>
-	    <td>Estimated ending date and time for the task</td>
-	    <td><?php echo $view['form']->widget($form['end'], 
-	    					array('attr' => array('class' => 'timepick'))) ?></td>
+	    <td>Estimated duration in days<br/><span class="helper">you can use floats for hours</span></td>
+	    <td><?php echo $view['form']->widget($form['duration']) ?></td>
 	  </tr>
 	  <tr>
 	    <td colspan="2">&nbsp;</td>
@@ -40,15 +31,15 @@
 	    <td colspan="2">&nbsp;</td>
 	  </tr>
 	  <tr>
-	    <td>For project<br/><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_addProject'); ?>" title="Add a Project" class="dialog lower">Add a project</a></td>
-	    <td><?php echo $view['form']->widget($form['project']) ?></td>
+	    <td>Assigned persons<br/><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_addPerson'); ?>" title="Add a Person" class="dialog lower">Add a person</a></td>
+	    <td><?php echo $view['form']->widget($form['persons']) ?></td>
 	  </tr>
 	  <tr>
 	    <td colspan="2">&nbsp;</td>
 	  </tr>
 	  <tr>
-	    <td>Assigned persons<br/><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_addPerson'); ?>" title="Add a Person" class="dialog lower">Add a person</a></td>
-	    <td><?php echo $view['form']->widget($form['persons']) ?></td>
+	    <td>Defined for project</td>
+	    <td><?php echo $view['form']->widget($form['project']) ?></td>
 	  </tr>
 	</table>
 	<?php echo $view['form']->rest($form) ?>

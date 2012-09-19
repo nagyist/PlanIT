@@ -24,9 +24,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\Validator\ExecutionContext;
+
 
 /**
  * Flyers\PlanITBundle\Entity\Assignment
+ * @Assert\Callback(methods={"isAssignmentValid"})
  */
 class Assignment
 {
@@ -55,20 +58,6 @@ class Assignment
      * @var Flyers\PlanITBundle\Entity\Project
      */
     private $project;
-    
-    /**
-     * @var date $begin
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
-     */
-    private $begin;
-    
-    /**
-     * @var datetime $end
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
-     */
-    private $end;
 
     /**
      * @var Flyers\PlanITBundle\Entity\Person
@@ -215,21 +204,113 @@ class Assignment
     {
         return $this->children;
     }
+	
+	
+    /**
+     * @var float $duration
+	 * @Assert\NotBlank()
+     */
+    private $duration;
+
+
+    /**
+     * Set duration
+     *
+     * @param float $duration
+     * @return Assignment
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+    
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return float 
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Add children
+     *
+     * @param Flyers\PlanITBundle\Entity\Assignment $children
+     * @return Assignment
+     */
+    public function addChildren(\Flyers\PlanITBundle\Entity\Assignment $children)
+    {
+        $this->children[] = $children;
+    
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param Flyers\PlanITBundle\Entity\Assignment $children
+     */
+    public function removeChildren(\Flyers\PlanITBundle\Entity\Assignment $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Remove persons
+     *
+     * @param Flyers\PlanITBundle\Entity\Person $persons
+     */
+    public function removePerson(\Flyers\PlanITBundle\Entity\Person $persons)
+    {
+        $this->persons->removeElement($persons);
+    }
+	
+	
+	public function isAssignmentValid(ExecutionContext $context) 
+	{
+		
+		if ( is_null($this->getProject()) )
+		{
+            $context->addViolationAtSubPath('project', 'You must choose a project', array(), null);
+		}
+		
+		if ( count($this->getPersons()) <= 0)
+		{
+            $context->addViolationAtSubPath('persons', 'You must assign the task to someone', array(), null);
+		}
+	}
+    /**
+     * @var \DateTime $begin
+     */
+    private $begin;
+
+    /**
+     * @var \DateTime $end
+     */
+    private $end;
+
 
     /**
      * Set begin
      *
-     * @param date $begin
+     * @param \DateTime $begin
+     * @return Assignment
      */
     public function setBegin($begin)
     {
         $this->begin = $begin;
+    
+        return $this;
     }
 
     /**
      * Get begin
      *
-     * @return date 
+     * @return \DateTime 
      */
     public function getBegin()
     {
@@ -239,17 +320,20 @@ class Assignment
     /**
      * Set end
      *
-     * @param datetime $end
+     * @param \DateTime $end
+     * @return Assignment
      */
     public function setEnd($end)
     {
         $this->end = $end;
+    
+        return $this;
     }
 
     /**
      * Get end
      *
-     * @return datetime 
+     * @return \DateTime 
      */
     public function getEnd()
     {

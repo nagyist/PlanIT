@@ -67,10 +67,14 @@ class ProjectController extends Controller
 		    $em->remove($project);
 			$em->flush();
 		} catch(Exception $e) {
-			return new Response('Unable to delete the project');
+			$response = new Response(json_encode(array('message' => 'Unable to delete the project'))); 
+			$response->headers->set('Content-Type', 'application/json');
+			return $response;
 		}
 		
-		return new Response('Project deleted with success');
+		$response = new Response(json_encode(array('message' => 'Project deleted with success'))); 
+		$response->headers->set('Content-Type', 'application/json');
+		return $response;
     }
     
     /**
@@ -98,7 +102,10 @@ class ProjectController extends Controller
     			$project->setUser( $this->get('security.context')->getToken()->getUser() );
     			$em->persist($project);
     			$em->flush();
-    			return new Response(json_encode(array('message' => 'Your project has been successfully saved')));
+				
+				$response = new Response(json_encode(array('message' => 'Your project has been successfully saved'))); 
+				$response->headers->set('Content-Type', 'application/json');
+    			return $response;
     		}
     		else
     		{
@@ -109,7 +116,9 @@ class ProjectController extends Controller
     				$tmp["message"] = $error->getMessage();
     				$ret[] = $tmp;
     			}
-    			return new Response( json_encode($ret) );
+				$response = new Response(json_encode($ret) ); 
+				$response->headers->set('Content-Type', 'application/json');
+    			return $response;
     		}
     		
     	}

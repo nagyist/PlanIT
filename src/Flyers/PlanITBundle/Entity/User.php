@@ -194,4 +194,27 @@ class User implements UserInterface
     {
         return $this->id;
     }
+
+    /**
+     * Add userRoles
+     *
+     * @param Flyers\PlanITBundle\Entity\Role $userRoles
+     * @return User
+     */
+    public function addUserRole(\Flyers\PlanITBundle\Entity\Role $userRoles)
+    {
+        $this->userRoles[] = $userRoles;
+    
+        return $this;
+    }
+
+    /**
+     * Remove userRoles
+     *
+     * @param Flyers\PlanITBundle\Entity\Role $userRoles
+     */
+    public function removeUserRole(\Flyers\PlanITBundle\Entity\Role $userRoles)
+    {
+        $this->userRoles->removeElement($userRoles);
+    }
 }

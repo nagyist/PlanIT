@@ -46,6 +46,7 @@ Flyers\PlanITBundle\Entity\Person:
       orphanRemoval: false
   manyToMany:
     projects:
+      cascade: [ "persist" ]
       targetEntity: Project
       joinTable:
         name: project_persons

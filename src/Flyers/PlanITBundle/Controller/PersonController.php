@@ -77,7 +77,9 @@ class PersonController extends Controller
     			$em->persist($person);
     			$em->flush();
     			
-    			return new Response(json_encode(array('message' => 'The person has been successfully registered')));
+				$response = new Response(json_encode(array('message' => 'The person has been successfully registered'))); 
+				$response->headers->set('Content-Type', 'application/json');
+				return $response;
     			
     		}
     		else 
@@ -89,7 +91,10 @@ class PersonController extends Controller
     				$tmp["message"] = $error->getMessage();
     				$ret[] = $tmp;
     			}
-    			return new Response( json_encode($ret) );
+				
+				$response = new Response(json_encode($ret)); 
+				$response->headers->set('Content-Type', 'application/json');
+				return $response;
     		}
     	}
     	else 
@@ -119,7 +124,9 @@ class PersonController extends Controller
 	    $em->remove($person);
 		$em->flush();
 		
-		return new Response('');
+		$response = new Response(json_encode(array('message' => 'Team member deleted with success'))); 
+		$response->headers->set('Content-Type', 'application/json');
+		return $response;
     }
     
 }

@@ -20,9 +20,12 @@ Flyers\PlanITBundle\Entity\Assignment:
       nullable: true
     begin:
       type: datetime
-      nullable: false
+      nullable: true
     end:
       type: datetime
+      nullable: true
+    duration:
+      type: float
       nullable: false
   oneToMany:
     children:
@@ -49,7 +52,7 @@ Flyers\PlanITBundle\Entity\Assignment:
       orphanRemoval: false
   manyToMany:
     persons:
-      cascade: [ "remove" ]
+      cascade: [ "persist" ]
       targetEntity: Person
       joinTable:
         name: assignment_persons

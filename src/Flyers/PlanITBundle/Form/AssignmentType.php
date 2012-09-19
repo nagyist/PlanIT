@@ -44,7 +44,8 @@ class AssignmentType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('begin', 'datetime',
+			->add('duration')
+            /*->add('begin', 'datetime',
             	array(
 	    			'input'  => 'datetime',
 	    			'widget' => 'single_text',
@@ -53,7 +54,7 @@ class AssignmentType extends AbstractType
 	            array(
 	    			'input'  => 'datetime',
 	    			'widget' => 'single_text',
-	            ))
+	            ))*/
             ->add('parent', 'entity', 
             	array(
             		'empty_value' => 'No preceeding',
@@ -62,14 +63,6 @@ class AssignmentType extends AbstractType
             		'class' => 'PlanITBundle:Assignment',
             		'property' => 'name',
             		'query_builder' => function(AssignmentRepository  $qb) use ($user) {
-            			return  $qb	->findAllByUserQuery($user);
-            		},
-            	))
-            ->add('project', 'entity', 
-            	array(
-            		'class' => 'PlanITBundle:Project',
-            		'property' => 'name',
-            		'query_builder' => function(ProjectRepository  $qb) use ($user) {
             			return  $qb	->findAllByUserQuery($user);
             		},
             	))
@@ -83,7 +76,15 @@ class AssignmentType extends AbstractType
             			return  $qb	->findAllByUserQuery($user);
             		},
             	))
-        ;
+			->add('project', 'entity', 
+            	array(
+            		'required' => true,
+            		'class' => 'PlanITBundle:Project',
+            		'property' => 'name',
+            		'query_builder' => function(ProjectRepository  $qb) use ($user) {
+            			return  $qb	->findAllByUserQuery($user);
+            		},
+            	));
     }
 
     public function getName()

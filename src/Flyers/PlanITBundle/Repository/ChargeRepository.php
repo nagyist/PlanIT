@@ -50,7 +50,6 @@ class ChargeRepository extends EntityRepository
 			 ->from('PlanITBundle:Charge', 'c')
 			 ->join('c.assignment', 'a')
 			 ->where('a.idassignment = :idassignment')
-			 ->orderBy('c.begin', 'ASC')
 			 ->setParameter('idassignment', $assignment->getIdassignment());
 		return $qb->getQuery()->getResult();
 	}
