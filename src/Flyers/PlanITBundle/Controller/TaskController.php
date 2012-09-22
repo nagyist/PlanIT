@@ -141,10 +141,10 @@ class TaskController extends Controller
     {
     	$em = $this->getDoctrine()->getEntityManager();
     	
-    	$task = $em->getRepository("PlanITBundle:Project")->find($idassignment);
+    	$task = $em->getRepository("PlanITBundle:Assignment")->find($idassignment);
 	    
     	if (!$task) {
-	        throw $this->createNotFoundException('No product found for id '.$idassignment);
+	        throw $this->createNotFoundException('No task found for id '.$idassignment);
 	    }
 	    
 	    $em->remove($task);

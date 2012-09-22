@@ -47,7 +47,7 @@ class AssignmentRepository extends EntityRepository
 			->from('PlanITBundle:Assignment', 'a')
 			->where('a.project = :id')
 			->leftjoin('a.parent', 'c')
-			->orderBy('c.idassignment', 'ASC')
+			->orderBy('a.parent', 'ASC')
 			->setParameter('id', $idproject);
 		return $qb->getQuery()->getResult();
 	}

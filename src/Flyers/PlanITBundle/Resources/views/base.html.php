@@ -44,10 +44,12 @@
 			<script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
 		<?php endforeach; */?>
 		
-		 
+		
+		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/raphael/raphael-min.js') ?>"></script> 
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/js/jquery-1.7.2.min.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/js/jquery-ui-1.8.16.custom.min.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/js/jquery-ui-timepicker-addon.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/fullcalendar/fullcalendar.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-gantt/jquery.fn.gantt.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/jquery.jqplot.min.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.dateAxisRenderer.min.js') ?>"></script>
@@ -57,8 +59,9 @@
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.canvasTextRenderer.min.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.highlighter.min.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.trendline.min.js') ?>"></script>
-		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/fullcalendar/fullcalendar.js') ?>"></script>
+		
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/initialize.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/raphael/pert.js') ?>"></script>
 		
 		
     </head>

@@ -17,35 +17,12 @@
 		    	</table>
     		</form>
     		
-    		<div id="chartdiv" style="height:550px;width:100%;"></div>
+    		<div id="pert" style="height:550px;width:100%;overflow:auto;"></div>
     	</div>
     	<?php if (isset($graphic) && !empty($graphic)) : ?>
     	<script type="text/javascript">
-    		$.jqplot('chartdiv', <?php echo $graphic; ?>, {
-    			axes:{
-    				xaxis:{
-    					renderer:$.jqplot.DateAxisRenderer,
-    					/*tickRenderer: $.jqplot.CanvasAxisTickRenderer*/
-    				},
-    				yaxis:{
-    					min: 0,
-    					tickOptions:{
-			            	formatString:'%.1f days'
-			            }
-    				}
-    			},
-    			highlighter: {
-    				show: true
-    			},
-    			fillBetween: {
-		            // series1: Required, if missing won't fill.
-		            series1: 0,
-		            // series2: Required, if  missing won't fill.
-		            series2: 1,
-		            // color: Optional, defaults to fillColor of series1.
-		            color: "rgba(227, 167, 111, 0.7)",
-		        },
-    		});
+    		var project = <?php echo $graphic; ?>;
+    		Raphael('pert').pertChart(project,8);
     	</script>
     	<?php endif; ?>
 <?php $view['slots']->stop() ?>

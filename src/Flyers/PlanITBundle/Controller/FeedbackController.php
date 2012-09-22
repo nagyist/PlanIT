@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
- * � Copyright 2012 BEN GHMISS Nassim �  
+ * Copyright 2012 BEN GHMISS Nassim 
  * 
  */
 
@@ -85,14 +85,43 @@ class FeedbackController extends Controller
     	
     	$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
     	
-    	if (is_null($idproject))
+    	if ($request->getMethod() == 'POST')
     	{
-    		return $this->redirect($this->generateUrl('PlanITBundle_homepage'));
-    	}
+    		$idproject = $request->request->get('idproject');
+			
+			if (!is_null($idproject))
+	    	{
+				return $this->redirect($this->generateUrl('PlanITBundle_pertFeedback', array('idproject' => $idproject)));
+			}
+			else
+	    	{
+	    		return $this->render('PlanITBundle:Default:pert.html.php', array("projects"=>$projects, "idproject" => $idproject));
+	    	}
+		}
+		
+		$project = $this->getDoctrine()->getRepository("PlanITBundle:Project")->find($idproject);
+		
+		$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByProject($idproject);
+		
+		$graph = array();
+		$graph['begin'] = $project->getBegin()->format('r');
+		$graph['end'] = $project->getEnd()->format('r');
+		
+		if ( count($tasks) > 0 )
+		{
+			$json_tasks = array();
+			foreach( $tasks as $task ) {
+				$json_tasks['id'] = $task->getIdassignment();
+				$json_tasks['name'] = $task->getName();
+				$json_tasks['duration'] = $task->getDuration();
+				$json_tasks['parent'] = ( $task->getParent() ) ? $task->getParent()->getIdassignment() : NULL;
+				
+				$graph['tasks'][] = $json_tasks;
+			}
+		}
 		
 		
-		
-        return $this->redirect($this->generateUrl('PlanITBundle_homepage'));
+      	return $this->render('PlanITBundle:Default:pert.html.php', array("projects"=>$projects, "idproject" => $idproject, "graphic" => json_encode($graph)));
     }
 	
     /**
@@ -122,44 +151,36 @@ class FeedbackController extends Controller
 		}
 
 		$project = $this->getDoctrine()->getRepository("PlanITBundle:Project")->find($idproject);
+
+		$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByProject($idproject);
 		
 		$graph = array();
 		
-		$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByProject($idproject);
 		if ( count($tasks) > 0 )
 		{
 			$task_total_duration = 0;
-			//$task_begin = clone $task_iterator;
 			foreach($tasks as $task) {
 				$graph_task = array();
 				$task_duration = $task->getDuration();
-				//$diff_task = $task->getBegin()->diff($task->getEnd());
 				$task_total_duration += $task_duration;
-				//$total_estimated = $task_begin->diff($task_iterator);
-				//$total_estimated_charge = $total_estimated->h + $total_estimated->days *24;
 			}
 			$graph_task[] = array($project->getBegin()->format('Y-m-d H:i:s'), $task_total_duration);
 			
 			foreach($tasks as $task) {
 				$charges = $em->getRepository("PlanITBundle:Charge")->findAllByAssignment($task);
-				//$charge_begin = clone $task_iterator;
 				foreach ($charges as $charge) {
-					//$diff_charge = $this->durationToInterval($charge->getDuration());
-					//$task_iterator->sub($diff_charge);
 					$charge_total = $task_total_duration - $charge->getDuration();
-					//$total_done = $charge_begin->diff($task_iterator);
-					//$total_charge = $total_estimated_charge - ($total_done->h + $total_done->days * 24);
-					
 					$graph_task[] = array($charge->getDate()->format('Y-m-d H:i:s'), $charge_total);
 				}
 			}
 			$graph_task[] = array($project->getEnd()->format('Y-m-d H:i:s'), 0);
 			
-			$graph[] = $graph_task;
+			$graph_project = array(array($project->getBegin()->format('Y-m-d H:i:s'), $task_total_duration),array($project->getEnd()->format('Y-m-d H:i:s'), 0));
+			
+			$graph = array($graph_task, $graph_project);
 		}
-		$graph_json = json_encode($graph);
 		
-        return $this->render('PlanITBundle:Default:burndown.html.php', array("projects"=>$projects, "idproject" => $idproject, "graphic" => $graph_json));
+        return $this->render('PlanITBundle:Default:burndown.html.php', array("projects"=>$projects, "idproject" => $idproject, "graphic" => json_encode($graph)));
     }
 
 	private function durationToInterval($duration) {
