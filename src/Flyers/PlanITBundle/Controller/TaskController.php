@@ -150,7 +150,7 @@ class TaskController extends Controller
 	    $em->remove($task);
 		$em->flush();
 		
-		$response = new Response(json_encode(array('message' => 'Task deleted with success'))); 
+		$response = new Response('Task deleted with success'); 
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
     }

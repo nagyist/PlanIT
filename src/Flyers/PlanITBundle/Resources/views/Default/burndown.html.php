@@ -9,6 +9,7 @@
 		    			<td>
 			    			<select id="idproject" name="idproject" class="autosubmit">
 				    			<?php foreach ($projects as $p) : ?>
+				    				<?php if ($p->getIdproject() == $idproject) $current_project = clone $p; ?>
 				    			<option <?php echo ($p->getIdproject() == $idproject) ? 'selected="selected"' : '' ;?> value="<?php echo $p->getIdproject(); ?>"><?php echo $p->getName(); ?></option>
 				    			<?php endforeach; ?>
 				    		</select>
@@ -24,8 +25,11 @@
     		$.jqplot('chartdiv', <?php echo $graphic; ?>, {
     			axes:{
     				xaxis:{
+    					min: '<?php echo $current_project->getBegin()->format("Y-m-d"); ?>',
+    					max: '<?php echo $current_project->getEnd()->format("Y-m-d"); ?>',
     					renderer:$.jqplot.DateAxisRenderer,
-    					/*tickRenderer: $.jqplot.CanvasAxisTickRenderer*/
+    					tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+    					tickInterval:'2 day',
     				},
     				yaxis:{
     					min: 0,
@@ -34,6 +38,12 @@
 			            }
     				}
     			},
+    			series:[{
+	    				
+    				},
+    				{
+    					showMarker:false
+					}],
     			highlighter: {
     				show: true
     			},

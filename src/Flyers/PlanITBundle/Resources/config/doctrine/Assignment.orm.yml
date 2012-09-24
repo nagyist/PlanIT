@@ -29,36 +29,41 @@ Flyers\PlanITBundle\Entity\Assignment:
       nullable: false
   oneToMany:
     children:
+      onDelete: CASCADE
       targetEntity: Assignment
       mappedBy: parent
-      cascade: [ "remove" ]
+      cascade: [ "detach" ]
   manyToOne:
     parent:
       nullable: true
       targetEntity: Assignment
-      cascade: [ "persist" ]
+      cascade: [ "detach" ]
       inversedBy: children
       joinColumns:
         parent:
-           referencedColumnName: idassignment
+          onDelete: CASCADE
+          referencedColumnName: idassignment
     project:
       targetEntity: Project
-      cascade: [ "persist" ]
+      cascade: [ "detach" ]
       mappedBy: null
       inversedBy: null
       joinColumns:
         project:
+          onDelete: CASCADE
           referencedColumnName: idproject
       orphanRemoval: false
   manyToMany:
     persons:
-      cascade: [ "persist" ]
+      cascade: [ "detach" ]
       targetEntity: Person
       joinTable:
         name: assignment_persons
         joinColumns:
           idassignment:
+            onDelete: CASCADE
             referencedColumnName: idassignment
         inverseJoinColumns:
           idperson:
+            onDelete: CASCADE
             referencedColumnName: idperson

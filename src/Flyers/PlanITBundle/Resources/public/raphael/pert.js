@@ -8,6 +8,15 @@ Number.prototype.leftZeroPad = function(numZeros) {
         return zeroString+n;
 };
 
+Raphael.fn.arrow = function (x1, y1, x2, y2, size) {
+	var angle = Math.atan2(x1-x2,y2-y1);
+	angle = (angle / (2 * Math.PI)) * 360;
+	var arrowPath = this.path("M" + x2 + " " + y2 + " L" + (x2  - size) + " " + (y2  - size) + " L" + (x2  - size)  + " " + (y2  + size) + " L" + x2 + " " + y2 ).attr("fill","black").rotate((90+angle),x2,y2);
+	var linePath = this.path("M" + x1 + " " + y1 + " L" + x2 + " " + y2);
+	return [linePath,arrowPath];
+};
+
+
 Raphael.fn.pertChart = function (p, wd) {
     var paper = this;
     var taskCountParents = function ( t, ts, count ) {
@@ -44,18 +53,16 @@ Raphael.fn.pertChart = function (p, wd) {
         var b = r.rect(x, y, w, h).toBack();
         var l1 = r.path("M"+(x)+" "+(y+30)+"H"+(x+w));
         var l2 = r.path("M"+(x)+" "+(y+60)+"H"+(x+w));
-        var l3 = r.path("M"+(x)+" "+(y+90)+"H"+(x+w));
         if ( c ) {
             b.attr({stroke: "#ff0000"});
             l1.attr({stroke: "#ff0000"});
             l2.attr({stroke: "#ff0000"});
-            l3.attr({stroke: "#ff0000"});
         } else {
             b.attr({stroke: "#000000"});
             l1.attr({stroke: "#000000"});
             l2.attr({stroke: "#000000"});
-            l3.attr({stroke: "#000000"});
         }
+        
         //Draw informations
         r.text(x+10, y+15, "ID : "+t.id)
             .attr(
@@ -90,7 +97,8 @@ Raphael.fn.pertChart = function (p, wd) {
     }
     
     var tasksShow = function (r, p ) {
-    
+    	if (!p) return;
+    	if (!p.tasks) return
         var daysToHours = function(duration, work_day_duration) {
             var days = Math.floor(duration);
             var hours10 = (duration - days) * work_day_duration;
@@ -104,7 +112,7 @@ Raphael.fn.pertChart = function (p, wd) {
     
         
         var w = 220;
-        var h = 120;
+        var h = 90;
         var ts = p.tasks;
         var onp = taskCountParents( ts[ts.length-1], ts );
         
@@ -174,9 +182,10 @@ Raphael.fn.pertChart = function (p, wd) {
                 j = 0;
                 onp = np;
             }
-            taskDisplay(r,t,10+(np+1)*(w+20),10+j*(h+20),w, h, dtbs[i], dtes[i], cs[i]);
+            taskDisplay(r,t,10+(np+1)*(w+20),10+j*(h+20),w,h, dtbs[i], dtes[i], cs[i]);
+            r.arrow(10+(20*(np))+w*(np+1),10+(h/2),(w+20)*(np+1)+10,10+(h/2)+(j*h),4);
         }
-        
+        r.arrow(30+w+(20*(np))+w*(np+1),10+(h/2),10+(onp+2)*(w+20),10+(h/2),4);
         var et = {id: 0,
             name: 'End',
             duration: 0,

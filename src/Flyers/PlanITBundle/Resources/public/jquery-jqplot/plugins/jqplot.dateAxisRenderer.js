@@ -482,7 +482,7 @@
 
                 min = Math.floor(min/tempti) * tempti;
                 min = new $.jsDate(min);
-                min = min.getTime() + min.getUtcOffset();
+                min = min.getTime();
 
                 nttarget = Math.ceil((max - min) / tempti) + 1;
                 this.min = min;

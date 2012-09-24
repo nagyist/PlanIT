@@ -25,22 +25,25 @@ Flyers\PlanITBundle\Entity\Charge:
   manyToOne:
     assignment:
       targetEntity: Assignment
-      cascade: [ "persist" ]
+      cascade: [ "detach" ]
       mappedBy: null
       inversedBy: null
       joinColumns:
         project:
+          onDelete: CASCADE
           referencedColumnName: idassignment
       orphanRemoval: false
   manyToMany:
     persons:
       targetEntity: Person
-      cascade: [ "persist" ]
+      cascade: [ "detach" ]
       joinTable:
         name: charge_persons
         joinColumns:
           idassignment:
+            onDelete: CASCADE
             referencedColumnName: idcharge
         inverseJoinColumns:
           idperson:
+            onDelete: CASCADE
             referencedColumnName: idperson

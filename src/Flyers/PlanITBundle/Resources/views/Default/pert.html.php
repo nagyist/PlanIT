@@ -2,7 +2,7 @@
 
 <?php $view['slots']->start('body') ?>
     	<div id="content">
-    		<form id="form_burndown" action="<?php echo $view['router']->generate('PlanITBundle_burndownFeedback'); ?>" method="post">
+    		<form id="form_pert" action="<?php echo $view['router']->generate('PlanITBundle_pertFeedback'); ?>" method="post">
 	    		<table width="100%" border="0" cellspacing="5">
 		    		<tr>
 		    			<td style="width: 150px;"><label for="idproject">Choose your project :</label></td>

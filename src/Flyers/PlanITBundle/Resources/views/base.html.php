@@ -52,7 +52,7 @@
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/fullcalendar/fullcalendar.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-gantt/jquery.fn.gantt.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/jquery.jqplot.min.js') ?>"></script>
-		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.dateAxisRenderer.min.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.dateAxisRenderer.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.categoryAxisRenderer.min.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js') ?>"></script>
@@ -112,7 +112,7 @@
 	    <?php $view['slots']->output('body') ?>
 	    <p style="height:30px;">&nbsp;</p>
 	    <ul id="footer_planit">
-	        <li><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_contact'); ?>" title="Contact us for any question" class="dialog">Contact</a></li>
+	        <li><a rel="section" data-blabel="Send" href="<?php echo $view['router']->generate('PlanITBundle_contact'); ?>" title="Contact us for any question" class="dialog">Contact</a></li>
 	        <li><a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_donate'); ?>" title="Donate to help project" class="dialog">Donate</a></li>
 	        <li><a target="_blank" href="http://github.com/FlyersWeb/PlanIT" title="Contribute">Contribute</a></li>
 	        <li><a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_about'); ?>" title="About the author" class="dialog">About</a></li>

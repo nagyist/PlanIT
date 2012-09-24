@@ -18,7 +18,7 @@
 			<td align="center">
 				<a class="dialog" title="Edit an employee" rel="section" href="<?php echo $view['router']->generate('PlanITBundle_editPerson', array('idperson' => $person->getIdperson())); ?>">Edit</a>
 				&nbsp;|&nbsp;
-				<a href="<?php echo $view['router']->generate('PlanITBundle_delPerson', array('idperson' => $person->getIdperson())); ?>">Delete</a>
+				<a class="dialog" rel="help" title="Employee deleted" href="<?php echo $view['router']->generate('PlanITBundle_delPerson', array('idperson' => $person->getIdperson())); ?>">Delete</a>
 			</td>
 		</tr>
 		<?php endforeach; ?>

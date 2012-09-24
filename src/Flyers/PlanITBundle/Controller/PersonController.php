@@ -124,7 +124,7 @@ class PersonController extends Controller
 	    $em->remove($person);
 		$em->flush();
 		
-		$response = new Response(json_encode(array('message' => 'Team member deleted with success'))); 
+		$response = new Response('Team member deleted with success'); 
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
     }

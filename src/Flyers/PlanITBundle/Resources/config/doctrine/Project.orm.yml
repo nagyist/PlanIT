@@ -30,10 +30,11 @@ Flyers\PlanITBundle\Entity\Project:
   manyToOne:
     user:
       targetEntity: User
-      cascade: [ "persist" ]
+      cascade: [ "detach" ]
       mappedBy: null
       inversedBy: null
       joinColumns:
         user:
+          onDelete: CASCADE
           referencedColumnName: id
       orphanRemoval: false

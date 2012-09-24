@@ -67,12 +67,12 @@ class ProjectController extends Controller
 		    $em->remove($project);
 			$em->flush();
 		} catch(Exception $e) {
-			$response = new Response(json_encode(array('message' => 'Unable to delete the project'))); 
+			$response = new Response('Unable to delete the project'); 
 			$response->headers->set('Content-Type', 'application/json');
 			return $response;
 		}
 		
-		$response = new Response(json_encode(array('message' => 'Project deleted with success'))); 
+		$response = new Response('Project deleted with success'); 
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
     }

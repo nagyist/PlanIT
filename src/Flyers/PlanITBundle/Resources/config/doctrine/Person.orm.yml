@@ -37,7 +37,7 @@ Flyers\PlanITBundle\Entity\Person:
   manyToOne:
     job:
       targetEntity: Job
-      cascade: [ "persist" ]
+      cascade: [ "detach" ]
       mappedBy: null
       inversedBy: null
       joinColumns:
@@ -46,13 +46,15 @@ Flyers\PlanITBundle\Entity\Person:
       orphanRemoval: false
   manyToMany:
     projects:
-      cascade: [ "persist" ]
+      cascade: [ "detach" ]
       targetEntity: Project
       joinTable:
         name: project_persons
         joinColumns:
           idperson:
+            onDelete: CASCADE
             referencedColumnName: idperson
         inverseJoinColumns:
           idproject:
+            onDelete: CASCADE
             referencedColumnName: idproject
