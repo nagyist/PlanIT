@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php $view['slots']->output('title', 'PlanIT - plan your projects') ?></title>
-        <?php /*foreach ($view['assetic']->stylesheets(
+        <?php foreach ($view['assetic']->stylesheets(
 		    	array(
 		    		'bundles/planit/jquery-ui/css/flick/jquery-ui-1.8.16.custom.css',
 		    		'bundles/planit/planit-style.css',
@@ -12,28 +12,21 @@
 		    	array('output'=>'css/base.css')
 		      ) as $url): ?>
 			<link rel="stylesheet" href="<?php echo $view->escape($url) ?>" type="text/css" media="screen" />
-		<?php endforeach;  */?>
+		<?php endforeach; ?>
 		
-		<link href="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/css/flick/jquery-ui-1.8.16.custom.css') ?>" rel="stylesheet" type="text/css" />
-		<link href="<?php echo $view['assets']->getUrl('bundles/planit/planit-style.css') ?>" rel="stylesheet" type="text/css" />
-				
-        <?php /*foreach ($view['assetic']->javascripts(
+        <?php foreach ($view['assetic']->javascripts(
 		    array(
 		    	'bundles/planit/jquery-ui/js/jquery-1.6.2.min.js',
 		    	'bundles/planit/jquery-ui/js/jquery-ui-1.8.16.custom.min.js',
 		        'bundles/planit/video/jwplayer.js',
+		        'bundles/planit/jquery-jqplot/jquery.jqplot.min.js',
 		    	'bundles/planit/initialize.js',
 		    ),
 		    array(),
 		    array('output'=>'js/base.js')
 		    ) as $url): ?>
 			<script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
-		<?php endforeach; */?>
-		
-		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/js/jquery-1.7.2.min.js') ?>"></script>
-		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/js/jquery-ui-1.8.16.custom.min.js') ?>"></script>
-		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/video/jwplayer.js') ?>"></script>
-		<script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/initialize.js') ?>"></script>
+		<?php endforeach; ?>
 		
     </head>
     <body>

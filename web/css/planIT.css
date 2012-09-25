@@ -1763,14 +1763,24 @@ tr.grid-row-cells td {
 	width: 62%;
 	z-index: 2;
 }
+#footer_planit {
+	background-color: rgb(66,33,11);
+	list-style: none;	
+	margin-top: 0.3em;
+	padding: 0.5em 0.5em;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: 2;
+}
 
-#footer li {
+#footer li, #footer_planit li {
 	color: white;
 	float: left;
 	margin: 0 0.8em;
 }
 
-#footer li a {
+#footer li a, #footer_planit li a {
 	color: white;
 	text-decoration:none;
 }

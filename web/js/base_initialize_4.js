@@ -1,4 +1,7 @@
 $(document).ready( function () {
+	
+	$.jqplot.config.enablePlugins = true;
+	
 	var tmpDate = new Date;
 	var uniqid = tmpDate.getTime();
 	var objmodal = new Array;
@@ -6,7 +9,7 @@ $(document).ready( function () {
 	$(".dialog").live( "click", function(e) {
 		e.preventDefault();
 		objmodal[uniqid] = $(this).attr("href");
-		openDialog($(this).attr("href"),$(this).attr("title"),$(this).attr("rel"),uniqid);
+		openDialog($(this).attr("href"),$(this).attr("title"),$(this).attr("rel"),uniqid,$(this).attr("data-blabel"));
 		uniqid++;
 		return false;
 	});
@@ -50,19 +53,24 @@ $(document).ready( function () {
 	
 	
 	
-	function openDialog(url, t, kind, id) {
+	function openDialog(url, t, kind, id, blabel) {
+		var label = blabel;
 		var button = {};
 		if (kind == "help"){
-			button = { "Close": function() { $(this).dialog("close"); } };
+			if (!blabel) label = "Close";
+			else label = blabel;
+			button[label] = function() { $(this).dialog("close"); } ;
 		} else {
-			button = { "Save": function() { 
+			if (!blabel) label = "Save";
+			else label = blabel;
+			button[label] = function() { 
 				$.ajax({
 					type : "POST",
 					url: $(".form").last().attr("action"),
 					data: $(".form").last().serialize(),
 					context: $(this),
 					success: function(e) { 
-						var errors = JSON.parse(e);
+						var errors = e;
 						if (errors.length > 0)	{
 							var msg = '';
 							for ( id in errors)	{
@@ -77,7 +85,7 @@ $(document).ready( function () {
 						$('<div id="errors" style="display:none;">Error while submitting form, please try again</div>').dialog({title:'Errors',modal:true, buttons: {Ok:function(){$(this).dialog("close");}}});
 					}
 				});
-			} };
+			};
 		}
 		
 		var dialog = $('<div class="modals" id="'+id+'" style="display:none;"></div>').appendTo("body");

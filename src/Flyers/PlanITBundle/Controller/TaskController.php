@@ -35,8 +35,8 @@ use Flyers\PlanITBundle\Form\UserType;
 use Flyers\PlanITBundle\Entity\Assignment;
 use Flyers\PlanITBundle\Form\AssignmentType;
 
-define('WORK_DAY_DURATION', 8);
-define('WORK_DAY_BEGINNING', 'T08H00M');
+//define('WORK_DAY_DURATION', 8);
+//define('WORK_DAY_BEGINNING', 'T08H00M');
 
 class TaskController extends Controller
 {
