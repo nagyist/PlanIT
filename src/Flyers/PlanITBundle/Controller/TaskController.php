@@ -35,11 +35,12 @@ use Flyers\PlanITBundle\Form\UserType;
 use Flyers\PlanITBundle\Entity\Assignment;
 use Flyers\PlanITBundle\Form\AssignmentType;
 
-//define('WORK_DAY_DURATION', 8);
-//define('WORK_DAY_BEGINNING', 'T08H00M');
 
 class TaskController extends Controller
 {
+	
+	const WORK_DAY_DURATION = 8;
+	const WORK_DAY_BEGINNING = 'T08H00M';
 	
     /**
     * @Secure(roles="ROLE_USER")
@@ -85,14 +86,14 @@ class TaskController extends Controller
 					}
 				} else {
 					$date_begin = $project->getBegin();
-					$interval = new \DateInterval('P0Y0D'.WORK_DAY_BEGINNING);
+					$interval = new \DateInterval('P0Y0D'.self::WORK_DAY_BEGINNING);
 					$date_begin->add($interval);
 					$task->setBegin( $date_begin );
 				}
 				
 				$duration = $task->getDuration();
 				$days = floor($duration);
-				$hours_base10 = ( round($duration,2) - $days ) * WORK_DAY_DURATION;
+				$hours_base10 = ( round($duration,2) - $days ) * self::WORK_DAY_DURATION;
 				$hours = floor( $hours_base10 );
 				$minutes = ( $hours_base10 - $hours ) * 60;
 				
@@ -103,8 +104,10 @@ class TaskController extends Controller
 				
     			$em->persist($task);
     			$em->flush();
+				
+				$ret['notices'][] = 'The task has been successfully saved';
     			
-    			$response = new Response(json_encode(array('message' => 'Your project has been successfully saved'))); 
+    			$response = new Response(json_encode($ret)); 
 				$response->headers->set('Content-Type', 'application/json');
 				return $response;
     		}
@@ -115,7 +118,7 @@ class TaskController extends Controller
     			foreach($errors as $error){
 					$tmp["field"] = $error->getPropertyPath();
     				$tmp["message"] = $error->getMessage();
-    				$ret[] = $tmp;
+    				$ret['errors'][] = $tmp;
     			}
 				
 				$response = new Response(json_encode($ret)); 
@@ -143,13 +146,17 @@ class TaskController extends Controller
     	
     	$task = $em->getRepository("PlanITBundle:Assignment")->find($idassignment);
 	    
-    	if (!$task) {
-	        throw $this->createNotFoundException('No task found for id '.$idassignment);
-	    }
-	    
-	    $em->remove($task);
-		$em->flush();
-		
+		try {
+	    	if (!$task) {
+		        throw $this->createNotFoundException('No task found for id '.$idassignment);
+		    }
+		    $em->remove($task);
+			$em->flush();
+		} catch (Exception $e) {
+			$response = new Response($e->getMessage()); 
+			$response->headers->set('Content-Type', 'application/json');
+			return $response;
+		}
 		$response = new Response('Task deleted with success'); 
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;

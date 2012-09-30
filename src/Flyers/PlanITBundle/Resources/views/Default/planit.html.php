@@ -14,12 +14,14 @@
 			events: "<?php echo $view['router']->generate('PlanITBundle_jsonevents'); ?>",
 			axisFormat: 'HH(:mm)',
 			timeFormat: 'H:mm',
-			height: 550,
+			minTime: '08:00',
+			maxTime: '20:00',
+			height: 570,
 			editable: true,
 			theme: true,
 			weekends: true,
 			allDaySlot: false,
-			defaultView: 'agendaDay',
+			defaultView: 'agendaWeek',
 			eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
 				$.ajax({
 					type : "POST",
@@ -35,6 +37,21 @@
 					data: {'id':event.id, 'end': event.end.toString()},
 					error: function(xhr, status) { revertFunc(); }
 				});
+		    },
+		    eventRender: function(event, element) {
+		        element.qtip({
+		            content: event.tooltip,
+		            style: { 
+						name: 'green',
+						tip: 'bottomLeft',
+					},
+					position: {
+						corner: {
+							target: 'topLeft',
+							tooltip: 'bottomLeft'
+						}
+					}
+		        });	
 		    }
 		});
 		</script>

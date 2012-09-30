@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
- * � Copyright 2012 BEN GHMISS Nassim �  
+ * Copyright 2012 BEN GHMISS Nassim
  * 
  */
 
@@ -61,7 +61,9 @@ class JobController extends Controller
     			$em->persist($job);
     			$em->flush();
     			
-				$response = new Response(json_encode(array('message' => 'The job has been successfully created'))); 
+				$ret['notices'][] = 'The job has been successfully created';
+				
+				$response = new Response(json_encode($ret)); 
 				$response->headers->set('Content-Type', 'application/json');
 				return $response;
     		}
@@ -72,7 +74,7 @@ class JobController extends Controller
     			foreach($errors as $error){
 					$tmp["field"] = $error->getPropertyPath();
     				$tmp["message"] = $error->getMessage();
-    				$ret[] = $tmp;
+    				$ret['errors'][] = $tmp;
     			}
 
 				$response = new Response(json_encode($ret)); 

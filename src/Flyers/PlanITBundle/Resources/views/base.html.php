@@ -35,6 +35,7 @@
 		    	'bundles/planit/fullcalendar/fullcalendar.js',
 		    	'bundles/planit/raphael/raphael-min.js',
 		    	'bundles/planit/raphael/pert.js',
+		    	'bundles/planit/qtip/jquery.qtip-1.0.0-rc3.min.js',
 		    	'bundles/planit/initialize.js'
 		    ),
 		    array(),

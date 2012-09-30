@@ -1,11 +1,11 @@
 <?php
 ?>
 <form id="contact" name="contact" method="post" class="form" action="<?php echo $view['router']->generate('PlanITBundle_contact'); ?>">
-	<!--<table width="100%" border="0" cellspacing="5">
+	<table width="100%" border="0" cellspacing="5">
 	  <tr>
-	    <td><label for="name">Your name</label></td>
+	    <td style="width:25%;"><label for="name">Your name</label></td>
 	    <td>
-	      <input type="text" name="name" id="name" />
+	      <?php echo $view['form']->widget($form['name']) ?>
 	    </td>
 	  </tr>
 	  <tr>
@@ -14,7 +14,8 @@
 	  <tr>
 	    <td><label for="email">Contact email</label></td>
 	    <td>
-	      <input type="text" name="email" id="email" /></td>
+	      <?php echo $view['form']->widget($form['email']) ?>
+	    </td>
 	  </tr>
 	  <tr>
 	    <td colspan="2">&nbsp;</td>
@@ -22,7 +23,8 @@
 	  <tr>
 	    <td><label for="subject">Subject of the message</label></td>
 	    <td>
-	      <input type="text" name="subject" id="subject" /></td>
+	      <?php echo $view['form']->widget($form['subject']) ?>
+	    </td>
 	  </tr>
 	  <tr>
 	    <td colspan="2">&nbsp;</td>
@@ -35,9 +37,8 @@
 	  </tr>
 	  <tr>
 	    <td colspan="2">
-	      <textarea name="message" id="message" cols="45" rows="5"></textarea></td>
+	      <?php echo $view['form']->widget($form['message']) ?>
+	    </td>
 	  </tr>
-	  -->
-	  <?php echo $view['form']->widget($form) ?>
 	</table>
 </form>

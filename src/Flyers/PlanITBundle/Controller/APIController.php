@@ -63,13 +63,16 @@ class APIController extends Controller
     		
     		foreach ($tasks as $task)
     		{
-    		
-	    		$vals["id"]		= $task->getIdassignment();
-	    		$vals["title"] 	= $task->getProject()->getName().' : '.$task->getName();
-	    		$vals["start"] 	= $task->getBegin()->format('Y-m-d H:i');
-	    		$vals["end"]   	= $task->getEnd()->format('Y-m-d H:i');
-	    		$vals["color"]  = $colors[$idx];
-	    		$vals["allDay"] = false;
+    			$description = $task->getDescription();
+				$title = "Project : ".$task->getProject()->getName()."\nTask : ".$task->getName()."\n\n".$description;
+				
+	    		$vals["id"]				= $task->getIdassignment();
+	    		$vals["title"] 			= $title;
+	    		$vals["tooltip"] 		= (!empty($description)) ? $description : '' ;
+	    		$vals["start"] 			= $task->getBegin()->format('Y-m-d H:i');
+	    		$vals["end"]   			= $task->getEnd()->format('Y-m-d H:i');
+	    		$vals["color"]  		= $colors[$idx];
+	    		$vals["allDay"] 		= false;
 	    		
 	    		$return[] = $vals;
 	    		

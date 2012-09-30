@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
- * � Copyright 2012 BEN GHMISS Nassim �  
+ * Copyright 2012 BEN GHMISS Nassim 
  * 
  */
 
@@ -62,12 +62,14 @@ class ProjectController extends Controller
 	    try
 	    {
 	    	if (!$project) {
-		        throw $this->createNotFoundException('No product found for id '.$idproject);
+		        throw $this->createNotFoundException('No project found for id '.$idproject);
 		    }
 		    $em->remove($project);
 			$em->flush();
+		
 		} catch(Exception $e) {
-			$response = new Response('Unable to delete the project'); 
+			
+			$response = new Response($e->getMessage()); 
 			$response->headers->set('Content-Type', 'application/json');
 			return $response;
 		}
@@ -103,7 +105,9 @@ class ProjectController extends Controller
     			$em->persist($project);
     			$em->flush();
 				
-				$response = new Response(json_encode(array('message' => 'Your project has been successfully saved'))); 
+				$ret['notices'][] = 'Your project has been successfully saved';
+				
+				$response = new Response(json_encode($ret)); 
 				$response->headers->set('Content-Type', 'application/json');
     			return $response;
     		}
@@ -114,7 +118,7 @@ class ProjectController extends Controller
     			foreach($errors as $error){
 					$tmp["field"] = $error->getPropertyPath();
     				$tmp["message"] = $error->getMessage();
-    				$ret[] = $tmp;
+    				$ret['errors'][] = $tmp;
     			}
 				$response = new Response(json_encode($ret) ); 
 				$response->headers->set('Content-Type', 'application/json');

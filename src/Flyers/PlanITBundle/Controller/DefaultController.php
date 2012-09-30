@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
- * � Copyright 2012 BEN GHMISS Nassim �  
+ * Copyright 2012 BEN GHMISS Nassim 
  * 
  */
 
@@ -91,7 +91,7 @@ class DefaultController extends Controller
 				foreach ($errorList as $error) {
 					$tmp["field"] = substr($error->getPropertyPath(), 1, -1);
     				$tmp["message"] = $error->getMessageTemplate();
-					$ret[] = $tmp;
+					$ret['errors'][] = $tmp;
 				}
 				
 				$response = new Response(json_encode($ret));
@@ -101,19 +101,21 @@ class DefaultController extends Controller
 			
 			try {
 	    		$message = \Swift_Message::newInstance()
+							->setContentType('text/html')
 	    					->setFrom($data['email'])
 	    					->setSubject($data['subject'])
 	    					->setTo('contact@flyers-web.org')
 	    					->setBody($data['name']."<br />".$data['message']);
     			$this->get('mailer')->send($message);
 			} catch (Exception $e) {
-				$response = new Response(json_encode($e->getMessage()));
+				$ret['errors']['swift'] = $e->getMessage();
+				$response = new Response(json_encode($ret));
 	    		$response->headers->set('Content-Type', 'application/json');
 				return $response;
 			}
     		
-			$return = "Message envoyé avec succès";
-			$response = new Response(json_encode($return));
+			$ret['notices'][] = "Email sended successfully";
+			$response = new Response(json_encode($ret));
 	    	$response->headers->set('Content-Type', 'application/json');
 	    	return $response;
     	}

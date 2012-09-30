@@ -40,11 +40,11 @@ use Flyers\PlanITBundle\Form\JobType;
 use Flyers\PlanITBundle\Entity\Person;
 use Flyers\PlanITBundle\Form\PersonType;
 
-define('WORK_DAY_DURATION', 8);
-define('WORK_DAY_BEGINNING', 'T08H00M');
 
 class FeedbackController extends Controller
 {
+
+	const WORK_DAY_DURATION = 8;
 	
 	/**
     * @Secure(roles="ROLE_USER")
@@ -56,6 +56,9 @@ class FeedbackController extends Controller
     	$user = $this->get('security.context')->getToken()->getUser();
     	
     	$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
+		
+		if ( $idproject == 0 )
+				$idproject = $projects[0]->getIdproject();
     	
 		if ($request->getMethod() == 'POST')
     	{
@@ -84,6 +87,9 @@ class FeedbackController extends Controller
     	$user = $this->get('security.context')->getToken()->getUser();
     	
     	$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
+		
+		if ( $idproject == 0 )
+				$idproject = $projects[0]->getIdproject();
     	
     	if ($request->getMethod() == 'POST')
     	{
@@ -135,6 +141,8 @@ class FeedbackController extends Controller
 		
 		$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
 		
+		if ( $idproject == 0 )
+				$idproject = $projects[0]->getIdproject();
 		
 		if ($request->getMethod() == 'POST')
     	{
@@ -185,7 +193,7 @@ class FeedbackController extends Controller
 
 	private function durationToInterval($duration) {
 		$days = floor($duration);
-		$hours_base10 = ( round($duration,2) - $days ) * WORK_DAY_DURATION;
+		$hours_base10 = ( round($duration,2) - $days ) * self::WORK_DAY_DURATION;
 		$hours = floor( $hours_base10 );
 		$minutes = ( $hours_base10 - $hours ) * 60;
 		

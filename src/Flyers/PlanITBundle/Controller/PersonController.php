@@ -77,7 +77,9 @@ class PersonController extends Controller
     			$em->persist($person);
     			$em->flush();
     			
-				$response = new Response(json_encode(array('message' => 'The person has been successfully registered'))); 
+				$ret['notices'][] = 'The person has been successfully registered';
+				
+				$response = new Response(json_encode($ret)); 
 				$response->headers->set('Content-Type', 'application/json');
 				return $response;
     			
@@ -89,7 +91,7 @@ class PersonController extends Controller
     			foreach($errors as $error){
 					$tmp["field"] = $error->getPropertyPath();
     				$tmp["message"] = $error->getMessage();
-    				$ret[] = $tmp;
+    				$ret['errors'][] = $tmp;
     			}
 				
 				$response = new Response(json_encode($ret)); 
@@ -117,13 +119,19 @@ class PersonController extends Controller
     	
     	$person = $em->getRepository("PlanITBundle:Person")->find($idperson);
 	    
-    	if (!$person) {
-	        throw $this->createNotFoundException('No team member found for id '.$idperson);
-	    }
-	    
-	    $em->remove($person);
-		$em->flush();
-		
+		try
+	    {
+	    	if (!$person) {
+		        throw $this->createNotFoundException('No team member found for id '.$idperson);
+		    }
+		    $em->remove($person);
+			$em->flush();
+		} catch(Exception $e) {
+			$response = new Response($e->getMessage()); 
+			$response->headers->set('Content-Type', 'application/json');
+			return $response;
+		}
+
 		$response = new Response('Team member deleted with success'); 
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;

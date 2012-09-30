@@ -109,19 +109,19 @@ PlanITBundle_editCharge:
    
 PlanITBundle_burndownFeedback:
     pattern:  /planIT/feedback/burndown/{idproject}
-    defaults: {_controller: PlanITBundle:Feedback:burndownFeedback, idproject: 1 }
+    defaults: {_controller: PlanITBundle:Feedback:burndownFeedback, idproject: 0 }
     requirements:
        idproject: \d+
    
 PlanITBundle_ganttFeedback:
     pattern:  /planIT/feedback/gantt/{idproject}
-    defaults: {_controller: PlanITBundle:Feedback:ganttFeedback, idproject: 1 }
+    defaults: {_controller: PlanITBundle:Feedback:ganttFeedback, idproject: 0 }
     requirements:
        idproject: \d+
 
 PlanITBundle_pertFeedback:
     pattern:  /planIT/feedback/pert/{idproject}
-    defaults: {_controller: PlanITBundle:Feedback:pertFeedback, idproject: 1 }
+    defaults: {_controller: PlanITBundle:Feedback:pertFeedback, idproject: 0 }
     requirements:
        idproject: \d+
     
