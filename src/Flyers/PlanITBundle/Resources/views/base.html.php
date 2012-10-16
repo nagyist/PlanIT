@@ -12,7 +12,7 @@
 		    		'bundles/planit/fullcalendar/fullcalendar.css',
 		    		'bundles/planit/planit-style.css',
 		    	),
-		    	array('cssrewrite'),
+		    	array('cssrewrite','yui_css'),
 		    	array('output'=>'css/planIT.css')
 		      ) as $url): ?>
 			<link rel="stylesheet" href="<?php echo $view->escape($url) ?>" type="text/css" media="screen" />
@@ -38,7 +38,7 @@
 		    	'bundles/planit/raphael/pert.js',
 		    	'bundles/planit/initialize.js'
 		    ),
-		    array(),
+		    array('yui_js'),
 		    array('output'=>'js/planIT.js')
 		    ) as $url): ?>
 			<script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>

@@ -8,7 +8,7 @@
 		    		'bundles/planit/jquery-ui/css/flick/jquery-ui-1.8.16.custom.css',
 		    		'bundles/planit/planit-style.css',
 		    	),
-		    	array('cssrewrite'),
+		    	array('cssrewrite','yui_css'),
 		    	array('output'=>'css/base.css')
 		      ) as $url): ?>
 			<link rel="stylesheet" href="<?php echo $view->escape($url) ?>" type="text/css" media="screen" />
@@ -22,7 +22,7 @@
 		        'bundles/planit/jquery-jqplot/jquery.jqplot.min.js',
 		    	'bundles/planit/initialize.js',
 		    ),
-		    array(),
+		    array('yui_js'),
 		    array('output'=>'js/base.js')
 		    ) as $url): ?>
 			<script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
