@@ -20,7 +20,7 @@
     		
     		<div id="chartdiv" style="height:550px;width:100%;"></div>
     	</div>
-    	<?php if (isset($graphic) && !empty($graphic)) : ?>
+    	<?php if (isset($graphic) && !empty($graphic) && isset($current_project)) : ?>
     	<script type="text/javascript">
     		var data = <?php echo $graphic ?>;
     		if ( data ) {
