@@ -33,9 +33,9 @@
 		    	'bundles/planit/jquery-jqplot/plugins/jqplot.canvasTextRenderer.min.js',
 		    	'bundles/planit/jquery-jqplot/plugins/jqplot.highlighter.min.js',
 		    	'bundles/planit/fullcalendar/fullcalendar.js',
+		    	'bundles/planit/qtip/jquery.qtip-1.0.0-rc3.min.js',
 		    	'bundles/planit/raphael/raphael-min.js',
 		    	'bundles/planit/raphael/pert.js',
-		    	'bundles/planit/qtip/jquery.qtip-1.0.0-rc3.min.js',
 		    	'bundles/planit/initialize.js'
 		    ),
 		    array(),
@@ -76,9 +76,10 @@
 	        	</ul>
 	        </li>
 	        <li>
-	        	<a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_addCharge'); ?>" title="Manage charges" id="charge" class="dialog">Charges</a>
+	        	<a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_listCharge'); ?>" title="Manage charges" id="charge" class="dialog">Charges</a>
 	        	<ul class="submenu" id="subcharge">
 	        		<li><a rel="section" href="<?php echo $view['router']->generate('PlanITBundle_addCharge'); ?>" title="Add a charge" class="dialog">Add</a></li>
+	        		<li><a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_listCharge'); ?>" title="Manage charges" class="dialog">List</a></li>
 	        	</ul>
 	        </li>
 	        <li>

@@ -65,10 +65,11 @@ class APIController extends Controller
     		{
     			$description = $task->getDescription();
 				$title = "Project : ".$task->getProject()->getName()."\nTask : ".$task->getName()."\n\n".$description;
+				$tooltip = "<p>Previsted beginning : ".$task->getBegin()->format("d-m-Y H:i")."</p><p>Previsted end : ".$task->getEnd()->format("d-m-Y H:i")."</p>";
 				
 	    		$vals["id"]				= $task->getIdassignment();
 	    		$vals["title"] 			= $title;
-	    		$vals["tooltip"] 		= (!empty($description)) ? $description : '' ;
+	    		$vals["tooltip"] 		= $tooltip ;
 	    		$vals["start"] 			= $task->getBegin()->format('Y-m-d H:i');
 	    		$vals["end"]   			= $task->getEnd()->format('Y-m-d H:i');
 	    		$vals["color"]  		= $colors[$idx];

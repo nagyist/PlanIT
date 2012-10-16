@@ -3,6 +3,7 @@
 
 # Bootstrap
 app/bootstrap*
+app/config/security.yml
 
 # Symfony directories
 vendor/*

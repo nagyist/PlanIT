@@ -162,7 +162,7 @@ class FeedbackController extends Controller
 
 		$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByProject($idproject);
 		
-		$graph = array();
+		$graph = NULL;
 		
 		if ( count($tasks) > 0 )
 		{

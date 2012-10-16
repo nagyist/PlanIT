@@ -26,7 +26,7 @@
 				$.ajax({
 					type : "POST",
 					url: '<?php echo $view['router']->generate('PlanITBundle_jsondrop'); ?>',
-					data: {'id': event.id, 'start': event.start.toString(), 'end': event.end.toString() },
+					data: {'id': event.id, 'start': event.start.toISOString(), 'end': event.end.toISOString() },
 					error: function(xhr, status) { revertFunc(); }
 				});
 			},
@@ -34,7 +34,7 @@
 				$.ajax({
 					type : "POST",
 					url: '<?php echo $view['router']->generate('PlanITBundle_jsonresize'); ?>',
-					data: {'id':event.id, 'end': event.end.toString()},
+					data: {'id':event.id, 'end': event.end.toISOString()},
 					error: function(xhr, status) { revertFunc(); }
 				});
 		    },

@@ -79,7 +79,21 @@
 	        <li><a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_about'); ?>" title="About the author" class="dialog">About</a></li>
 	  </ul>
       <script type="text/javascript">
-      jwplayer("player").setup({ flashplayer: "<?php echo $view['assets']->getUrl('bundles/planit/video/player.swf') ?>", file: "<?php echo $view['assets']->getUrl('bundles/planit/video/video.mp4') ?>", height: 300, width: 470 });
+      jwplayer("player").setup({ flashplayer: "<?php echo $view['assets']->getUrl('bundles/planit/video/player.swf') ?>", file: "http://www.youtube.com/watch?v=1MSsOx0o9Xk", height: 300, width: 470 });
       </script>
+      	<script>
+      		var msg =  '<p>PlanIT is in closed bêta for the moment.</p><p>If you want an account, <a rel="section" data-blabel="Send" href="<?php echo $view['router']->generate('PlanITBundle_contact'); ?>" title="Contact us for any question" class="dialog">send us an email</a> with the reasons of your demand.</p><p>Thanks.</p>';
+			var dialog = $('<div class="modals" style="display:none;">'+msg+'</div>').appendTo("body");
+			dialog.dialog({
+				close: function(event, ui) {
+					dialog.remove();
+				},
+				buttons: { "Close": function() { $(this).dialog("close"); } },
+				title: "Closed registrations",
+				closeOnEscape: true,
+				modal: true,
+				minWidth: 600
+			});
+		</script>
     </body>
 </html>

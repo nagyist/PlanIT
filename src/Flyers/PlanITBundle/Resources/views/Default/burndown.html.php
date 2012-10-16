@@ -22,40 +22,43 @@
     	</div>
     	<?php if (isset($graphic) && !empty($graphic)) : ?>
     	<script type="text/javascript">
-    		$.jqplot('chartdiv', <?php echo $graphic; ?>, {
-    			axes:{
-    				xaxis:{
-    					min: '<?php echo $current_project->getBegin()->format("Y-m-d"); ?>',
-    					max: '<?php echo $current_project->getEnd()->format("Y-m-d"); ?>',
-    					renderer:$.jqplot.DateAxisRenderer,
-    					tickRenderer: $.jqplot.CanvasAxisTickRenderer,
-    					tickInterval:'2 day',
-    				},
-    				yaxis:{
-    					min: 0,
-    					tickOptions:{
-			            	formatString:'%.1f days'
-			            }
-    				}
-    			},
-    			series:[{
-	    				
-    				},
-    				{
-    					showMarker:false
-					}],
-    			highlighter: {
-    				show: true
-    			},
-    			fillBetween: {
-		            // series1: Required, if missing won't fill.
-		            series1: 0,
-		            // series2: Required, if  missing won't fill.
-		            series2: 1,
-		            // color: Optional, defaults to fillColor of series1.
-		            color: "rgba(227, 167, 111, 0.7)",
-		        },
-    		});
+    		var data = <?php echo $graphic ?>;
+    		if ( data ) {
+	    		$.jqplot('chartdiv', <?php echo $graphic; ?>, {
+	    			axes:{
+	    				xaxis:{
+	    					min: '<?php echo $current_project->getBegin()->format("Y-m-d"); ?>',
+	    					max: '<?php echo $current_project->getEnd()->format("Y-m-d"); ?>',
+	    					renderer:$.jqplot.DateAxisRenderer,
+	    					tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+	    					tickInterval:'2 day',
+	    				},
+	    				yaxis:{
+	    					min: 0,
+	    					tickOptions:{
+				            	formatString:'%.1f days'
+				            }
+	    				}
+	    			},
+	    			series:[{
+		    				
+	    				},
+	    				{
+	    					showMarker:false
+						}],
+	    			highlighter: {
+	    				show: true
+	    			},
+	    			fillBetween: {
+			            // series1: Required, if missing won't fill.
+			            series1: 0,
+			            // series2: Required, if  missing won't fill.
+			            series2: 1,
+			            // color: Optional, defaults to fillColor of series1.
+			            color: "rgba(227, 167, 111, 0.7)",
+			        },
+	    		});
+    		}
     	</script>
     	<?php endif; ?>
 <?php $view['slots']->stop() ?>

@@ -38,8 +38,7 @@ class ChargeRepository extends EntityRepository
 			->leftjoin('c.assignment', 'a')
 			->join('a.project', 'p')
 			->where($qb->expr()->andx('a.project = p.idproject', 'p.user = :id'))
-			->leftjoin('a.parent', 'c')
-			->orderBy('c.idassignment', 'ASC')
+			->orderBy('c.idcharge', 'ASC')
 			->setParameter('id', $user->getId() );
 		return $qb->getQuery()->getResult();
 	}

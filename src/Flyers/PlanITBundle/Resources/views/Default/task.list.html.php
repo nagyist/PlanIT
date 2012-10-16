@@ -19,7 +19,7 @@
 			<td align="center"><?php echo $task->getBegin()->format("d-m-Y H:i") ?></td>
 			<td align="center"><?php echo $task->getEnd()->format("d-m-Y H:i") ?></td>
 			<td align="center">
-				<a class="dialog" title="Edit an employee" rel="section" href="<?php echo $view['router']->generate('PlanITBundle_editTask', array('idassignment' => $task->getIdassignment())); ?>">Edit</a>
+				<a class="dialog" title="Edit an assignment" rel="section" href="<?php echo $view['router']->generate('PlanITBundle_editTask', array('idassignment' => $task->getIdassignment())); ?>">Edit</a>
 				&nbsp;|&nbsp;
 				<a class="dialog" rel="help" title="Task deleted" href="<?php echo $view['router']->generate('PlanITBundle_delTask', array('idassignment' => $task->getIdassignment())); ?>">Delete</a>
 			</td>

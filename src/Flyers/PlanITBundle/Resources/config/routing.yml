@@ -104,8 +104,12 @@ PlanITBundle_addCharge:
     defaults: { _controller: PlanITBundle:Charge:addCharge, idcharge: null  }
     
 PlanITBundle_editCharge:
-    pattern:  /planIT/charge/edit/{idassignment}
+    pattern:  /planIT/charge/edit/{idcharge}
     defaults: { _controller: PlanITBundle:Charge:addCharge }
+    
+PlanITBundle_delCharge:
+    pattern:  /planIT/person/delete/{idcharge}
+    defaults: { _controller: PlanITBundle:Charge:delCharge }
    
 PlanITBundle_burndownFeedback:
     pattern:  /planIT/feedback/burndown/{idproject}

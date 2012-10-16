@@ -36,6 +36,7 @@ $(document).ready( function () {
 				}); 
 			});
 	
+	/*
 	$(".submenu").css("visibility", "hidden");
 	
 	$("#project").mouseover(function(e) {$("#subproject").css("visibility","visible");});
@@ -43,7 +44,7 @@ $(document).ready( function () {
 	$("#task").mouseover(function(e) {$("#subtask").css("visibility","visible");});
 	$("#charge").mouseover(function(e) {$("#subcharge").css("visibility","visible");});
 	$("#feedback").mouseover(function(e) {$("#subfeedback").css("visibility","visible");});
-	
+	*/
 	
 	$(".autosubmit").live('change', function (e) {
 		var form = $(this).closest('form');

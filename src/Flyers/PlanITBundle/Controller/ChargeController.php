@@ -107,5 +107,30 @@ class ChargeController extends Controller
         	return $this->render('PlanITBundle:Default:charge.form.html.php', array('action'=>$action, 'form'=>$form->createView()));
     	}
     }
+
+	/**
+    * @Secure(roles="ROLE_USER")
+    */
+	public function delChargeAction(Request $request, $idcharge = null)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	
+    	$charge = $em->getRepository("PlanITBundle:Charge")->find($idcharge);
+	    
+		try {
+	    	if (!$charge) {
+		        throw $this->createNotFoundException('No charge found for id '.$idassignment);
+		    }
+		    $em->remove($charge);
+			$em->flush();
+		} catch (Exception $e) {
+			$response = new Response($e->getMessage()); 
+			$response->headers->set('Content-Type', 'application/json');
+			return $response;
+		}
+		$response = new Response('Charge deleted with success'); 
+		$response->headers->set('Content-Type', 'application/json');
+		return $response;
+    }
     
 }
