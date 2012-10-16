@@ -57,8 +57,7 @@ class FeedbackController extends Controller
     	
     	$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
 		
-		if ( $idproject == 0 )
-				$idproject = $projects[0]->getIdproject();
+		
     	
 		if ($request->getMethod() == 'POST')
     	{
@@ -72,6 +71,12 @@ class FeedbackController extends Controller
 	    	{
 	    		return $this->render('PlanITBundle:Default:gantt.html.php', array("projects"=>$projects, "idproject" => $idproject));
 	    	}
+		}
+		
+		if (!empty($projects))
+		{
+			if ( $idproject == 0 )
+				$idproject = $projects[0]->getIdproject();
 		}
     	
         return $this->render('PlanITBundle:Default:gantt.html.php', array("projects"=>$projects, "idproject" => $idproject));
@@ -88,8 +93,7 @@ class FeedbackController extends Controller
     	
     	$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
 		
-		if ( $idproject == 0 )
-				$idproject = $projects[0]->getIdproject();
+		$graph = NULL;
     	
     	if ($request->getMethod() == 'POST')
     	{
@@ -105,27 +109,30 @@ class FeedbackController extends Controller
 	    	}
 		}
 		
-		$project = $this->getDoctrine()->getRepository("PlanITBundle:Project")->find($idproject);
-		
-		$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByProject($idproject);
-		
-		$graph = array();
-		$graph['begin'] = $project->getBegin()->format('r');
-		$graph['end'] = $project->getEnd()->format('r');
-		
-		if ( count($tasks) > 0 )
-		{
-			$json_tasks = array();
-			foreach( $tasks as $task ) {
-				$json_tasks['id'] = $task->getIdassignment();
-				$json_tasks['name'] = $task->getName();
-				$json_tasks['duration'] = $task->getDuration();
-				$json_tasks['parent'] = ( $task->getParent() ) ? $task->getParent()->getIdassignment() : NULL;
-				
-				$graph['tasks'][] = $json_tasks;
+		if ( !empty($projects) ) {
+			if ( $idproject == 0 )
+				$idproject = $projects[0]->getIdproject();
+
+			$project = $this->getDoctrine()->getRepository("PlanITBundle:Project")->find($idproject);
+			
+			$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByProject($idproject);
+			
+			$graph['begin'] = $project->getBegin()->format('r');
+			$graph['end'] = $project->getEnd()->format('r');
+			
+			if ( count($tasks) > 0 )
+			{
+				$json_tasks = array();
+				foreach( $tasks as $task ) {
+					$json_tasks['id'] = $task->getIdassignment();
+					$json_tasks['name'] = $task->getName();
+					$json_tasks['duration'] = $task->getDuration();
+					$json_tasks['parent'] = ( $task->getParent() ) ? $task->getParent()->getIdassignment() : NULL;
+					
+					$graph['tasks'][] = $json_tasks;
+				}
 			}
 		}
-		
 		
       	return $this->render('PlanITBundle:Default:pert.html.php', array("projects"=>$projects, "idproject" => $idproject, "graphic" => json_encode($graph)));
     }
@@ -141,8 +148,7 @@ class FeedbackController extends Controller
 		
 		$projects = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
 		
-		if ( $idproject == 0 )
-				$idproject = $projects[0]->getIdproject();
+		$graph = NULL;
 		
 		if ($request->getMethod() == 'POST')
     	{
@@ -158,34 +164,38 @@ class FeedbackController extends Controller
 	    	}
 		}
 
-		$project = $this->getDoctrine()->getRepository("PlanITBundle:Project")->find($idproject);
-
-		$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByProject($idproject);
-		
-		$graph = NULL;
-		
-		if ( count($tasks) > 0 )
+		if (!empty($projects))
 		{
-			$task_total_duration = 0;
-			foreach($tasks as $task) {
-				$graph_task = array();
-				$task_duration = $task->getDuration();
-				$task_total_duration += $task_duration;
-			}
-			$graph_task[] = array($project->getBegin()->format('Y-m-d H:i:s'), $task_total_duration);
+			if ( $idproject == 0 )
+				$idproject = $projects[0]->getIdproject();
+
+			$project = $this->getDoctrine()->getRepository("PlanITBundle:Project")->find($idproject);
+	
+			$tasks = $em->getRepository("PlanITBundle:Assignment")->findAllByProject($idproject);
 			
-			foreach($tasks as $task) {
-				$charges = $em->getRepository("PlanITBundle:Charge")->findAllByAssignment($task);
-				foreach ($charges as $charge) {
-					$charge_total = $task_total_duration - $charge->getDuration();
-					$graph_task[] = array($charge->getDate()->format('Y-m-d H:i:s'), $charge_total);
+			if ( count($tasks) > 0 )
+			{
+				$task_total_duration = 0;
+				foreach($tasks as $task) {
+					$graph_task = array();
+					$task_duration = $task->getDuration();
+					$task_total_duration += $task_duration;
 				}
+				$graph_task[] = array($project->getBegin()->format('Y-m-d H:i:s'), $task_total_duration);
+				
+				foreach($tasks as $task) {
+					$charges = $em->getRepository("PlanITBundle:Charge")->findAllByAssignment($task);
+					foreach ($charges as $charge) {
+						$charge_total = $task_total_duration - $charge->getDuration();
+						$graph_task[] = array($charge->getDate()->format('Y-m-d H:i:s'), $charge_total);
+					}
+				}
+				$graph_task[] = array($project->getEnd()->format('Y-m-d H:i:s'), 0);
+				
+				$graph_project = array(array($project->getBegin()->format('Y-m-d H:i:s'), $task_total_duration),array($project->getEnd()->format('Y-m-d H:i:s'), 0));
+				
+				$graph = array($graph_task, $graph_project);
 			}
-			$graph_task[] = array($project->getEnd()->format('Y-m-d H:i:s'), 0);
-			
-			$graph_project = array(array($project->getBegin()->format('Y-m-d H:i:s'), $task_total_duration),array($project->getEnd()->format('Y-m-d H:i:s'), 0));
-			
-			$graph = array($graph_task, $graph_project);
 		}
 		
         return $this->render('PlanITBundle:Default:burndown.html.php', array("projects"=>$projects, "idproject" => $idproject, "graphic" => json_encode($graph)));
