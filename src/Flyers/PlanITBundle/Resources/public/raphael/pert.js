@@ -47,6 +47,8 @@ Raphael.fn.pertChart = function (p, wd) {
         
         var display_begin = db.getFullYear()+'-'+(db.getMonth()+1).leftZeroPad(2)+'-'+db.getDate().leftZeroPad(2);
         var display_end = de.getFullYear()+'-'+(de.getMonth()+1).leftZeroPad(2)+'-'+de.getDate().leftZeroPad(2);
+        
+        var name = (t.name.length > 10) ? t.name.substr(0,10)+'...' : t.name ;
 
         // Draw structure
         
@@ -70,7 +72,7 @@ Raphael.fn.pertChart = function (p, wd) {
                 "font-family":"Verdana, Arial, serif",
                 "font-size":"14",}
             );
-        r.text(x+(w/2), y+15, t.name)
+        r.text(x+(w/2), y+15, name)
             .attr(
                 {"text-anchor":"start",
                 "font-family":"Verdana, Arial, serif",
@@ -114,7 +116,7 @@ Raphael.fn.pertChart = function (p, wd) {
         var w = 220;
         var h = 90;
         var ts = p.tasks;
-        var onp = taskCountParents( ts[ts.length-1], ts );
+        var onp = taskCountParents( ts[ts.length-1], ts )+1;
         
         var db = new Date(p.begin);
         var de = new Date(p.end);
@@ -123,6 +125,7 @@ Raphael.fn.pertChart = function (p, wd) {
             name: 'Start',
             duration: 0,
             parent: null}
+        
         // Display start
         taskDisplay(r,st,10,10,w,h,db,db,true);
         
@@ -131,20 +134,24 @@ Raphael.fn.pertChart = function (p, wd) {
         var odte = new Date(dte);
         var od = 0;
         var cs = {};
-        
+
         for (var i=ts.length-1; i>=0; i--) {
+
             var t = ts[i];
+            
+            var np = taskCountParents( t, ts );
+            if ( onp != np) od = 0;
             
             // check if criticial
             if ( t.duration > od ) {
                 od = t.duration;
                 cs[i] = true;
+                cs[i+1] = false;
             } else {
                 cs[i] = false;
             }
             
             // check if we change of level
-            var np = taskCountParents( t, ts );
             if ( onp != np) {
                 odte = new Date(dte);
                 onp = np;
