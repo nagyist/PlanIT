@@ -25,6 +25,9 @@ Flyers\PlanITBundle\Entity\User:
       length: 255
       fixed: false
       nullable: false
+    active:
+      type: boolean
+      nullable: false
   manyToMany:
     userRoles:
       targetEntity: Role

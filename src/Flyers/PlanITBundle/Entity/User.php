@@ -217,4 +217,32 @@ class User implements UserInterface
     {
         $this->userRoles->removeElement($userRoles);
     }
+    /**
+     * @var boolean $active
+     */
+    private $active;
+
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return User
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
 }

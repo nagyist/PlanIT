@@ -82,6 +82,7 @@
       jwplayer("player").setup({ flashplayer: "<?php echo $view['assets']->getUrl('bundles/planit/video/player.swf') ?>", file: "http://www.youtube.com/watch?v=1MSsOx0o9Xk", height: 300, width: 470 });
       </script>
       	<script>
+      	/*
       		var msg =  '<p>PlanIT is in closed bêta for the moment.</p><p>If you want an account, <a rel="section" data-blabel="Send" href="<?php echo $view['router']->generate('PlanITBundle_contact'); ?>" title="Contact us for any question" class="dialog">send us an email</a> with the reasons of your demand.</p><p>Thanks.</p>';
 			var dialog = $('<div class="modals" style="display:none;">'+msg+'</div>').appendTo("body");
 			dialog.dialog({
@@ -94,6 +95,7 @@
 				modal: true,
 				minWidth: 600
 			});
+		*/
 		</script>
     </body>
 </html>
