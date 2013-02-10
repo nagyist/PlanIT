@@ -3,7 +3,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php $view['slots']->output('title', 'PlanIT - plan your projects') ?></title>
-        <?php foreach ($view['assetic']->stylesheets(
+        <link rel="stylesheet" href="bundles/planit/jquery-ui/css/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="bundles/planit/planit-style.css" type="text/css" media="screen" />
+        
+        <script type="text/javascript" src="bundles/planit/jquery-ui/js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="bundles/planit/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+        <script type="text/javascript" src="bundles/planit/video/jwplayer.js"></script>
+        <script type="text/javascript" src="bundles/planit/jquery-jqplot/jquery.jqplot.min.js"></script>
+        <script type="text/javascript" src="bundles/planit/initialize.js"></script>
+
+        <?php /* foreach ($view['assetic']->stylesheets(
 		    	array(
 		    		'bundles/planit/jquery-ui/css/flick/jquery-ui-1.8.16.custom.css',
 		    		'bundles/planit/planit-style.css',
@@ -12,9 +21,9 @@
 		    	array('output'=>'css/base.css')
 		      ) as $url): ?>
 			<link rel="stylesheet" href="<?php echo $view->escape($url) ?>" type="text/css" media="screen" />
-		<?php endforeach; ?>
+		<?php endforeach; */ ?>
 		
-        <?php foreach ($view['assetic']->javascripts(
+        <?php /* foreach ($view['assetic']->javascripts(
 		    array(
 		    	'bundles/planit/jquery-ui/js/jquery-1.6.2.min.js',
 		    	'bundles/planit/jquery-ui/js/jquery-ui-1.8.16.custom.min.js',
@@ -26,7 +35,7 @@
 		    array('output'=>'js/base.js')
 		    ) as $url): ?>
 			<script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
-		<?php endforeach; ?>
+		<?php endforeach; */ ?>
 		
     </head>
     <body>
@@ -81,21 +90,5 @@
       <script type="text/javascript">
       jwplayer("player").setup({ flashplayer: "<?php echo $view['assets']->getUrl('bundles/planit/video/player.swf') ?>", file: "http://www.youtube.com/watch?v=1MSsOx0o9Xk", height: 300, width: 470 });
       </script>
-      	<script>
-      	/*
-      		var msg =  '<p>PlanIT is in closed bêta for the moment.</p><p>If you want an account, <a rel="section" data-blabel="Send" href="<?php echo $view['router']->generate('PlanITBundle_contact'); ?>" title="Contact us for any question" class="dialog">send us an email</a> with the reasons of your demand.</p><p>Thanks.</p>';
-			var dialog = $('<div class="modals" style="display:none;">'+msg+'</div>').appendTo("body");
-			dialog.dialog({
-				close: function(event, ui) {
-					dialog.remove();
-				},
-				buttons: { "Close": function() { $(this).dialog("close"); } },
-				title: "Closed registrations",
-				closeOnEscape: true,
-				modal: true,
-				minWidth: 600
-			});
-		*/
-		</script>
     </body>
 </html>
