@@ -3,14 +3,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php $view['slots']->output('title', 'PlanIT - plan your projects') ?></title>
-        <link rel="stylesheet" href="bundles/planit/jquery-ui/css/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="screen" />
-        <link rel="stylesheet" href="bundles/planit/planit-style.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/css/flick/jquery-ui-1.8.16.custom.css') ?>" type="text/css" media="screen" />
+        <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/planit-style.css') ?>" type="text/css" media="screen" />
         
-        <script type="text/javascript" src="bundles/planit/jquery-ui/js/jquery-1.6.2.min.js"></script>
-        <script type="text/javascript" src="bundles/planit/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
-        <script type="text/javascript" src="bundles/planit/video/jwplayer.js"></script>
-        <script type="text/javascript" src="bundles/planit/jquery-jqplot/jquery.jqplot.min.js"></script>
-        <script type="text/javascript" src="bundles/planit/initialize.js"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/js/jquery-1.6.2.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/js/jquery-ui-1.8.16.custom.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/video/jwplayer.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/jquery.jqplot.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/initialize.js') ?>"></script>
 
         <?php /* foreach ($view['assetic']->stylesheets(
 		    	array(

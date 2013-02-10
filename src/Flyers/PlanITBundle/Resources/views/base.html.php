@@ -4,28 +4,28 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php $view['slots']->output('title', 'PlanIT - Plan it Right now') ?></title>
         
-        <link rel="stylesheet" href="../bundles/planit/jquery-ui/css/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="screen" />
-        <link rel="stylesheet" href="../bundles/planit/jquery-ui/css/flick/jquery-ui-timepicker-addon.css" type="text/css" media="screen" />
-        <link rel="stylesheet" href="../bundles/planit/jquery-gantt/style.css" type="text/css" media="screen" />
-        <link rel="stylesheet" href="../bundles/planit/jquery-jqplot/jquery.jqplot.min.css" type="text/css" media="screen" />
-        <link rel="stylesheet" href="../bundles/planit/planit-style.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/css/flick/jquery-ui-1.8.16.custom.css') ?>" type="text/css" media="screen" />
+        <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/css/flick/jquery-ui-timepicker-addon.css') ?>" type="text/css" media="screen" />
+        <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/jquery-gantt/style.css') ?>" type="text/css" media="screen" />
+        <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/jquery.jqplot.min.css') ?>" type="text/css" media="screen" />
+        <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/planit-style.css') ?>" type="text/css" media="screen" />
         
-        <script type="text/javascript" src="../bundles/planit/jquery-ui/js/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="../bundles/planit/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
-        <script type="text/javascript" src="../bundles/planit/jquery-ui/js/jquery-ui-timepicker-addon.js"></script>
-        <script type="text/javascript" src="../bundles/planit/jquery-gantt/jquery.fn.gantt.js"></script>
-        <script type="text/javascript" src="../bundles/planit/jquery-jqplot/jquery.jqplot.min.js"></script>
-        <script type="text/javascript" src="../bundles/planit/jquery-jqplot/plugins/jqplot.dateAxisRenderer.js"></script>
-        <script type="text/javascript" src="../bundles/planit/jquery-jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
-        <script type="text/javascript" src="../bundles/planit/jquery-jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
-        <script type="text/javascript" src="../bundles/planit/jquery-jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
-        <script type="text/javascript" src="../bundles/planit/jquery-jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
-        <script type="text/javascript" src="../bundles/planit/jquery-jqplot/plugins/jqplot.highlighter.min.js"></script>
-        <script type="text/javascript" src="../bundles/planit/fullcalendar/fullcalendar.js"></script>
-        <script type="text/javascript" src="../bundles/planit/qtip/jquery.qtip-1.0.0-rc3.min.js"></script>
-        <script type="text/javascript" src="../bundles/planit/raphael/raphael-min.js"></script>
-        <script type="text/javascript" src="../bundles/planit/raphael/pert.js"></script>
-        <script type="text/javascript" src="../bundles/planit/initialize.js"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/js/jquery-1.7.2.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/js/jquery-ui-1.8.16.custom.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/js/jquery-ui-timepicker-addon.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-gantt/jquery.fn.gantt.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/jquery.jqplot.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.dateAxisRenderer.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.categoryAxisRenderer.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.canvasTextRenderer.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/plugins/jqplot.highlighter.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/fullcalendar/fullcalendar.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/qtip/jquery.qtip-1.0.0-rc3.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/raphael/raphael-min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/raphael/pert.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/initialize.js') ?>"></script>
         
         <?php /* foreach ($view['assetic']->stylesheets(
 		    	array(
