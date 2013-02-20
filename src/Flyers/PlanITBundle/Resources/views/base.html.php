@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/css/flick/jquery-ui-timepicker-addon.css') ?>" type="text/css" media="screen" />
         <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/jquery-gantt/style.css') ?>" type="text/css" media="screen" />
         <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/jquery-jqplot/jquery.jqplot.min.css') ?>" type="text/css" media="screen" />
+        <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/fullcalendar/fullcalendar.css') ?>" type="text/css" media="screen" />        
         <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('bundles/planit/planit-style.css') ?>" type="text/css" media="screen" />
         
         <script type="text/javascript" src="<?php echo $view['assets']->getUrl('bundles/planit/jquery-ui/js/jquery-1.7.2.min.js') ?>"></script>
