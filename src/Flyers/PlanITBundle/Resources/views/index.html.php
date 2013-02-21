@@ -39,6 +39,7 @@
 		
     </head>
     <body>
+      <a href="https://github.com/FlyersWeb/PlanIT"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:10;" src="<?php echo $view['assets']->getUrl('bundles/planit/images/forkme_right_red.png') ?>" alt="Fork me on GitHub"></a>
       <div id="wrapheader">
 	      <div id="header">
 	      	<h1>PlanIT</h1>
@@ -82,9 +83,7 @@
       </div>
 	  <ul id="footer">
 	        <li><a rel="section" data-blabel="Send" href="<?php echo $view['router']->generate('PlanITBundle_contact'); ?>" title="Contact us for any question" class="dialog">Contact</a></li>
-	        <!-- <li><a href="mailto:&#099;&#111;&#110;&#116;&#097;&#099;&#116;&#064;&#102;&#108;&#121;&#101;&#114;&#115;&#045;&#119;&#101;&#098;&#046;&#111;&#114;&#103;">Contact</a></li> -->
 	        <li><a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_donate'); ?>" title="Donate to help project" class="dialog">Donate</a></li>
-	        <li><a target="_blank" href="http://github.com/FlyersWeb/PlanIT" title="Contribute">Contribute</a></li>
 	        <li><a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_about'); ?>" title="About the author" class="dialog">About</a></li>
 	  </ul>
       <script type="text/javascript">

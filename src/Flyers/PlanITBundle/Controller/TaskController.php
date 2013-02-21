@@ -69,6 +69,8 @@ class TaskController extends Controller
     		$task	= new Assignment();
     	else
     		$task = $this->getDoctrine()->getRepository("PlanITBundle:Assignment")->find($idassignment);
+
+        print_r($task, true);
     		
     	$form = $this->createForm(new AssignmentType($user), $task);
     			

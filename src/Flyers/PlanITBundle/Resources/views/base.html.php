@@ -73,6 +73,7 @@
 		
     </head>
     <body id="planit">
+    	<a href="https://github.com/FlyersWeb/PlanIT/issues"><img style="position: absolute; top: 30%; left: 0; border: 0; z-index:10;" src="<?php echo $view['assets']->getUrl('bundles/planit/images/FeedBackTab.png') ?>" alt="Feedback issues"></a>
     	<a href="<?php echo $view['router']->generate('PlanITBundle_logout'); ?>" class="right" style="color:white;padding:17px 6px;">Logout</a>
     	<h1>
 	        <a href="<?php echo $view['router']->generate('PlanITBundle_homepage'); ?>"><?php $view['slots']->output('title', 'Plan IT') ?></a>
@@ -122,7 +123,6 @@
 	    <ul id="footer_planit">
 	        <li><a rel="section" data-blabel="Send" href="<?php echo $view['router']->generate('PlanITBundle_contact'); ?>" title="Contact us for any question" class="dialog">Contact</a></li>
 	        <li><a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_donate'); ?>" title="Donate to help project" class="dialog">Donate</a></li>
-	        <li><a target="_blank" href="http://github.com/FlyersWeb/PlanIT" title="Contribute">Contribute</a></li>
 	        <li><a rel="help" href="<?php echo $view['router']->generate('PlanITBundle_about'); ?>" title="About the author" class="dialog">About</a></li>
 	    </ul>
     
