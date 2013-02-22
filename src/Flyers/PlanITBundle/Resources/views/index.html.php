@@ -39,7 +39,7 @@
 		
     </head>
     <body>
-      <a href="https://github.com/FlyersWeb/PlanIT"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:10;" src="<?php echo $view['assets']->getUrl('bundles/planit/images/forkme_right_red.png') ?>" alt="Fork me on GitHub"></a>
+      <a href="https://github.com/FlyersWeb/PlanIT" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:10;" src="<?php echo $view['assets']->getUrl('bundles/planit/images/forkme_right_red.png') ?>" alt="Fork me on GitHub"></a>
       <div id="wrapheader">
 	      <div id="header">
 	      	<h1>PlanIT</h1>

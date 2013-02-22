@@ -73,7 +73,7 @@
 		
     </head>
     <body id="planit">
-    	<a href="https://github.com/FlyersWeb/PlanIT/issues"><img style="position: absolute; top: 30%; left: 0; border: 0; z-index:10;" src="<?php echo $view['assets']->getUrl('bundles/planit/images/FeedBackTab.png') ?>" alt="Feedback issues"></a>
+    	<a href="https://github.com/FlyersWeb/PlanIT/issues" target="_blank"><img style="position: fixed; top: 50%; left: 0; border: 0; z-index:10;" src="<?php echo $view['assets']->getUrl('bundles/planit/images/FeedBackTab.png') ?>" alt="Feedback issues"></a>
     	<a href="<?php echo $view['router']->generate('PlanITBundle_logout'); ?>" class="right" style="color:white;padding:17px 6px;">Logout</a>
     	<h1>
 	        <a href="<?php echo $view['router']->generate('PlanITBundle_homepage'); ?>"><?php $view['slots']->output('title', 'Plan IT') ?></a>

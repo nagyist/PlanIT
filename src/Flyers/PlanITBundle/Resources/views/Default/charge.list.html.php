@@ -20,7 +20,7 @@
 			</td>
 		</tr>
 		<?php endforeach; ?>
-		<?php if ( count($charge) <= 0) : ?>
+		<?php if ( !isset($charge) ) : ?>
 		<tr>
 			<td colspan="5" align="center">No charges created for the moment</td>
 		</tr>
