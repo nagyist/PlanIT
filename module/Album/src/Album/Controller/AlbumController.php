@@ -86,9 +86,67 @@ class AlbumController extends AbstractActionController
 
     public function editAction()
     {
+        $em = $this->getEntityManager();
+
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('album', array(
+                'action' => 'index'
+            ));
+        }
+
+        $album = $em->find('Album\Entity\Album', $id);
+
+        $form = new AlbumForm();
+        $form->get('submit')->setValue('Edit');
+
+        $form->bind($album);
+
+        $request = $this->getRequest();
+        if ($request->isPost())
+        {
+            $form->setData($request->getPost());
+
+            if ($form->isValid())
+            {
+                $em->persist($album);
+                $em->flush();
+            }
+        }
+
+        return array(
+            'id' => $id,
+            'form' => $form
+            );
     }
 
     public function deleteAction()
     {
+        $em = $this->getEntityManager();
+
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('album');
+        }
+
+        $album = $em->find('Album\Entity\Album', $id);
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $del = $request->getPost('del', 'No');
+
+            if ($del == 'Yes') {
+                $em->remove($album);
+                $em->flush();
+            }
+
+            // Redirect to list of albums
+            return $this->redirect()->toRoute('album');
+        }
+
+        return array(
+            'id'    => $id,
+            'album' => $album
+        );
     }
 }
