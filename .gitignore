@@ -1,17 +1,7 @@
 ## Files
 .DS_Store
 
-# Bootstrap
-app/bootstrap*
-app/config/security.yml
-
 # Symfony directories
 vendor/*
-*/logs/*
-*/cache/*
-web/uploads/*
-web/bundles/*
+data/*
 
-# Configuration files
-app/config/parameters.ini
-app/config/parameters.yml
