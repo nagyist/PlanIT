@@ -1,0 +1,5 @@
+plan_it:
+    resource: "@PlanITBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
