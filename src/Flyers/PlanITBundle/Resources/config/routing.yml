@@ -1,0 +1,3 @@
+album:
+    type: rest
+    resource: Flyers\PlanITBundle\Controller\AlbumController

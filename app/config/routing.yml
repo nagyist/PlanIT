@@ -3,3 +3,7 @@ plan_it:
     type:     annotation
     prefix:   /
 
+albums:
+    type : rest
+    resource: "@PlanITBundle/Resources/config/routing.yml"
+
