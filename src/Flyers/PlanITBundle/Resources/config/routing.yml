@@ -1,3 +1,7 @@
 album:
     type: rest
     resource: Flyers\PlanITBundle\Controller\AlbumController
+
+user:
+    type: rest
+    resource: Flyers\PlanITBundle\Controller\UserController

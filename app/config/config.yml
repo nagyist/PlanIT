@@ -65,5 +65,15 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_rest:
+    view:
+        view_response_listener: force
     routing_loader:
         default_format: json
+
+sensio_framework_extra:
+    view:    { annotations: false }
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Flyers\PlanITBundle\Entity\User

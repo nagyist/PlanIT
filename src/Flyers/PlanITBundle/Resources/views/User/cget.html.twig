@@ -1,0 +1,10 @@
+Users:
+<ul>
+    {% for user in entities %}
+    <li>{{ user.username}}
+    <ul>
+    <li>{{ user.email}}</li>
+    </ul>
+    </li>
+    {% endfor %}
+</ul>

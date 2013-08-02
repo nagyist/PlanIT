@@ -7,17 +7,17 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\Rest\Util\Codes;
 
-class AlbumController extends FOSRestController implements ClassResourceInterface
+class UserController extends FOSRestController implements ClassResourceInterface
 {
     /**
-     * @Rest\Get("/albums")
+     * @Rest\Get("/users")
      * @Rest\View()
      */
     public function cgetAction()
     {
         $em = $this->getDoctrine()->getManager();
         
-        $entities = $em->getRepository("PlanITBundle:Album")->findAll();
+        $entities = $em->getRepository("PlanITBundle:User")->findAll();
         
         return array(
             'entities' => $entities,
@@ -25,14 +25,14 @@ class AlbumController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * @Rest\Get("/album/{id}")
+     * @Rest\Get("/user/{id}")
      * @Rest\View()
      */
     public function getAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository("PlanITBundle:Album")->find($id);
+        $entity = $em->getRepository("PlanITBundle:User")->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find album entity');
         }

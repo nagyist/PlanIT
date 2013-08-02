@@ -3,12 +3,17 @@
 namespace Flyers\PlanITBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Album
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Flyers\PlanITBundle\Entity\AlbumRepository")
+ *
+ * @ExclusionPolicy("all")
  */
 class Album
 {
@@ -18,6 +23,8 @@ class Album
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Expose
      */
     private $id;
 
@@ -25,6 +32,8 @@ class Album
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     *
+     * @Expose
      */
     private $title;
 
@@ -32,6 +41,8 @@ class Album
      * @var string
      *
      * @ORM\Column(name="artist", type="string", length=255)
+     *
+     * @Expose
      */
     private $artist;
 
