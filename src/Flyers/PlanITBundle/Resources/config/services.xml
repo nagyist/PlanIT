@@ -17,4 +17,18 @@
         </service>
     </services>
     -->
+
+    <services>
+        <service id="wsse.security.authentication.provider"
+            class="Flyers\PlanITBundle\Security\Authentication\Provider\WsseProvider" public="false">
+            <argument /> <!-- User Provider -->
+            <argument>%kernel.cache_dir%/security/nonces</argument>
+        </service>
+
+        <service id="wsse.security.authentication.listener"
+            class="Flyers\PlanITBundle\Security\Firewall\WsseListener" public="false">
+            <argument type="service" id="security.context"/>
+            <argument type="service" id="security.authentication.manager" />
+        </service>
+    </services>
 </container>

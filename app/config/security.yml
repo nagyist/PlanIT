@@ -16,6 +16,9 @@ security:
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
     firewalls:
+        wsse_secured:
+            pattern: ^/api/.*
+            wsse: { lifetime: 30}
         main:
             pattern: ^/
             form_login:
