@@ -1,0 +1,88 @@
+<?php
+
+namespace Flyers\PlanITBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Charge
+ *
+ * @ORM\Table(name="charge")
+ * @ORM\Entity(repositoryClass="Flyers\PlanITBundle\Entity\ChargeRepository")
+ */
+class Charge
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
+
+    /**
+     * @var Flyers\PlanITBundle\Entity\User $user
+     *
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     **/
+    private $user;
+
+    /**
+     * @var Flyers\PlanITBundle\Entity\Employee $employee
+     *
+     * @ORM\OneToOne(targetEntity="Employee")
+     * @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
+     **/
+    private $employee;
+
+    /**
+     * @var Flyers\PlanITBundle\Entity\Task $task
+     *
+     * @ORM\OneToOne(targetEntity="Task")
+     * @ORM\JoinColumn(name="task_id", referencedColumnName="id")
+     **/
+    private $task;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Charge
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+}

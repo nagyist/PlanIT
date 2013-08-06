@@ -4,9 +4,10 @@ namespace Flyers\PlanITBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+
+use Symfony\Component\Validator\Constraints;
 
 /**
  * @ORM\Table(name="user")
