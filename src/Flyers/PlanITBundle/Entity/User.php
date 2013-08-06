@@ -26,14 +26,15 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(name="name", type="string", length=255)
+     * @var ArrayCollection $projects
      *
-     * @Constraints\NotNull
-     * @Constraints\NotBlank
-     * 
-     * @Expose
+     * @ORM\ManyToMany(targetEntity="Project")
+     * @ORM\JoinTable(
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id")}
+     * )
      */
-    private $name;
+    private $projects;
 
     /**
      * Get id
@@ -46,26 +47,43 @@ class User extends BaseUser
     }
 
     /**
-     * Set name
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add projects
      *
-     * @param string $name
+     * @param \Flyers\PlanITBundle\Entity\Project $projects
      * @return User
      */
-    public function setName($name)
+    public function addProject(\Flyers\PlanITBundle\Entity\Project $projects)
     {
-        $this->name = $name;
+        $this->projects[] = $projects;
     
         return $this;
     }
 
     /**
-     * Get name
+     * Remove projects
      *
-     * @return string 
+     * @param \Flyers\PlanITBundle\Entity\Project $projects
      */
-    public function getName()
+    public function removeProject(\Flyers\PlanITBundle\Entity\Project $projects)
     {
-        return $this->name;
+        $this->projects->removeElement($projects);
     }
 
+    /**
+     * Get projects
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProjects()
+    {
+        return $this->projects;
+    }
 }

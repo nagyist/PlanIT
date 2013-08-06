@@ -8,6 +8,8 @@ use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
+
 use Flyers\PlanITBundle\Security\Authentication\Token\WsseUserToken;
 
 class WsseListener implements ListenerInterface
@@ -15,10 +17,11 @@ class WsseListener implements ListenerInterface
     protected $securityContext;
     protected $authenticationManager;
 
-    public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager)
+    public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager, LoggerInterface $logger)
     {
         $this->securityContext = $securityContext;
         $this->authenticationManager = $authenticationManager;
+        $this->logger = $logger;
     }
 
     public function handle(GetResponseEvent $event)
@@ -47,6 +50,7 @@ class WsseListener implements ListenerInterface
                     return;
                 } catch (AuthenticationException $failed) {
                     // ... you might log something here
+                    $this->logger->error($failed->getMessage());
 
                     // To deny the authentication clear the token. This will redirect to the login page.
                     // $this->securityContext->setToken(null);

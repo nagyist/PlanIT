@@ -49,7 +49,7 @@ class WsseProvider extends ContainerAware implements AuthenticationProviderInter
 
         // Convert it to seconds
         $seconds =
-            ($diff->y * 365 * 24 * 60 * 60) +
+                ($diff->y * 365 * 24 * 60 * 60) +
                 ($diff->m * 30 * 24 * 60 * 60) +
                 ($diff->d * 24 * 60 * 60) +
                 ($diff->h * 60 * 60) +
@@ -72,7 +72,7 @@ class WsseProvider extends ContainerAware implements AuthenticationProviderInter
         file_put_contents($this->cacheDir.'/'.$nonce, time());
 
         // Validate Secret
-        $expected = base64_encode(sha1(base64_decode($nonce).$created.$secret, true));
+        $expected = base64_encode(sha1($nonce.$created.$secret, true));
 
         // Return TRUE if our newly-calculated digest is the same as the one provided in the validateDigest() call
         return $expected === $digest;

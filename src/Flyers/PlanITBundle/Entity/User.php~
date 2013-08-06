@@ -9,8 +9,8 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 
 /**
- * @ORM\Entity
  * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="Flyers\PlanITBundle\Entity\UserRepository")
  *
  * @ExclusionPolicy("all")
  */
@@ -26,14 +26,16 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(name="name", type="string", length=255)
+     * @var ArrayCollection $projects
      *
-     * @Constraints\NotNull
-     * @Constraints\NotBlank
-     * 
-     * @Expose
+     * @ORM\ManyToMany(targetEntity="Project")
+     * @ORM\JoinTable(
+     *      name="project_users",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id")}
+     * )
      */
-    private $name;
+    private $projects;
 
     /**
      * Get id
@@ -43,29 +45,6 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return User
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
 }

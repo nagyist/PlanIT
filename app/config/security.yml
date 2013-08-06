@@ -9,15 +9,11 @@ security:
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
-        in_memory:
-            memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
     firewalls:
         wsse_secured:
             pattern: ^/api/.*
+            stateless: true
             wsse: { lifetime: 30}
         main:
             pattern: ^/

@@ -10,12 +10,12 @@ use FOS\Rest\Util\Codes;
 class UserController extends FOSRestController implements ClassResourceInterface
 {
     /**
-     * @Rest\Get("/users")
+     * @Rest\Get("/api/users")
      * @Rest\View()
      */
     public function cgetAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->container->get("doctrine")->getManager();
         
         $entities = $em->getRepository("PlanITBundle:User")->findAll();
         
@@ -25,12 +25,12 @@ class UserController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
-     * @Rest\Get("/user/{id}")
+     * @Rest\Get("/api/user/{id}")
      * @Rest\View()
      */
     public function getAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->container->get("doctrine")->getManager();
 
         $entity = $em->getRepository("PlanITBundle:User")->find($id);
         if (!$entity) {
