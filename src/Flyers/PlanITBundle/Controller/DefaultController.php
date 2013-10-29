@@ -31,7 +31,6 @@ class DefaultController extends Controller
 
         $password = $user->getPassword();
 
-        // $created = date("Y-m-d\TH:i:s\Z");
         $created = date("c");
 
         $b64nonce = base64_encode($nonce);

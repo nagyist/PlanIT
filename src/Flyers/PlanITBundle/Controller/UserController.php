@@ -2,10 +2,17 @@
 
 namespace Flyers\PlanITBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\Rest\Util\Codes;
+
+use Flyers\PlanITBundle\Entity\User;
+use Flyers\PlanITBundle\Form\UserType;
 
 class UserController extends FOSRestController implements ClassResourceInterface
 {
@@ -40,6 +47,35 @@ class UserController extends FOSRestController implements ClassResourceInterface
         return array(
             'entity' => $entity,
         );
+    }
+
+    /**
+     * @Rest\Post("/user/auth")
+     * @Rest\View()
+     */
+    public function authAction(Request $request)
+    {
+        $um = $this->get('fos_user.user_manager');
+        $providerKey = $this->container->getParameter('fos_user.firewall_name');
+
+        $email = $request->request->get('email');
+        $password = $request->request->get('password');
+
+        $user = $um->findUserByUsername($email);
+        if (!$user)
+        {
+            throw $this->createNotFoundException('No user found!');
+        }
+
+        $token = new UsernamePasswordToken($user, $user->getPassword(), $providerKey, $user->getRoles());
+
+        $context = $this->get('security.context');
+        $context->setToken($token);
+
+        return array(
+            'token' => $context->getToken(),
+        );
+
     }
 
 }

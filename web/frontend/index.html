@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en" ng-app="PlanIT">
+  <head>
+    <meta charset="utf-8">
+    <title>PlanIT, plan your projects</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Flyers">
+
+    <link href="vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendors/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="assets/css/planit.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="vendors/html5shiv/html5shiv.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <a href="https://github.com/FlyersWeb/PlanIT" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:10;" src="assets/img/forkme_right_red.png" alt="Fork me on GitHub"></a>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+          <a class="brand" href="#">PlanIT</a>
+            <ul class="nav">
+              <li class="active"><a href="#">Login</a></li>
+              <li><a href="#about">What is PlanIT ?</a></li>
+              <li><a href="#author">About the author</a></li>
+              <li><a href="#donate">Donate</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+
+      <div ng-view></div>
+
+      <div class="row-fluid">
+        <div class="span6" ng-controller="RegisterCtrl">
+          <h2>Register</h2>
+          <form ng-submit="submit()">
+            <label>Your E-mail:</label>
+            <input type="email" placeholder="Enter your email..." name="login" ng-model="user.login">
+            <label>Your password</label>
+            <input type="password" name="password" ng-model="user.password">
+            <label>Confirm password</label>
+            <input type="password" name="password_confirm" ng-model="user.password_confirm">
+            <label></label>
+            <button type="submit" class="btn btn-inverse">Create a new account</button>
+          </form>
+        </div>
+        <div class="span6" ng-controller="LoginCtrl">
+          <h2>Login</h2>
+          <form ng-submit="submit()">
+            <label>Your E-mail :</label>
+            <input type="email" placeholder="Enter your email..." name="login" ng-model="user.login">
+            <label>Your Password :</label>
+            <input type="password" name="password" ng-model="user.password">
+            <label></label>
+            <button type="submit" class="btn btn-inverse">Login</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div class="span6">
+          <div style="height:300px;">
+            <object type="application/x-shockwave-flash" data="http://planit.flyers-web.org/Symfony/web/bundles/planit/video/player.swf" width="100%" height="100%" bgcolor="#000000" id="player" name="player" tabindex="0"><param name="allowfullscreen" value="true"><param name="allowscriptaccess" value="always"><param name="seamlesstabbing" value="true"><param name="wmode" value="opaque"><param name="flashvars" value="netstreambasepath=http%3A%2F%2Fplanit.flyers-web.org%2F&amp;id=player&amp;file=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D1MSsOx0o9Xk&amp;controlbar.position=over"></object>
+          </div>
+        </div>
+        <div class="span6">
+          <h2><a href="#" name="about"></a>What is PlanIT ?</h2>
+          <p class="text-justify">
+            PlanIT is a web tool allowing you to manage efficiently all your projects. You create separate teams for your different projects and define easily tasks time duration in order to know day by day how are doing your projects.
+          </p>
+          <p class="text-justify">
+            It also offer diagrams representations of your current projects in order to manage easily the working charge of your teams, the projects deadlines and make prevision in order to optimize realisation times of all your current projects.
+          </p>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div class="span7">
+          <h2><a href="#" name="author"></a>About the author</h2>
+          <p class="text-justify">
+            This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+          </p>
+          <p class="text-justify">
+            This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+          </p>
+          <p class="text-justify">
+            You should have received a copy of the GNU General Public License along with this program. If not, see <a href="http://www.gnu.org/licenses/" target="_blank">licenses</a>.
+          </p>
+          <p class="text-justify">
+            <em>Copyright 2012 BEN GHMISS Nassim</em>
+          </p>
+          <p class="text-justify">
+            For more informations on the author see <a href="http://www.flyers-web.org/">Flyers Web</a>.
+          </p>
+        </div>
+
+        <div class="span5" ng-controller="ContactCtrl">
+          <h2><a href="#" name="contact"></a>Contact Author</h2>
+          <form ng-submit="submit()">
+            <label>Your name</label>
+            <input type="text" placeholder="John Doe" name="name" ng-model="contact.name">
+            <label>Your email</label>
+            <input type="email" placeholder="john.doe@doe.com" name="mail" ng-model="contact.mail">
+            <label>Subject</label>
+            <input type="text" placeholder="Want a partnership" name="subject" ng-model="contact.subject">
+            <label>Message</label>
+            <textarea name="message" ng-model="contact.message"></textarea>
+            <label></label>
+            <button type="submit" class="btn btn-inverse">Send me a message</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="row-fluid">
+        <div class="span6">
+          <h2><a href="#" name="donate"></a>Donate</h2>
+          <p class="text-justify">
+            The PlanIT is an opensource project. All source code are accessible through GitHub, accessible using contribute link.
+          </p>
+          <p class="text-justify">
+            So if you want to support the project that I'm developing on my sparetime, feel free to give me some money for my coffees.
+          </p>
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="text-align: center;">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="5388RYAJFZJRQ">
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+          </form>
+        </div>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
+    <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/planit.js"></script>
+    <script src="assets/js/filters.js"></script>
+    <script src="assets/js/directives.js"></script>
+    <script src="assets/js/services.js"></script>
+    <script src="assets/js/controllers.js"></script>
+    
+
+  </body>
+</html>

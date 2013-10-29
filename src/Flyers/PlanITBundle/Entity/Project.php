@@ -42,16 +42,18 @@ class Project
     /**
      * @var \DateTime
      *
-     * @Constraints\Type("\DateTime")
+     * @Constraints\Type("\Datetime")
      *
-     * @ORM\Column(name="begin", type="datetime")
+     * @ORM\Column(name="begin", type="date")
      */
     private $begin;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="end", type="datetime")
+     * @Constraints\Type("\Datetime")
+     *
+     * @ORM\Column(name="end", type="date")
      */
     private $end;
 

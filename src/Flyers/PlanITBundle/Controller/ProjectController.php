@@ -63,8 +63,14 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
         $values = $request->request->get('project');
         $usersId = $values['users'];
 
-        foreach ($usersId as $id) {
-            $user = $userRepository->find($id);
+        if ( is_array($usersId) ) {
+            foreach ($usersId as $id) {
+                $user = $userRepository->find($id);
+                if (!is_null($user))
+                    $entity->addUser($user);
+            }
+        } else {
+            $user = $userRepository->find($usersId);
             if (!is_null($user))
                 $entity->addUser($user);
         }
@@ -129,8 +135,11 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
         
         $entity = $entityRepository->find($id);
 
-        $em->remove($entity);
-        $em->flush();
+        if (!is_null($entity))
+        {
+            $em->remove($entity);
+            $em->flush();
+        }
 
         return $this->view(null, Codes::HTTP_NO_CONTENT);
     }

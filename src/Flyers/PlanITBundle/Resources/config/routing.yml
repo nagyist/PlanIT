@@ -1,4 +1,4 @@
-album:
+project:
     type: rest
     resource: Flyers\PlanITBundle\Controller\ProjectController
 

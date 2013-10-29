@@ -53,6 +53,8 @@ class User extends BaseUser
     public function __construct()
     {
         $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct();
     }
     
     /**
