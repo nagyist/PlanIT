@@ -1,0 +1,19 @@
+        <div class="span6" ng-controller="RegisterCtrl">
+          <h2>Register</h2>
+          <form ng-submit="submit()">
+            <div class="alert alert-error" ng-show="error">
+              <p class="text-error">{[{error}]}</p>
+            </div>
+            <div class="alert alert-notice" ng-show="notice">
+              <p class="text-notice">{[{notice}]}</p>
+            </div>
+            <label>Your E-mail:</label>
+            <input type="email" placeholder="Enter your email..." name="login" class="input-xxlarge" ng-model="user.login">
+            <label>Your password</label>
+            <input type="password" name="password" class="input-xxlarge" ng-model="user.password">
+            <label>Confirm password</label>
+            <input type="password" name="password_confirm" class="input-xxlarge" ng-model="user.password_confirm">
+            <label></label>
+            <button type="submit" class="btn btn-inverse">Create a new account</button>
+          </form>
+        </div>

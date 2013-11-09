@@ -1,0 +1,14 @@
+        <div class="span6" ng-controller="LoginCtrl">
+          <h2>Login</h2>
+          <form ng-submit="submit()">
+            <div class="alert alert-error" ng-show="error">
+              <p class="text-error">{[{error}]}</p>
+            </div>
+            <label>Your E-mail :</label>
+            <input type="email" placeholder="Enter your email..." name="login" class="input-xxlarge" ng-model="user.login">
+            <label>Your Password :</label>
+            <input type="password" name="password" class="input-xxlarge" ng-model="user.password">
+            <label></label>
+            <button type="submit" class="btn btn-inverse">Login</button>
+          </form>
+        </div>

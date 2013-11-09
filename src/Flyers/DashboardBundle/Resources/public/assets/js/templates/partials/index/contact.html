@@ -1,0 +1,15 @@
+        <div class="span5" ng-controller="ContactCtrl">
+          <h2><a href="#" name="contact"></a>Contact Author</h2>
+          <form ng-submit="submit()">
+            <label>Your name</label>
+            <input type="text" placeholder="John Doe" name="name" ng-model="contact.name">
+            <label>Your email</label>
+            <input type="email" placeholder="john.doe@doe.com" name="mail" ng-model="contact.mail">
+            <label>Subject</label>
+            <input type="text" placeholder="Want a partnership" name="subject" ng-model="contact.subject">
+            <label>Message</label>
+            <textarea name="message" ng-model="contact.message"></textarea>
+            <label></label>
+            <button type="submit" class="btn btn-inverse">Send me a message</button>
+          </form>
+        </div>

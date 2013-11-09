@@ -4,6 +4,9 @@
   /* Services */
 
   angular.module('PlanIT.services', ['ngResource'])
+    .config(['$interpolateProvider', function($interpolateProvider){
+      $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+    }])
     .factory('Global', [function(){
       return {
         prefix: '/planit/app_dev.php'

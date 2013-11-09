@@ -1,3 +1,8 @@
+dashboard:
+    resource: "@DashboardBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 plan_it:
     resource: "@PlanITBundle/Controller/"
     type:     annotation
