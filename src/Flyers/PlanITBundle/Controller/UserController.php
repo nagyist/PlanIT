@@ -66,27 +66,33 @@ class UserController extends FOSRestController implements ClassResourceInterface
         $user = $um->findUserByUsername($email);
         if (!$user)
         {
-            return array(
-                'error' => 'error',
-                'message' => 'No User Found !'
-            );
+            $view = $this->view(
+                array(
+                    'error' => 'error',
+                    'message' => 'No User Found !'
+                ), 200);
+            return $this->handleView($view);
         }
         
         if (!$user->isEnabled())
         {
-            return array(
-                'error' => 'error',
-                'message' => 'Inactive user'
-            );
+            $view = $this->view(
+                array(
+                    'error' => 'error',
+                    'message' => 'Inactive user'
+                ), 200);
+            return $this->handleView($view);
         }
         
         $encoder = $es->getEncoder($user);
         $encoded_pass = $encoder->encodePassword($password, $user->getSalt());
         if ($user->getPassword() != $encoded_pass) {
-            return array(
-                'error' => 'error',
-                'message' => 'Invalid password'
-            );
+            $view = $this->view(
+                array(
+                    'error' => 'error',
+                    'message' => 'Invalid password'
+                ), 200);
+            return $this->handleView($view);
         }
 
         $token = new UsernamePasswordToken($user, $user->getPassword(), $providerKey, $user->getRoles());
@@ -94,10 +100,13 @@ class UserController extends FOSRestController implements ClassResourceInterface
         $context = $this->get('security.context');
         $context->setToken($token);
 
-        return array(
-            'error' => 'success',
-            'token' => $context->getToken(),
-        );
+        $view = $this->view(
+            array(
+                'error' => 'success',
+                'user' => $user,
+                'token' => $context->getToken(),
+            ), 200);
+        return $this->handleView($view);
 
     }
 
@@ -117,18 +126,22 @@ class UserController extends FOSRestController implements ClassResourceInterface
         $check = $um->findUserByUsername($email);
         if (!is_null($check))
         {
-            return array(
-                'error' => 'error',
-                'message' => 'User already exist'
-            );
+            $view = $this->view(
+                array(
+                    'error' => 'error',
+                    'message' => 'User already exist'
+                ), 200);
+            return $this->handleView($view);
         }
 
         if ($password != $password_confirm)
         {
-            return array(
-                'error' => 'error',
-                'message' => 'Invalid confirmation password'
-            );   
+            $view = $this->view(
+                array(
+                    'error' => 'error',
+                    'message' => 'Invalid confirmation password'
+                ), 200);
+            return $this->handleView($view);
         }
 
         $user = $um->createUser();
@@ -142,11 +155,13 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
         // TODO Send confirmation email
 
-        return array(
-            'error' => 'success',
-            'user' => $serializer->serialize($user, 'json'),
-            'message' => 'User created with success'
-        );
+        $view = $this->view(
+            array(
+                'error' => 'success',
+                'user' => $serializer->serialize($user, 'json'),
+                'message' => 'User created with success'
+            ), 200);
+        return $this->handleView($view);
 
     }
 

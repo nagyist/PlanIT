@@ -8,8 +8,9 @@
       .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         
         $routeProvider.when('/', {templateUrl: prefix+'/assets/js/templates/index.html', controller: 'HomeCtrl'});
-        $routeProvider.when('/project', {templateUrl: prefix+'/assets/js/templates/projects.html', controller: 'ProjectsCtrl'});
+        $routeProvider.when('/projects', {templateUrl: prefix+'/assets/js/templates/projects.html', controller: 'ProjectsCtrl'});
         $routeProvider.when('/project/:projectId', {templateUrl: prefix+'/assets/js/templates/project.html', controller: 'ProjectCtrl'});
+        $routeProvider.when('/project/add/:projectId', {templateUrl: prefix+'/assets/js/templates/project.html', controller: 'ProjectCtrl'});
         $routeProvider.otherwise({redirectTo: '/'});
         
       }]);

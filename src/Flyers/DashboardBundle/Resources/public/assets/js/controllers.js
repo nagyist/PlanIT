@@ -18,7 +18,8 @@
             if (data.error == "error") {
               $scope.error = data.message;
             } else {
-              $location.path('/project')
+              Global.user = data.user;
+              $location.path('/projects')
             }
           })
           .error(function(data,status,headers){
@@ -61,6 +62,33 @@
         contact.subject = $scope.contact.subject;
         contact.message = $scope.contact.message;
         contact.$send();
+      }
+    }])
+    .controller('ProjectsCtrl', [ '$scope', '$http', '$location', 'Global', function($scope, $http, $location, Global){
+      $scope.loadProjects = function() {
+        var cur_user = Global.user;
+        if (typeof cur_user == "undefined") $location.path('/');
+        $http({method:'GET', url:Global.prefix+'/api/projects/'+cur_user.id})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+              $scope.projects = data.projects;
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
+      };
+
+      $scope.openProject = function(id) {
+        $location.path('/project/'+id);
+      };
+
+      $scope.addParticipant = function(id) {
+        $location.path('/project/add/'+id);
       }
     }])
     

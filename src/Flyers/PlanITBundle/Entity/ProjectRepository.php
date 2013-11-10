@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProjectRepository extends EntityRepository
 {
+	public function findAllByUser($user)
+	{
+		# TODO edit SQL request
+		return $this->getEntityManager()
+					->createQuery(
+						"SELECT p FROM PlanITBundle:Project p ORDER BY p.begin DESC"
+						)
+					->getResult();
+	}
 }

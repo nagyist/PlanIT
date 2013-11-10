@@ -65,8 +65,6 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_rest:
-    view:
-        view_response_listener: force
     routing_loader:
         default_format: json
 

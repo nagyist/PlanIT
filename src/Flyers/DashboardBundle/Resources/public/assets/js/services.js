@@ -30,6 +30,13 @@
         });
       return Contact;
     }])
+    .factory('Projects', ['$resource', 'Global', function($resource, Global) {
+      var prefix = Global.prefix;
+      var Projects = $resource(prefix+'/api/projects',
+        {},
+        {});
+      return Projects;
+    }])
     
 
 }())

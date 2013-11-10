@@ -10,11 +10,12 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/hello/{name}", name="home")
-     * @Template()
      */
     public function indexAction($name)
     {
-        return array('name' => $name);
+        return $this->render(
+            "PlanITBundle:Default:index:html:twig"
+        );
     }
 
     /**
@@ -39,6 +40,9 @@ class DefaultController extends Controller
 
         $token = 'UsernameToken Username="'.$username.'", PasswordDigest="'.$digest.'", Nonce="'.$b64nonce.'", Created="'.$created.'"';
 
-        return array('token' => $token);
+        return $this->render(
+            "PlanITBundle:Default:token.htm.twig",
+            array('token' => $token)
+        );
     }
 }

@@ -11,10 +11,10 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
-        wsse_secured:
-            pattern: ^/api/.*
-            stateless: true
-            wsse: { lifetime: 30}
+#        wsse_secured:
+#            pattern: ^/api/.*
+#            stateless: true
+#            wsse: { lifetime: 30}
         main:
             pattern: ^/
             form_login:

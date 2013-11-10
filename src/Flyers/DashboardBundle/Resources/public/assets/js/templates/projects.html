@@ -1,11 +1,13 @@
-<div class="container-fluid" ng-controller="ProjectsCtrl">
+<div class="container-fluid" ng-controller="ProjectsCtrl" ng-init="loadProjects()">
 
 	<div class="row-fluid">
         <div class="span12">
-          <div class="span3 project">
-            <h3>Project Name</h3>
-            <p>Description</p>
-            <a href="#" ng-click="openProject()">Go to Project</a>
+          <div class="span3 project" ng-repeat="project in projects">
+            <h3>{[{project.name}]}</h3>
+            <p>{[{project.description}]}</p>
+            <p><a ng-href="/project/{[{project.id}]}" ng-click="openProject({[{project.id}]})">Go to Project</a></p>
+            <p><a ng-href="/project/add/{[{project.id}]}" ng-click="addParticipant({[{project.id}]})">Add participants</a></p>
+            <p><a href="">Share</a></p>
           </div>
         </div>
 	</div>

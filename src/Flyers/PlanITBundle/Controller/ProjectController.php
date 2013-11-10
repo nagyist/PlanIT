@@ -9,6 +9,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\Rest\Util\Codes;
 
+use Flyers\PlanITBundle\Entity\User;
 use Flyers\PlanITBundle\Entity\Project;
 use Flyers\PlanITBundle\Form\ProjectType;
 
@@ -16,17 +17,55 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
 {
     /**
      * @Rest\Get("/api/projects")
-     * @Rest\View()
      */
     public function cgetAction()
     {
         $em = $this->container->get("doctrine")->getManager();
         
         $entities = $em->getRepository("PlanITBundle:Project")->findAll();
-        
-        return array(
-            'entities' => $entities,
-        );
+
+        $view = $this->view($entities, 200);
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * @Rest\Get("/api/projects/{slug}")
+     */
+    public function getProjectsUserAction($slug)
+    {
+        $em = $this->container->get("doctrine")->getManager();
+
+        $id = intval($slug);
+
+        if ($id <= 0)
+        {
+            $view = $this->view(array(
+                    'error' => 'error',
+                    'message' => 'Invalid User'
+                ), 200);
+            return $this->handleView($view);
+        }
+
+        $user = $em->getRepository("PlanITBundle:User")->find($slug);
+        if (!$user)
+        {
+            $view = $this->view(array(
+                    'error' => 'error',
+                    'message' => 'No User Found !'
+                ), 200);
+            return $this->handleView($view);
+        }
+
+        $entities = $em->getRepository("PlanITBundle:Project")->findAllByUser($user);
+
+        $view = $this->view(array(
+            'error' => 'success',
+            'message' => '',
+            'projects' => $entities
+            ), 200);
+        return $this->handleView($view);
+
     }
 
     /**
