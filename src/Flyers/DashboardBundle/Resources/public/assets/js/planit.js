@@ -9,8 +9,9 @@
         
         $routeProvider.when('/', {templateUrl: prefix+'/assets/js/templates/index.html', controller: 'HomeCtrl'});
         $routeProvider.when('/projects', {templateUrl: prefix+'/assets/js/templates/projects.html', controller: 'ProjectsCtrl'});
+        $routeProvider.when('/project/new', {templateUrl: prefix+'/assets/js/templates/project/new.html', controller: 'ProjectCtrl'});
+        $routeProvider.when('/project/add/:projectId', {templateUrl: prefix+'/assets/js/templates/project/addParticipant.html', controller: 'ProjectCtrl'});        
         $routeProvider.when('/project/:projectId', {templateUrl: prefix+'/assets/js/templates/project.html', controller: 'ProjectCtrl'});
-        $routeProvider.when('/project/add/:projectId', {templateUrl: prefix+'/assets/js/templates/project.html', controller: 'ProjectCtrl'});
         $routeProvider.otherwise({redirectTo: '/'});
         
       }]);

@@ -68,6 +68,17 @@ class Project
      */
     private $users;
 
+    /**
+     * @var ArrayCollection $employees
+     *
+     * @ORM\ManyToMany(targetEntity="Employee")
+     * @ORM\JoinTable(
+     *      joinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="employee_id", referencedColumnName="id")}
+     * )
+     */
+    private $employees;
+
 
     /**
      * Get id
@@ -210,5 +221,38 @@ class Project
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Add employees
+     *
+     * @param \Flyers\PlanITBundle\Entity\Employee $employees
+     * @return Project
+     */
+    public function addEmployee(\Flyers\PlanITBundle\Entity\Employee $employees)
+    {
+        $this->employees[] = $employees;
+    
+        return $this;
+    }
+
+    /**
+     * Remove employees
+     *
+     * @param \Flyers\PlanITBundle\Entity\Employee $employees
+     */
+    public function removeEmployee(\Flyers\PlanITBundle\Entity\Employee $employees)
+    {
+        $this->employees->removeElement($employees);
+    }
+
+    /**
+     * Get employees
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEmployees()
+    {
+        return $this->employees;
     }
 }

@@ -1,0 +1,31 @@
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12" ng-controller="ProjectCtrl" ng-init="loadJob()">
+				<h2>Add a participant</h2>
+				<div class="alert alert-error" ng-show="error">
+	              <p class="text-error">{[{error}]}</p>
+	            </div>
+	            <div class="alert alert-notice" ng-show="notice">
+	              <p class="text-notice">{[{notice}]}</p>
+	            </div>
+	            <form ng-submit="addParticipant()">
+	            	<label for="lastname">Lastname</label>
+	            	<input type="text" placeholder="John" name="lastname" id="lastname" class="input-xxlarge" ng-model="participant.lastname">
+	            	<label for="firstname">Firstname</label>
+	            	<input type="text" placeholder="Doe" name="firstname" id="firstname" class="input-xxlarge" ng-model="participant.firstname">
+		            <label for="email">Email : </label>
+		            <input type="email" placeholder="john.doe@gmail.com" name="email" id="email" class="input-xxlarge" ng-model="participant.email">
+		            <label for="phone">Phone number</label>
+		            <input type="text" placeholder="555-2145" name="phone" id="phone" class="input-xxlarge" ng-model="participant.phone">
+		            <label for="salary">Salary</label>
+		            <input type="text" placeholder="100 $" name="salary" id="salary" class="input-xxlarge" ng-model="participant.salary">
+		            <label for="job">Job</label>
+		            <select class="input-xxlarge" id="job" name="job" ng-model="participant.job">
+		            	<option ng-repeat="job in jobs" value="{[{job.id}]}">{[{job.name}]}</option>
+		            </select>
+		            <label></label>
+		            <button class="btn btn-inverse">Add participant</button>
+	            </form>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,25 @@
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12" ng-controller="ProjectCtrl">
+				<h2>Add a project</h2>
+				<div class="alert alert-error" ng-show="error">
+	              <p class="text-error">{[{error}]}</p>
+	            </div>
+	            <div class="alert alert-notice" ng-show="notice">
+	              <p class="text-notice">{[{notice}]}</p>
+	            </div>
+	            <form ng-submit="new()">
+		            <label for="name">Name : </label>
+		            <input type="text" placeholder="Project name" name="name" class="input-xxlarge" ng-model="project.name" id="name">
+		            <label for="description">Description : </label>
+		            <textarea class="input-xxlarge" name="description" id="description" ng-model="project.description">Project description</textarea>
+		            <label for="begin">Estimated date of beginning : </label>
+		            <input type="text" name="begin" class="input-xxlarge" ng-model="project.begin" id="begin">
+		            <label for="end">Estimated date of ending : </label>
+		            <input type="text" name="end" class="input-xxlarge" ng-model="project.end" id="end">
+		            <label></label>
+		            <button class="btn btn-inverse">Add project</button>
+	            </form>
+			</div>
+		</div>
+	</div>
