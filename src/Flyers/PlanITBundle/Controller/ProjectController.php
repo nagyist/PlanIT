@@ -75,7 +75,6 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
 
     /**
      * @Rest\Get("/api/project/{id}")
-     * @Rest\View()
      */
     public function getAction($id)
     {
@@ -102,7 +101,6 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
     /**
      * params: name,description,begin,end,user
      * @Rest\Post("/api/project")
-     * @Rest\View()
      */
     public function cpostAction(Request $request)
     {
@@ -123,18 +121,18 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
         $project["begin"]["year"] = $tmpDatetime->format('Y');
         $project["begin"]["month"] = $tmpDatetime->format('m');
         $project["begin"]["day"] = $tmpDatetime->format('d');
-        $project["begin"]["hour"] = $tmpDatetime->format('H');
-        $project["begin"]["minute"] = $tmpDatetime->format('i');
-        $project["begin"]["second"] = $tmpDatetime->format('s');
+        //$project["begin"]["hour"] = $tmpDatetime->format('H');
+        //$project["begin"]["minute"] = $tmpDatetime->format('i');
+        //$project["begin"]["second"] = $tmpDatetime->format('s');
 
         $tmpDatetime = new \DateTime($request->request->get('end'));
         $project["end"] = array();
         $project["end"]["year"] = $tmpDatetime->format('Y');
         $project["end"]["month"] = $tmpDatetime->format('m');
         $project["end"]["day"] = $tmpDatetime->format('d');
-        $project["end"]["hour"] = $tmpDatetime->format('H');
-        $project["end"]["minute"] = $tmpDatetime->format('i');
-        $project["end"]["second"] = $tmpDatetime->format('s');
+        //$project["end"]["hour"] = $tmpDatetime->format('H');
+        //$project["end"]["minute"] = $tmpDatetime->format('i');
+        //$project["end"]["second"] = $tmpDatetime->format('s');
 
         $user = $em->getRepository("PlanITBundle:User")->find($userId);
         if (!$user) {
@@ -144,6 +142,8 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
                 ), 200);
             return $this->handleView($view);
         }
+
+        var_dump($project);
 
         $form->bind($project);
 

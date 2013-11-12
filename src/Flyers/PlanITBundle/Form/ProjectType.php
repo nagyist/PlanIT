@@ -15,6 +15,7 @@ class ProjectType extends AbstractType
             ->add('description')
             ->add('begin')
             ->add('end')
+            /*
             ->add('users', 'entity', 
                 array(
                     'class' => 'PlanITBundle:User',
@@ -22,6 +23,7 @@ class ProjectType extends AbstractType
                     'multiple' => true
                     )
                 )
+            */
         ;
     }
 
