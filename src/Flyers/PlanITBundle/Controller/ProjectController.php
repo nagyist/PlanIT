@@ -14,6 +14,7 @@ use Flyers\PlanITBundle\Entity\Project;
 use Flyers\PlanITBundle\Entity\Employee;
 use Flyers\PlanITBundle\Form\ProjectType;
 use Flyers\PlanITBundle\Form\EmployeeType;
+use Flyers\PlanITBundle\Form\ParticipantType;
 
 class ProjectController extends FOSRestController implements ClassResourceInterface
 {
@@ -115,24 +116,25 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
         $userId = intval($request->request->get('user'));
         $project["name"] = $request->request->get('name');
         $project["description"] = $request->request->get('description');
-        
-        $tmpDatetime = new \DateTime($request->request->get('begin'));
-        $project["begin"] = array();
-        $project["begin"]["year"] = $tmpDatetime->format('Y');
-        $project["begin"]["month"] = $tmpDatetime->format('m');
-        $project["begin"]["day"] = $tmpDatetime->format('d');
-        //$project["begin"]["hour"] = $tmpDatetime->format('H');
-        //$project["begin"]["minute"] = $tmpDatetime->format('i');
-        //$project["begin"]["second"] = $tmpDatetime->format('s');
 
-        $tmpDatetime = new \DateTime($request->request->get('end'));
-        $project["end"] = array();
-        $project["end"]["year"] = $tmpDatetime->format('Y');
-        $project["end"]["month"] = $tmpDatetime->format('m');
-        $project["end"]["day"] = $tmpDatetime->format('d');
-        //$project["end"]["hour"] = $tmpDatetime->format('H');
-        //$project["end"]["minute"] = $tmpDatetime->format('i');
-        //$project["end"]["second"] = $tmpDatetime->format('s');
+        $begin  = \DateTime::createFromFormat('d/m/Y', $request->request->get('begin'));
+        $end    = \DateTime::createFromFormat('d/m/Y', $request->request->get('end'));
+
+        $begin  = ($begin) ? $begin : null;
+        $end    = ($end) ? $end : null;
+
+        if ( is_null($begin) ) $project['begin'] = $begin;
+        else { 
+            $project['begin']['year'] = $begin->format('Y'); 
+            $project['begin']['month'] = $begin->format('m'); 
+            $project['begin']['day'] = $begin->format('d'); 
+        }
+        if ( is_null($end) ) $project['end'] = $end;
+        else {
+            $project['end']['year'] = $end->format('Y');
+            $project['end']['month'] = $end->format('m');
+            $project['end']['day'] = $end->format('d');
+        }
 
         $user = $em->getRepository("PlanITBundle:User")->find($userId);
         if (!$user) {
@@ -142,8 +144,6 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
                 ), 200);
             return $this->handleView($view);
         }
-
-        var_dump($project);
 
         $form->bind($project);
 
@@ -268,7 +268,7 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
             $employee = new Employee();
         }
 
-        $form = $this->createForm(new EmployeeType(), $employee);
+        $form = $this->createForm(new ParticipantType(), $employee);
 
         $project = $projectRepository->find($id);
         if(!$project)
@@ -280,37 +280,36 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
             return $this->handleView($view);
         }
 
-        $job = $jobRepository->find($request->request->get('job'));
-        if(!$job) 
-        {
-            $view = $this->view(array(
-                'error' => 'error',
-                'message' => 'Job not found !'
-                ), 200);
-            return $this->handleView($view);
+        if (is_null($request->request->get('job'))) {
+            $job = null;
+        } else {
+            $job = $jobRepository->find($request->request->get('job'));
+            if(!$job)
+                $job = null;
         }
 
         $participant = array();
         $participant["lastname"] = $request->request->get('lastname');
         $participant["firstname"] = $request->request->get('firstname');
         $participant["phone"] = $request->request->get('phone');
-        $participant["salary"] = $request->request->get('salary');
+        $participant["salary"] = floatval( $request->request->get('salary') );
         $participant["email"] = $request->request->get('email');
-        // TODO correct external entity bind
-        $participant["projects"] = array($project);
-        $participant["job"] = $job;
+        
+        if (!is_null($job)) $participant["job"] = $job->getName();
+        else $participant["job"] = $job;
 
         $form->bind($participant);
 
         if ($form->isValid())
         {
+            $employee->addProject($project);
             $em->persist($employee);
             $em->flush();
 
             $view = $this->view(array(
                 'error' => 'success',
                 'message' => 'Participant added with success',
-                'project' => $entity
+                'project' => $employee
                 ), 200);
             return $this->handleView($view);
         }

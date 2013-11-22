@@ -6,20 +6,19 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProjectType extends AbstractType
+class ParticipantType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('begin', 'date', array(
-                'format' => 'dd/MM/yyyy',
-                'input' => 'array'
-                ))
-            ->add('end', 'date', array(
-                'format' => 'dd/MM/yyyy',
-                'input' => 'array'
+            ->add('lastname')
+            ->add('firstname')
+            ->add('email')
+            ->add('phone')
+            ->add('salary')
+            ->add('job', 'entity', array(
+                'class' => 'PlanITBundle:Job',
+                'property' => 'name'
                 ))
         ;
     }
@@ -27,13 +26,13 @@ class ProjectType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Flyers\PlanITBundle\Entity\Project',
+            'data_class' => 'Flyers\PlanITBundle\Entity\Employee',
             'csrf_protection' => false
         ));
     }
 
     public function getName()
     {
-        return 'project';
+        return 'flyers_planitbundle_participanttype';
     }
 }

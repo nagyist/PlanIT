@@ -1,0 +1,25 @@
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12" ng-controller="TaskCtrl" ng-init="loadEmployees()">
+				<h2>Add a task</h2>
+				<div class="alert alert-error" ng-show="error">
+	              <p class="text-error">{[{error}]}</p>
+	            </div>
+	            <div class="alert alert-notice" ng-show="notice">
+	              <p class="text-notice">{[{notice}]}</p>
+	            </div>
+	            <form ng-submit="new()">
+		            <label for="name">Name : </label>
+		            <input type="text" placeholder="Improve web portal" name="name" class="input-xxlarge" ng-model="task.name" id="name">
+		            <label for="description">Description : </label>
+		            <textarea class="input-xxlarge" name="description" id="description" ng-model="task.description"></textarea>
+		            <label for="employees">Assigned to : </label>
+		            <select class="input-xxlarge" name="employees" ng-model="task.employees">
+		            	<option>John Doe</option>
+		            </select>
+		            <label></label>
+		            <button class="btn btn-inverse">Add task</button>
+	            </form>
+			</div>
+		</div>
+	</div>

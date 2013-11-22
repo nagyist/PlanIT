@@ -1,0 +1,15 @@
+<div class="container-fluid" ng-controller="TasksCtrl" ng-init="loadTasks()">
+
+	<div class="row-fluid">
+        <div class="span12">
+          <p><a href="/planit/app_dev.php#/tasks/new">Create new Task</a></p>
+          <div class="span3 task" ng-repeat="task in tasks">
+            <h3>{[{task.name}]}</h3>
+            <p>{[{task.description}]}</p>
+            <!-- TODO remove prefix -->
+            <p><a href="/planit/app_dev.php#/task/edit/{[{project.id}]}">Edit Task</a></p>
+          </div>
+        </div>
+	</div>
+
+</div>

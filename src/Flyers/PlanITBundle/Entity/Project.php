@@ -42,16 +42,12 @@ class Project
     /**
      * @var \DateTime
      *
-     * @Constraints\Type("\Date")
-     *
      * @ORM\Column(name="begin", type="date")
      */
     private $begin;
 
     /**
      * @var \DateTime
-     *
-     * @Constraints\Type("\Date")
      *
      * @ORM\Column(name="end", type="date")
      */
@@ -71,11 +67,7 @@ class Project
     /**
      * @var ArrayCollection $employees
      *
-     * @ORM\ManyToMany(targetEntity="Employee")
-     * @ORM\JoinTable(
-     *      joinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="employee_id", referencedColumnName="id")}
-     * )
+     * @ORM\ManyToMany(targetEntity="Employee", mappedBy="projects")
      */
     private $employees;
 
@@ -188,6 +180,7 @@ class Project
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->employees = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**

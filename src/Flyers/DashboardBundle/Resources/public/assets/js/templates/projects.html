@@ -9,9 +9,25 @@
             <!-- TODO remove prefix -->
             <p><a ng-href="/planit/app_dev.php#/project/{[{project.id}]}" ng-click="openProject({[{project.id}]})">Go to Project</a></p>
             <p><a ng-href="/planit/app_dev.php#/project/add/{[{project.id}]}" ng-click="addParticipant({[{project.id}]})">Add participants</a></p>
-            <p><a href="/planit/app_dev.php#/project/new">Create new Project</a></p>
+            <p><a href="/planit/app_dev.php#/project/edit/{[{project.id}]}">Edit Project</a></p>
           </div>
         </div>
 	</div>
+
+</div>
+
+<div class="container-fluid" ng-controller="EmployeesCtrl" ng-init="loadEmployees()">
+
+  <div class="row-fluid">
+        <div class="span12">
+          <p><a href="/planit/app_dev.php#/employee/new">Create new Staff member</a></p>
+          <div class="span3 employee" ng-repeat="employee in employees">
+            <h3>{[{employee.name}]}</h3>
+            <p>{[{employee.description}]}</p>
+            <!-- TODO remove prefix -->
+            <p><a href="/planit/app_dev.php#/employee/edit/{[{employee.id}]}">Edit Staff member informations</a></p>
+          </div>
+        </div>
+  </div>
 
 </div>
