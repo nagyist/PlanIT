@@ -8,14 +8,13 @@
 	            <div class="alert alert-notice" ng-show="notice">
 	              <p class="text-notice">{[{notice}]}</p>
 	            </div>
-	            <form ng-submit="new()">
+	            <form ng-submit="addTask()">
 		            <label for="name">Name : </label>
 		            <input type="text" placeholder="Improve web portal" name="name" class="input-xxlarge" ng-model="task.name" id="name">
 		            <label for="description">Description : </label>
 		            <textarea class="input-xxlarge" name="description" id="description" ng-model="task.description"></textarea>
 		            <label for="employees">Assigned to : </label>
-		            <select class="input-xxlarge" name="employees" ng-model="task.employees">
-		            	<option>John Doe</option>
+		            <select class="input-xxlarge" name="employees" ng-model="task.employees" ng-options="employee.id as (employee.firstname+' '+employee.lastname) for employee in employees">
 		            </select>
 		            <label></label>
 		            <button class="btn btn-inverse">Add task</button>

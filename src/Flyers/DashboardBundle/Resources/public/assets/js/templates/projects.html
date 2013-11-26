@@ -2,13 +2,13 @@
 
 	<div class="row-fluid">
         <div class="span12">
+          <h2>Projects</h2>
           <p><a href="/planit/app_dev.php#/project/new">Create new Project</a></p>
           <div class="span3 project" ng-repeat="project in projects">
             <h3>{[{project.name}]}</h3>
             <p>{[{project.description}]}</p>
             <!-- TODO remove prefix -->
             <p><a ng-href="/planit/app_dev.php#/project/{[{project.id}]}" ng-click="openProject({[{project.id}]})">Go to Project</a></p>
-            <p><a ng-href="/planit/app_dev.php#/project/add/{[{project.id}]}" ng-click="addParticipant({[{project.id}]})">Add participants</a></p>
             <p><a href="/planit/app_dev.php#/project/edit/{[{project.id}]}">Edit Project</a></p>
           </div>
         </div>
@@ -20,10 +20,12 @@
 
   <div class="row-fluid">
         <div class="span12">
+          <h2>Staff</h2>
           <p><a href="/planit/app_dev.php#/employee/new">Create new Staff member</a></p>
           <div class="span3 employee" ng-repeat="employee in employees">
-            <h3>{[{employee.name}]}</h3>
-            <p>{[{employee.description}]}</p>
+            <h3>{[{employee.firstname}]} {[{employee.lastname}]}</h3>
+            <p>{[{employee.email}]}</p>
+            <p>{[{employee.phone}]}</p>
             <!-- TODO remove prefix -->
             <p><a href="/planit/app_dev.php#/employee/edit/{[{employee.id}]}">Edit Staff member informations</a></p>
           </div>

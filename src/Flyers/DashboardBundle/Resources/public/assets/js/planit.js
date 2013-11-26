@@ -19,11 +19,25 @@
         // Employees
         $routeProvider.when('/employee/new', {templateUrl: prefix+'/assets/js/templates/employee/new.html', controller: 'EmployeeCtrl'});
         $routeProvider.when('/employee/edit/:employeeId', {templateUrl: prefix+'/assets/js/templates/employee/edit.html', controller: 'EmployeeCtrl'});        
+
+        // Jobs
+        $routeProvider.when('/job/new', {templateUrl: prefix+'/assets/js/templates/job/new.html', controller: 'JobCtrl'});
         
         // Tasks
         $routeProvider.when('/tasks/:projectId', {templateUrl: prefix+'/assets/js/templates/tasks.html', controller: 'TasksCtrl'});
         $routeProvider.when('/task/new/:projectId', {templateUrl: prefix+'/assets/js/templates/task/new.html', controller: 'TaskCtrl'});
         $routeProvider.when('/task/edit/:taskId', {templateUrl: prefix+'/assets/js/templates/task/edit.html', controller: 'TaskCtrl'});
+        $routeProvider.when('/calendar/:projectId', {templateUrl: prefix+'/assets/js/templates/calendar.html', controller: 'TaskCtrl'});
+
+        // Charges
+        $routeProvider.when('/charges/:projectId', {templateUrl: prefix+'/assets/js/templates/charges.html', controller: 'ChargesCtrl'});
+        $routeProvider.when('/charge/new/:projectId', {templateUrl: prefix+'/assets/js/templates/charge/new.html', controller: 'ChargeCtrl'});
+
+        // Graphics
+        $routeProvider.when('/gantt/:projectId', {templateUrl: prefix+'/assets/js/templates/gantt.html', controller: 'GanttCtrl'});
+        $routeProvider.when('/pert/:projectId', {templateUrl: prefix+'/assets/js/templates/pert.html', controller: 'PertCtrl'});
+        $routeProvider.when('/burndown/:projectId', {templateUrl: prefix+'/assets/js/templates/burndown.html', controller: 'BurndownCtrl'});
+
         $routeProvider.otherwise({redirectTo: '/'});
         
       }]);

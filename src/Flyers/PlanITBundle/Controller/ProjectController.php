@@ -111,30 +111,22 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
         $entity = new Project();
         $form = $this->createForm(new ProjectType(), $entity);
         
-        $project = array();
+        $data = array();
 
         $userId = intval($request->request->get('user'));
-        $project["name"] = $request->request->get('name');
-        $project["description"] = $request->request->get('description');
+        $data["name"] = $request->request->get('name');
+        $data["description"] = $request->request->get('description');
+        $data["begin"]   = null;
+        $data["end"]     = null;
 
         $begin  = \DateTime::createFromFormat('d/m/Y', $request->request->get('begin'));
         $end    = \DateTime::createFromFormat('d/m/Y', $request->request->get('end'));
 
-        $begin  = ($begin) ? $begin : null;
-        $end    = ($end) ? $end : null;
+        $begin  = ($begin) ? $begin->format('d/m/Y') : null;
+        $end    = ($end) ? $end->format('d/m/Y') : null;
 
-        if ( is_null($begin) ) $project['begin'] = $begin;
-        else { 
-            $project['begin']['year'] = $begin->format('Y'); 
-            $project['begin']['month'] = $begin->format('m'); 
-            $project['begin']['day'] = $begin->format('d'); 
-        }
-        if ( is_null($end) ) $project['end'] = $end;
-        else {
-            $project['end']['year'] = $end->format('Y');
-            $project['end']['month'] = $end->format('m');
-            $project['end']['day'] = $end->format('d');
-        }
+        if ( !is_null($begin) ) $data['begin'] = $begin;
+        if ( !is_null($end) ) $data['end'] = $end;
 
         $user = $em->getRepository("PlanITBundle:User")->find($userId);
         if (!$user) {
@@ -145,7 +137,7 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
             return $this->handleView($view);
         }
 
-        $form->bind($project);
+        $form->bind($data);
 
         if ($form->isValid()) {
             $entity->addUser($user);
@@ -187,11 +179,23 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
         }
         $form = $this->createForm(new ProjectType(), $entity);
 
-        $project = array();
+        $data = array();
 
-        $project["name"] = $request->request->get('name');
-        $project["description"] = $request->request->get('description');
+        $data["name"] = $request->request->get('name');
+        $data["description"] = $request->request->get('description');
+        $data["begin"]   = null;
+        $data["end"]     = null;
+
+        $begin  = \DateTime::createFromFormat('d/m/Y', $request->request->get('begin'));
+        $end    = \DateTime::createFromFormat('d/m/Y', $request->request->get('end'));
+
+        $begin  = ($begin) ? $begin->format('d/m/Y') : null;
+        $end    = ($end) ? $end->format('d/m/Y') : null;
+
+        if ( !is_null($begin) ) $data['begin'] = $begin;
+        if ( !is_null($end) ) $data['end'] = $end;
         
+/*        
         $tmpDatetime = new \DateTime($request->request->get('begin'));
         $project["begin"] = array();
         $project["begin"]["year"] = $tmpDatetime->format('Y');
@@ -209,8 +213,9 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
         $project["end"]["hour"] = $tmpDatetime->format('H');
         $project["end"]["minute"] = $tmpDatetime->format('i');
         $project["end"]["second"] = $tmpDatetime->format('s');
+*/        
 
-        $form->bind($request);
+        $form->bind($data);
 
         if ($form->isValid()) {
             $em->persist($entity);
@@ -255,6 +260,7 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
      * @Rest\Post("/api/participant/add/{id}")
      * @Rest\View()
      */
+    /*
     public function participantAddAction(Request $request, $id)
     {
         $em = $this->container->get("doctrine")->getManager();
@@ -323,5 +329,6 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
         }
 
     }
+    */
 
 }

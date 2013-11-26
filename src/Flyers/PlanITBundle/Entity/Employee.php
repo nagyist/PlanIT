@@ -59,7 +59,7 @@ class Employee
     /**
      * @var Flyers\PlanITBundle\Entity\Job $job
      *
-     * @ORM\OneToOne(targetEntity="Job")
+     * @ORM\ManyToOne(targetEntity="Job", inversedBy="employees")
      * @ORM\JoinColumn(name="job_id", referencedColumnName="id")
      **/
     private $job;
@@ -76,15 +76,12 @@ class Employee
     private $tasks;
 
     /**
-     * @var ArrayCollection $projects
+     * @var Flyers\PlanITBundle\Entity\User $user
      *
-     * @ORM\ManyToMany(targetEntity="Project")
-     * @ORM\JoinTable(
-     *      joinColumns={@ORM\JoinColumn(name="employee_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id")}
-     * )
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="employees")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $projects;
+    private $user;
 
 
     /**
@@ -277,35 +274,25 @@ class Employee
     }
 
     /**
-     * Add projects
+     * Set user
      *
-     * @param \Flyers\PlanITBundle\Entity\Project $projects
+     * @param \Flyers\PlanITBundle\Entity\User $user
      * @return Employee
      */
-    public function addProject(\Flyers\PlanITBundle\Entity\Project $projects)
+    public function setUser(\Flyers\PlanITBundle\Entity\User $user = null)
     {
-        $this->projects[] = $projects;
+        $this->user = $user;
     
         return $this;
     }
 
     /**
-     * Remove projects
+     * Get user
      *
-     * @param \Flyers\PlanITBundle\Entity\Project $projects
+     * @return \Flyers\PlanITBundle\Entity\User 
      */
-    public function removeProject(\Flyers\PlanITBundle\Entity\Project $projects)
+    public function getUser()
     {
-        $this->projects->removeElement($projects);
-    }
-
-    /**
-     * Get projects
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getProjects()
-    {
-        return $this->projects;
+        return $this->user;
     }
 }

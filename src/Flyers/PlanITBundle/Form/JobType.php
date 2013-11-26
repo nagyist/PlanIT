@@ -19,7 +19,8 @@ class JobType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Flyers\PlanITBundle\Entity\Job'
+            'data_class' => 'Flyers\PlanITBundle\Entity\Job',
+            'csrf_protection' => false
         ));
     }
 

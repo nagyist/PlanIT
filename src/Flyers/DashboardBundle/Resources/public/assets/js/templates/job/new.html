@@ -1,0 +1,21 @@
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12" ng-controller="JobCtrl" ng-init="checkUser()">
+				<h2>Add a job</h2>
+				<div class="alert alert-error" ng-show="error">
+	              <p class="text-error">{[{error}]}</p>
+	            </div>
+	            <div class="alert alert-notice" ng-show="notice">
+	              <p class="text-notice">{[{notice}]}</p>
+	            </div>
+	            <form ng-submit="addJob()">
+		            <label for="name">Name : </label>
+		            <input type="text" placeholder="Developer" name="name" class="input-xxlarge" ng-model="job.name" id="name">
+		            <label for="description">Description : </label>
+		            <textarea class="input-xxlarge" name="description" id="description" ng-model="job.description"></textarea>
+		            <label></label>
+		            <button class="btn btn-inverse">Add job</button>
+	            </form>
+			</div>
+		</div>
+	</div>

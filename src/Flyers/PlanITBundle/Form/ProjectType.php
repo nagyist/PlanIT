@@ -14,12 +14,12 @@ class ProjectType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('begin', 'date', array(
-                'format' => 'dd/MM/yyyy',
-                'input' => 'array'
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy'
                 ))
             ->add('end', 'date', array(
-                'format' => 'dd/MM/yyyy',
-                'input' => 'array'
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy'
                 ))
         ;
     }

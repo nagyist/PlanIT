@@ -35,6 +35,13 @@ class Job
      */
     private $description;
 
+    /**
+     * @var ArrayCollection $employees
+     *
+     * @ORM\OneToMany(targetEntity="Employee", mappedBy="job")
+     */
+    private $employees;
+
 
     /**
      * Get id
@@ -90,5 +97,45 @@ class Job
     public function getDescription()
     {
         return $this->description;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->employees = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add employees
+     *
+     * @param \Flyers\PlanITBundle\Entity\Employee $employees
+     * @return Job
+     */
+    public function addEmployee(\Flyers\PlanITBundle\Entity\Employee $employees)
+    {
+        $this->employees[] = $employees;
+    
+        return $this;
+    }
+
+    /**
+     * Remove employees
+     *
+     * @param \Flyers\PlanITBundle\Entity\Employee $employees
+     */
+    public function removeEmployee(\Flyers\PlanITBundle\Entity\Employee $employees)
+    {
+        $this->employees->removeElement($employees);
+    }
+
+    /**
+     * Get employees
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEmployees()
+    {
+        return $this->employees;
     }
 }

@@ -142,13 +142,32 @@
           })
       };
 
-      $scope.new = function() {
+      $scope.addProject = function() {
         var project = $scope.project;
-        console.log(project);
 
         $scope.checkUser();
 
         $http({method:'POST',url:Global.prefix+'/api/project',data:{user:$scope.cur_user.id,name:project.name,description:project.description,begin:project.begin,end:project.end}})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+              $scope.notice = data.message;
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
+      };
+
+      $scope.editProject = function() {
+        var project = $scope.project;
+
+        $scope.checkUser();
+
+        $http({method:'PUT',url:Global.prefix+'/api/project/'+project.id,data:{user:$scope.cur_user.id,name:project.name,description:project.description,begin:project.begin,end:project.end}})
           .success(function(data,status,headers){
             if(data.error == "error") {
               $scope.error = data.message;
@@ -199,7 +218,7 @@
             if(data.error == "error") {
               $scope.error = data.message;
             } else {
-              $scope.projects = data.projects;
+              $scope.employees = data.employees;
             }
           })
           .error(function(data,status,headers){
@@ -210,6 +229,30 @@
       }
 
     }])
+    .controller('JobCtrl', ['$scope', '$http', '$location', '$routeParams', 'Global', function($scope, $http, $location, $routeParams, Global){
+      $scope.checkUser = function() {
+        $scope.cur_user = Global.user;
+        if(typeof $scope.cur_user == "undefined") $location.path('/');
+      };
+
+      $scope.addJob = function() {
+        var job = $scope.job;
+
+        $http({method:'POST', url:Global.prefix+'/api/job',data:{name:job.name,description:job.description}})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+              $scope.notice = data.message;
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
+      };
+    }])
     .controller('EmployeeCtrl', ['$scope', '$http', '$location', '$routeParams', 'Global', function($scope, $http, $location, $routeParams, Global) {
       $scope.checkUser = function() {
         $scope.cur_user = Global.user;
@@ -218,13 +261,13 @@
 
       $scope.loadJob = function() {
         $scope.checkUser();
+        $scope.employee = {};
 
         $http({method:'GET', url:Global.prefix+'/api/jobs'})
           .success(function(data,status,headers){
             if(data.error == "error") {
               $scope.error = data.message;
             } else {
-              console.log(data);
               $scope.jobs = data.jobs;
             }
           })
@@ -236,9 +279,9 @@
       }
 
       $scope.loadEmployee = function() {
-        $scope.checkUser();
-
         $scope.employeeId = $routeParams.employeeId;
+
+        $scope.loadJob();
 
         $http({method:'GET', url:Global.prefix+'/api/employee/'+$scope.employeeId})
           .success(function(data,status,headers){
@@ -255,12 +298,44 @@
           })
       }
 
-      $scope.new = function() {
+      $scope.addEmployee = function() {
+        var employee = $scope.employee;
 
+        $scope.checkUser();
+
+        $http({method:'POST',url:Global.prefix+'/api/employee',data:{user:$scope.cur_user.id,lastname:employee.lastname,firstname:employee.firstname,email:employee.email,phone:employee.phone,salary:employee.salary,job:employee.job}})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+              $scope.notice = data.message;
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
       }
 
-      $scope.edit = function () {
+      $scope.editEmployee = function () {
+        var employee = $scope.employee;
 
+        $scope.checkUser();
+
+        $http({method:'PUT',url:Global.prefix+'/api/employee/'+employee.id,data:{user:$scope.cur_user.id,lastname:employee.lastname,firstname:employee.firstname,email:employee.email,phone:employee.phone,salary:employee.salary,job:employee.job}})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+              $scope.notice = data.message;
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
       }
     }])
     .controller('TasksCtrl', ['$scope', '$http', '$location', '$routeParams','Global', function($scope, $http, $location, $routeParams, Global) {
@@ -299,8 +374,44 @@
       $scope.loadEmployees = function() {
         $scope.checkUser();
 
-
+        $http({method:'GET', url:Global.prefix+'/api/employees/'+$scope.cur_user.id})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+              $scope.employees = data.employees;
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
       }
+
+      $scope.addTask = function() {
+        var task = $scope.task;
+
+        $scope.checkUser();
+
+        $scope.projectId = $routeParams.projectId;
+
+        $http({method:'POST',url:Global.prefix+'/api/task',data:{user:$scope.cur_user.id,project:$scope.projectId,name:task.name,description:task.description,employees:task.employees}})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+              $scope.notice = data.message;
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
+      }
+
+      
     }])
 
 }())

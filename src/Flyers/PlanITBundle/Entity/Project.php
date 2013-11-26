@@ -64,13 +64,6 @@ class Project
      */
     private $users;
 
-    /**
-     * @var ArrayCollection $employees
-     *
-     * @ORM\ManyToMany(targetEntity="Employee", mappedBy="projects")
-     */
-    private $employees;
-
 
     /**
      * Get id
@@ -216,36 +209,4 @@ class Project
         return $this->users;
     }
 
-    /**
-     * Add employees
-     *
-     * @param \Flyers\PlanITBundle\Entity\Employee $employees
-     * @return Project
-     */
-    public function addEmployee(\Flyers\PlanITBundle\Entity\Employee $employees)
-    {
-        $this->employees[] = $employees;
-    
-        return $this;
-    }
-
-    /**
-     * Remove employees
-     *
-     * @param \Flyers\PlanITBundle\Entity\Employee $employees
-     */
-    public function removeEmployee(\Flyers\PlanITBundle\Entity\Employee $employees)
-    {
-        $this->employees->removeElement($employees);
-    }
-
-    /**
-     * Get employees
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getEmployees()
-    {
-        return $this->employees;
-    }
 }

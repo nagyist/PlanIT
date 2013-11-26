@@ -8,7 +8,7 @@
 	            <div class="alert alert-notice" ng-show="notice">
 	              <p class="text-notice">{[{notice}]}</p>
 	            </div>
-	            <form ng-submit="edit()">
+	            <form ng-submit="editEmployee()">
 	            	<label for="lastname">Lastname :</label>
 	            	<input type="text" placeholder="John" name="lastname" id="lastname" class="input-xxlarge" ng-model="employee.lastname" value="{[{ employee.lastname }]}">
 	            	<label for="firstname">Firstname :</label>
@@ -20,11 +20,12 @@
 		            <label for="salary">Salary :</label>
 		            <input type="text" placeholder="100 $" name="salary" id="salary" class="input-xxlarge" ng-model="employee.salary" value="{[{ employee.salary }]}">
 		            <label for="job">Job :</label>
-		            <select class="input-xxlarge" id="job" name="job" ng-model="employee.job">
-		            	<option ng-repeat="job in jobs" value="{[{job.id}]}">{[{job.name}]}</option>
+		            <select class="input-xxlarge" id="job" name="job" ng-model="employee.job" ng-options="job.id as job.name for job in jobs" ng-selected="">
 		            </select>
-		            <a href="">Create a new job</a>
+		            <!-- TODO remove prefix -->
+		            <a href="/planit/app_dev.php#/job/new">Create a new job</a>
 		            <label></label>
+		            <input type="hidden" name="id" ng-model="employee.id" value="{[{ employee.id }]}">
 		            <button class="btn btn-inverse">Save staff member</button>
 	            </form>
 			</div>

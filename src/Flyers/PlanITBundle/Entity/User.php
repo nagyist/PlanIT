@@ -38,6 +38,13 @@ class User extends BaseUser
     private $projects;
 
     /**
+     * @var ArrayCollection $employees
+     *
+     * @ORM\OneToMany(targetEntity="Employee", mappedBy="user")
+     */
+    private $employees;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -88,5 +95,38 @@ class User extends BaseUser
     public function getProjects()
     {
         return $this->projects;
+    }
+
+    /**
+     * Add employees
+     *
+     * @param \Flyers\PlanITBundle\Entity\Employee $employees
+     * @return User
+     */
+    public function addEmployee(\Flyers\PlanITBundle\Entity\Employee $employees)
+    {
+        $this->employees[] = $employees;
+    
+        return $this;
+    }
+
+    /**
+     * Remove employees
+     *
+     * @param \Flyers\PlanITBundle\Entity\Employee $employees
+     */
+    public function removeEmployee(\Flyers\PlanITBundle\Entity\Employee $employees)
+    {
+        $this->employees->removeElement($employees);
+    }
+
+    /**
+     * Get employees
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEmployees()
+    {
+        return $this->employees;
     }
 }
