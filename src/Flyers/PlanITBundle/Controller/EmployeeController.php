@@ -10,11 +10,8 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\Rest\Util\Codes;
 
 use Flyers\PlanITBundle\Entity\User;
-use Flyers\PlanITBundle\Entity\Project;
 use Flyers\PlanITBundle\Entity\Employee;
-use Flyers\PlanITBundle\Form\ProjectType;
 use Flyers\PlanITBundle\Form\EmployeeType;
-use Flyers\PlanITBundle\Form\ParticipantType;
 
 class EmployeeController extends FOSRestController implements ClassResourceInterface
 {

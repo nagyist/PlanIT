@@ -13,8 +13,10 @@
 		            <input type="text" placeholder="Improve web portal" name="name" class="input-xxlarge" ng-model="task.name" id="name">
 		            <label for="description">Description : </label>
 		            <textarea class="input-xxlarge" name="description" id="description" ng-model="task.description"></textarea>
+		            <label for="estimate">Estimated time : </label>
+		            <input type="text" placeholder="2 days" name="estimate" class="input-xxlarge" ng-model="task.estimate" id="estimate">
 		            <label for="employees">Assigned to : </label>
-		            <select class="input-xxlarge" name="employees" ng-model="task.employees" ng-options="employee.id as (employee.firstname+' '+employee.lastname) for employee in employees">
+		            <select class="input-xxlarge" name="employees" multiple ng-model="task.employees" ng-options="employee.id as (employee.firstname+' '+employee.lastname) for employee in employees">
 		            </select>
 		            <label></label>
 		            <button class="btn btn-inverse">Add task</button>

@@ -11,10 +11,7 @@ use FOS\Rest\Util\Codes;
 
 use Flyers\PlanITBundle\Entity\User;
 use Flyers\PlanITBundle\Entity\Project;
-use Flyers\PlanITBundle\Entity\Employee;
 use Flyers\PlanITBundle\Form\ProjectType;
-use Flyers\PlanITBundle\Form\EmployeeType;
-use Flyers\PlanITBundle\Form\ParticipantType;
 
 class ProjectController extends FOSRestController implements ClassResourceInterface
 {

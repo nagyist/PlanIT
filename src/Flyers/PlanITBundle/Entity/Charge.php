@@ -29,17 +29,16 @@ class Charge
     private $description;
 
     /**
-     * @var Flyers\PlanITBundle\Entity\User $user
+     * @var float
      *
-     * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     **/
-    private $user;
+     * @ORM\Column(name="duration", type="decimal")
+     */
+    private $duration;
 
     /**
      * @var Flyers\PlanITBundle\Entity\Employee $employee
      *
-     * @ORM\OneToOne(targetEntity="Employee")
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="charges")
      * @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
      **/
     private $employee;
@@ -47,7 +46,7 @@ class Charge
     /**
      * @var Flyers\PlanITBundle\Entity\Task $task
      *
-     * @ORM\OneToOne(targetEntity="Task")
+     * @ORM\ManyToOne(targetEntity="Task", inversedBy="charges")
      * @ORM\JoinColumn(name="task_id", referencedColumnName="id")
      **/
     private $task;
@@ -153,5 +152,28 @@ class Charge
     public function getTask()
     {
         return $this->task;
+    }
+
+    /**
+     * Set duration
+     *
+     * @param float $duration
+     * @return Charge
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+    
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return float 
+     */
+    public function getDuration()
+    {
+        return $this->duration;
     }
 }

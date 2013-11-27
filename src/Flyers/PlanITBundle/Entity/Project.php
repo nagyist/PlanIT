@@ -64,6 +64,13 @@ class Project
      */
     private $users;
 
+    /**
+     * @var ArrayCollection $tasks
+     *
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="project")
+     */
+    private $tasks;
+
 
     /**
      * Get id
@@ -209,4 +216,37 @@ class Project
         return $this->users;
     }
 
+
+    /**
+     * Add tasks
+     *
+     * @param \Flyers\PlanITBundle\Entity\Task $tasks
+     * @return Project
+     */
+    public function addTask(\Flyers\PlanITBundle\Entity\Task $tasks)
+    {
+        $this->tasks[] = $tasks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove tasks
+     *
+     * @param \Flyers\PlanITBundle\Entity\Task $tasks
+     */
+    public function removeTask(\Flyers\PlanITBundle\Entity\Task $tasks)
+    {
+        $this->tasks->removeElement($tasks);
+    }
+
+    /**
+     * Get tasks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
 }

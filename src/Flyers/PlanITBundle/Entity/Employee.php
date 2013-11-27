@@ -67,11 +67,7 @@ class Employee
     /**
      * @var ArrayCollection $tasks
      *
-     * @ORM\ManyToMany(targetEntity="Task")
-     * @ORM\JoinTable(
-     *      joinColumns={@ORM\JoinColumn(name="employee_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="task_id", referencedColumnName="id")}
-     * )
+     * @ORM\ManyToMany(targetEntity="Task", mappedBy="employees")
      */
     private $tasks;
 
@@ -82,6 +78,13 @@ class Employee
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+
+    /**
+     * @var ArrayCollection $charges
+     *
+     * @ORM\OneToMany(targetEntity="Charge", mappedBy="employee")
+     */
+    private $charges;
 
 
     /**
@@ -294,5 +297,38 @@ class Employee
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add charges
+     *
+     * @param \Flyers\PlanITBundle\Entity\Charge $charges
+     * @return Employee
+     */
+    public function addCharge(\Flyers\PlanITBundle\Entity\Charge $charges)
+    {
+        $this->charges[] = $charges;
+    
+        return $this;
+    }
+
+    /**
+     * Remove charges
+     *
+     * @param \Flyers\PlanITBundle\Entity\Charge $charges
+     */
+    public function removeCharge(\Flyers\PlanITBundle\Entity\Charge $charges)
+    {
+        $this->charges->removeElement($charges);
+    }
+
+    /**
+     * Get charges
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCharges()
+    {
+        return $this->charges;
     }
 }

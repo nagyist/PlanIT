@@ -11,10 +11,8 @@ use FOS\Rest\Util\Codes;
 
 use Flyers\PlanITBundle\Entity\User;
 use Flyers\PlanITBundle\Entity\Project;
-use Flyers\PlanITBundle\Entity\Employee;
-use Flyers\PlanITBundle\Form\ProjectType;
-use Flyers\PlanITBundle\Form\EmployeeType;
-use Flyers\PlanITBundle\Form\ParticipantType;
+use Flyers\PlanITBundle\Entity\Task;
+use Flyers\PlanITBundle\Form\TaskType;
 
 class TaskController extends FOSRestController implements ClassResourceInterface
 {
@@ -63,12 +61,12 @@ class TaskController extends FOSRestController implements ClassResourceInterface
             return $this->handleView($view);
         }
 
-        $entities = $em->getRepository("PlanITBundle:Task")->findAllByProject($project);
+        $entities = $em->getRepository("PlanITBundle:Task")->findByProject($project);
 
         $view = $this->view(array(
             'error' => 'success',
             'message' => '',
-            'projects' => $entities
+            'tasks' => $entities
             ), 200);
         return $this->handleView($view);
 
@@ -93,7 +91,7 @@ class TaskController extends FOSRestController implements ClassResourceInterface
         $view = $this->view(array(
             'error' => 'success',
             'message' => '',
-            'project' => $entity
+            'task' => $entity
             ), 200);
         return $this->handleView($view);
 
@@ -107,6 +105,58 @@ class TaskController extends FOSRestController implements ClassResourceInterface
     {
         $em = $this->container->get("doctrine")->getManager();
         $entityRepository = $this->container->get("doctrine")->getRepository('PlanITBundle:Task');
+
+        $entity = new Task();
+        $form = $this->createForm(new TaskType(), $entity);
+
+        $data = array();
+
+        $userId = intval($request->request->get('user'));
+        $projectId = intval($request->request->get('project'));
+
+        $data["name"] = $request->request->get('name');
+        $data["description"] = $request->request->get('description');
+        $data["employees"] = $request->request->get('employees');
+        $data["estimate"] = floatval($request->request->get('estimate'));
+
+        $user = $em->getRepository("PlanITBundle:User")->find($userId);
+        if (!$user) {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'User not found !'
+                ), 200);
+            return $this->handleView($view);
+        }
+
+        $project = $em->getRepository("PlanITBundle:Project")->find($projectId);
+        if (!$project) {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Project not found !'
+                ), 200);
+            return $this->handleView($view);
+        }
+
+        $form->bind($data);
+
+        if ($form->isValid()) {
+            $entity->setProject($project);
+            $em->persist($entity);
+            $em->flush();
+
+            $view = $this->view(array(
+                'error' => 'success',
+                'message' => 'Task saved with success',
+                'task' => $entity
+                ), 200);
+            return $this->handleView($view);
+        } else {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => $form->getErrorsAsString()
+                ), 200);
+            return $this->handleView($view);
+        }
 
     }
 

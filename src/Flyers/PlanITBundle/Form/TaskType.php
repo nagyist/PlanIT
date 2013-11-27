@@ -13,8 +13,16 @@ class TaskType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('project')
-            ->add('employees')
+            ->add('estimate')
+            ->add('project', 'entity', array(
+                'class' => 'PlanITBundle:Project',
+                'property' => 'id'
+                ))
+            ->add('employees', 'entity', array(
+                'class' => 'PlanITBundle:Employee',
+                'property' => 'id',
+                'multiple' => true
+                ))
         ;
     }
 

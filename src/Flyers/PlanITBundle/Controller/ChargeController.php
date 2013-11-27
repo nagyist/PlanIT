@@ -12,9 +12,11 @@ use FOS\Rest\Util\Codes;
 use Flyers\PlanITBundle\Entity\User;
 use Flyers\PlanITBundle\Entity\Project;
 use Flyers\PlanITBundle\Entity\Employee;
+use Flyers\PlanITBundle\Entity\Charge;
 use Flyers\PlanITBundle\Form\ProjectType;
 use Flyers\PlanITBundle\Form\EmployeeType;
-use Flyers\PlanITBundle\Form\ParticipantType;
+use Flyers\PlanITBundle\Form\ChargeType;
+
 
 class ChargeController extends FOSRestController implements ClassResourceInterface
 {
@@ -30,7 +32,7 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
         $view = $this->view(array(
             'error' => 'success',
             'message' => '',
-            'tasks' => $entities
+            'charges' => $entities
             ), 200);
         return $this->handleView($view);
     }
@@ -68,7 +70,7 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
         $view = $this->view(array(
             'error' => 'success',
             'message' => '',
-            'projects' => $entities
+            'charges' => $entities
             ), 200);
         return $this->handleView($view);
 
@@ -93,7 +95,7 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
         $view = $this->view(array(
             'error' => 'success',
             'message' => '',
-            'project' => $entity
+            'charge' => $entity
             ), 200);
         return $this->handleView($view);
 
@@ -107,6 +109,59 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
     {
         $em = $this->container->get("doctrine")->getManager();
         $entityRepository = $this->container->get("doctrine")->getRepository('PlanITBundle:Charge');
+
+        $entity = new Charge();
+        $form = $this->createForm(new ChargeType(), $entity);
+
+        $data = array();
+
+        $userId = intval($request->request->get('user'));
+        $projectId = intval($request->request->get('project'));
+        $taskId = intval($request->request->get('task'));
+        $employeeId = intval($request->request->get('employee'));
+
+        $data["description"] = $request->request->get('description');
+        $data["duration"] = floatval( $request->request->get('duration') );
+
+        $employee = $em->getRepository("PlanITBundle:Employee")->find($employeeId);
+        if (!$employee) {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Employee not found !'
+                ), 200);
+            return $this->handleView($view);
+        }
+
+        $task = $em->getRepository("PlanITBundle:Task")->find($taskId);
+        if (!$task) {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Task not found !'
+                ), 200);
+            return $this->handleView($view);
+        }
+
+        $form->bind($data);
+
+        if ($form->isValid()) {
+            $entity->setEmployee($employee);
+            $entity->setTask($task);
+            $em->persist($entity);
+            $em->flush();
+
+            $view = $this->view(array(
+                'error' => 'success',
+                'message' => 'Charge saved with success',
+                'charge' => $entity
+                ), 200);
+            return $this->handleView($view);
+        } else {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => $form->getErrorsAsString()
+                ), 200);
+            return $this->handleView($view);
+        }
 
     }
 

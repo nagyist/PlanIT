@@ -1,0 +1,27 @@
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12" ng-controller="ChargeCtrl" ng-init="loadTasks()">
+				<h2>Charge</h2>
+				<div class="alert alert-error" ng-show="error">
+	              <p class="text-error">{[{error}]}</p>
+	            </div>
+	            <div class="alert alert-notice" ng-show="notice">
+	              <p class="text-notice">{[{notice}]}</p>
+	            </div>
+	            <form ng-submit="addCharge()">
+	            	<label for="task">Task : </label>
+		            <select class="input-xxlarge" name="task" ng-model="charge.task" ng-options="task.id as task.name for task in tasks">
+		            </select>
+		            <label for="description">Description : </label>
+		            <textarea class="input-xxlarge" name="description" id="description" ng-model="charge.description"></textarea>
+		            <label for="duration">Duration : </label>
+		            <input type="text" placeholder="2 hours" name="duration" class="input-xxlarge" ng-model="charge.duration" id="duration">
+		            <label for="employee">Who's charging : </label>
+		            <select class="input-xxlarge" name="employee" ng-model="charge.employee" ng-options="employee.id as (employee.firstname+' '+employee.lastname) for employee in employees">
+		            </select>
+		            <label></label>
+		            <button class="btn btn-inverse">Add charge</button>
+	            </form>
+			</div>
+		</div>
+	</div>

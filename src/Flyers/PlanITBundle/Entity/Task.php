@@ -35,11 +35,17 @@ class Task
      */
     private $description;
 
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="estimate", type="decimal")
+     */
+    private $estimate;
 
     /**
      * @var Flyers\PlanITBundle\Entity\Project $project
      *
-     * @ORM\OneToOne(targetEntity="Project")
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="tasks")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      **/
     private $project;
@@ -54,6 +60,13 @@ class Task
      * )
      */
     private $employees;
+
+    /**
+     * @var ArrayCollection $charges
+     *
+     * @ORM\OneToMany(targetEntity="Charge", mappedBy="task")
+     */
+    private $charges;
 
 
     /**
@@ -173,5 +186,61 @@ class Task
     public function getEmployees()
     {
         return $this->employees;
+    }
+
+    /**
+     * Set estimate
+     *
+     * @param float $estimate
+     * @return Task
+     */
+    public function setEstimate($estimate)
+    {
+        $this->estimate = $estimate;
+    
+        return $this;
+    }
+
+    /**
+     * Get estimate
+     *
+     * @return float 
+     */
+    public function getEstimate()
+    {
+        return $this->estimate;
+    }
+
+    /**
+     * Add charges
+     *
+     * @param \Flyers\PlanITBundle\Entity\Charge $charges
+     * @return Task
+     */
+    public function addCharge(\Flyers\PlanITBundle\Entity\Charge $charges)
+    {
+        $this->charges[] = $charges;
+    
+        return $this;
+    }
+
+    /**
+     * Remove charges
+     *
+     * @param \Flyers\PlanITBundle\Entity\Charge $charges
+     */
+    public function removeCharge(\Flyers\PlanITBundle\Entity\Charge $charges)
+    {
+        $this->charges->removeElement($charges);
+    }
+
+    /**
+     * Get charges
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCharges()
+    {
+        return $this->charges;
     }
 }
