@@ -34,6 +34,6 @@ class ProjectType extends AbstractType
 
     public function getName()
     {
-        return 'project';
+        return 'flyers_planitbundle_projecttype';
     }
 }

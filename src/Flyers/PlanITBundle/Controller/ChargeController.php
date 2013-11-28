@@ -123,6 +123,15 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
         $data["description"] = $request->request->get('description');
         $data["duration"] = floatval( $request->request->get('duration') );
 
+        if ( ( strpos($request->request->get('duration'), 'h') ) !== FALSE )
+            $base = 1;
+        if ( ( strpos($request->request->get('duration'), 'd') ) !== FALSE )
+            $base = 2;
+        if ( ( strpos($request->request->get('duration'), 'm') ) !== FALSE )
+            $base = 3;
+
+        $data["duration"] = $entity->convertDuration($data["duration"], $base);
+
         $employee = $em->getRepository("PlanITBundle:Employee")->find($employeeId);
         if (!$employee) {
             $view = $this->view(array(

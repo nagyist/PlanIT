@@ -87,6 +87,12 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
             return $this->handleView($view);
         }
 
+        $begin = $entity->getBegin()->format('d/m/Y');
+        $end = $entity->getEnd()->format('d/m/Y');
+
+        $entity->setBegin($begin);
+        $entity->setEnd($end);
+
         $view = $this->view(array(
             'error' => 'success',
             'message' => '',

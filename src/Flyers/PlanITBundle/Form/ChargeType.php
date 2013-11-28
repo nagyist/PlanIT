@@ -34,6 +34,6 @@ class ChargeType extends AbstractType
 
     public function getName()
     {
-        return 'charge';
+        return 'flyers_planitbundle_chargetype';
     }
 }

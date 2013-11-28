@@ -119,6 +119,15 @@ class TaskController extends FOSRestController implements ClassResourceInterface
         $data["employees"] = $request->request->get('employees');
         $data["estimate"] = floatval($request->request->get('estimate'));
 
+        if ( ( strpos($request->request->get('estimate'), 'h') ) !== FALSE )
+            $base = 1;
+        if ( ( strpos($request->request->get('estimate'), 'd') ) !== FALSE )
+            $base = 2;
+        if ( ( strpos($request->request->get('estimate'), 'm') ) !== FALSE )
+            $base = 3;
+
+        $data["estimate"] = $entity->convertEstimate($data["estimate"], $base);
+
         $user = $em->getRepository("PlanITBundle:User")->find($userId);
         if (!$user) {
             $view = $this->view(array(

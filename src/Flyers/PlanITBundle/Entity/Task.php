@@ -70,6 +70,34 @@ class Task
 
 
     /**
+     * Convert specified estimate time to minutes
+     *
+     * @return float
+     */
+    public function convertEstimate($estimate, $base = 0)
+    {
+        // $floor = floor($estimate);
+        // $decimal = $estimate - $floor;
+
+        // hours
+        if ($base == 1)
+        {
+            return $estimate * 60;
+        }
+        // day
+        else if ($base == 2)
+        {
+            return $estimate * 60 * 24; 
+        }
+        // month
+        else if ($base == 3)
+        {
+            return $estimate * 60 * 24 * date('t');
+        }
+        return $estimate;
+    }
+
+    /**
      * Get id
      *
      * @return integer 

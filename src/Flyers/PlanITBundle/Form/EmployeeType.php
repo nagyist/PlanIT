@@ -16,9 +16,15 @@ class EmployeeType extends AbstractType
             ->add('email')
             ->add('phone')
             ->add('salary')
-            ->add('job')
-            ->add('tasks')
-            ->add('projects')
+            ->add('job', 'entity', array(
+                'class' => 'PlanITBundle:Job',
+                'property' => 'id'
+                ))
+            ->add('tasks', 'entity', array(
+                'class' => 'PlanITBundle:Task',
+                'property' => 'id',
+                'multiple' => true
+                ))
         ;
     }
 

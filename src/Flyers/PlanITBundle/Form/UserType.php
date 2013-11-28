@@ -26,6 +26,6 @@ class UserType extends AbstractType
 
     public function getName()
     {
-        return 'user';
+        return 'flyers_planitbundle_usertype';
     }
 }

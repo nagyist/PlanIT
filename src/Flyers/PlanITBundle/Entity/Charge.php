@@ -51,6 +51,33 @@ class Charge
      **/
     private $task;
 
+    /**
+     * Convert specified duration time to minutes
+     *
+     * @return float
+     */
+    public function convertDuration($duration, $base = 0)
+    {
+        // $floor = floor($duration);
+        // $decimal = $duration - $floor;
+
+        // hours
+        if ($base == 1)
+        {
+            return $duration * 60;
+        }
+        // day
+        else if ($base == 2)
+        {
+            return $duration * 60 * 24; 
+        }
+        // month
+        else if ($base == 3)
+        {
+            return $duration * 60 * 24 * date('t');
+        }
+        return $duration;
+    }
 
     /**
      * Get id

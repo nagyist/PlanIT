@@ -10,11 +10,11 @@
 	            </div>
 	            <form ng-submit="addTask()">
 		            <label for="name">Name : </label>
-		            <input type="text" placeholder="Improve web portal" name="name" class="input-xxlarge" ng-model="task.name" id="name">
+		            <input type="text" placeholder="Create Website architecture" name="name" class="input-xxlarge" ng-model="task.name" id="name">
 		            <label for="description">Description : </label>
-		            <textarea class="input-xxlarge" name="description" id="description" ng-model="task.description"></textarea>
+		            <textarea class="input-xxlarge" name="description" id="description" ng-model="task.description" placeholder="Create database and website file architecture"></textarea>
 		            <label for="estimate">Estimated time : </label>
-		            <input type="text" placeholder="2 days" name="estimate" class="input-xxlarge" ng-model="task.estimate" id="estimate">
+		            <input type="text" placeholder="2.15 days" name="estimate" class="input-xxlarge" ng-model="task.estimate" id="estimate">
 		            <label for="employees">Assigned to : </label>
 		            <select class="input-xxlarge" name="employees" multiple ng-model="task.employees" ng-options="employee.id as (employee.firstname+' '+employee.lastname) for employee in employees">
 		            </select>

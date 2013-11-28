@@ -36,6 +36,6 @@ class TaskType extends AbstractType
 
     public function getName()
     {
-        return 'task';
+        return 'flyers_planitbundle_tasktype';
     }
 }

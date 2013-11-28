@@ -13,9 +13,9 @@
 		            <select class="input-xxlarge" name="task" ng-model="charge.task" ng-options="task.id as task.name for task in tasks">
 		            </select>
 		            <label for="description">Description : </label>
-		            <textarea class="input-xxlarge" name="description" id="description" ng-model="charge.description"></textarea>
+		            <textarea class="input-xxlarge" name="description" id="description" ng-model="charge.description" placeholder="Database generation and deployment"></textarea>
 		            <label for="duration">Duration : </label>
-		            <input type="text" placeholder="2 hours" name="duration" class="input-xxlarge" ng-model="charge.duration" id="duration">
+		            <input type="text" placeholder="2.15 hours" name="duration" class="input-xxlarge" ng-model="charge.duration" id="duration">
 		            <label for="employee">Who's charging : </label>
 		            <select class="input-xxlarge" name="employee" ng-model="charge.employee" ng-options="employee.id as (employee.firstname+' '+employee.lastname) for employee in employees">
 		            </select>

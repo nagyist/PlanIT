@@ -12,11 +12,11 @@
 		            <label for="name">Name : </label>
 		            <input type="text" name="name" class="input-xxlarge" ng-model="project.name" id="name" value="{[{ project.name }]}" required="true">
 		            <label for="description">Description : </label>
-		            <textarea class="input-xxlarge" name="description" id="description" ng-model="project.description">{[{ project.description }]}</textarea>
+		            <textarea class="input-xxlarge" name="description" id="description" ng-model="project.description" placeholder="Migrate architecture to MVC compliant">{[{ project.description }]}</textarea>
 		            <label for="begin">Estimated date of beginning : </label>
-		            <input type="text" name="begin" class="input-xxlarge datepicker" ng-model="project.begin" id="begin" value="{[{ project.begin }]}">
+		            <input type="text" name="begin" class="input-xxlarge datepicker" ng-model="project.begin" id="begin" value="{[{ project.begin }]}" placeholder="01/01/2012" jqdatepicker>
 		            <label for="end">Estimated date of ending : </label>
-		            <input type="text" name="end" class="input-xxlarge datepicker" ng-model="project.end" id="end" value="{[{ project.end }]}">
+		            <input type="text" name="end" class="input-xxlarge datepicker" ng-model="project.end" id="end" value="{[{ project.end }]}" placeholder="01/02/2012" jqdatepicker>
 		            <label></label>
 		            <input type="hidden" name="id" ng-model="project.id" value="{[{ project.id }]}">
 		            <button class="btn btn-inverse">Save project</button>

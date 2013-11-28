@@ -177,12 +177,40 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
         }
         $form = $this->createForm(new EmployeeType(), $entity);
 
-        $employee = array();
+        $data = array();
+
+        $userId = intval($request->request->get('user'));
+        $jobId = intval($request->request->get('job'));
+        $data["lastname"] = $request->request->get('lastname');
+        $data["firstname"] = $request->request->get('firstname');
+        $data["email"] = $request->request->get('email');
+        $data["phone"] = $request->request->get('phone');
+        $data["salary"] = floatval( $request->request->get('salary') );
+
+        $user = $em->getRepository("PlanITBundle:User")->find($userId);
+        if (!$user) {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'User not found !'
+                ), 200);
+            return $this->handleView($view);
+        }
+
+        $job = $em->getRepository("PlanITBundle:Job")->find($jobId);
+        if (!$job) {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Job not found !'
+                ), 200);
+            return $this->handleView($view);
+        }
 
 
-        $form->bind($request);
+        $form->bind($data);
 
         if ($form->isValid()) {
+            $entity->setUser($user);
+            $entity->setJob($job);
             $em->persist($entity);
             $em->flush();
 
