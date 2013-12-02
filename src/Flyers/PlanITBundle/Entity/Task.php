@@ -68,6 +68,21 @@ class Task
      */
     private $charges;
 
+    /**
+     * @var ArrayCollection $children
+     *
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="parent")
+     */
+    private $children;
+
+    /**
+     * @var Flyers\PlanITBundle\Entity\Task $parent
+     *
+     * @ORM\ManyToOne(targetEntity="Task", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     */
+    private $parent;
+
 
     /**
      * Convert specified estimate time to minutes
@@ -158,6 +173,8 @@ class Task
     public function __construct()
     {
         $this->employees = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->charges = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -270,5 +287,61 @@ class Task
     public function getCharges()
     {
         return $this->charges;
+    }
+
+    /**
+     * Add children
+     *
+     * @param \Flyers\PlanITBundle\Entity\Task $children
+     * @return Task
+     */
+    public function addChildren(\Flyers\PlanITBundle\Entity\Task $children)
+    {
+        $this->children[] = $children;
+    
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Flyers\PlanITBundle\Entity\Task $children
+     */
+    public function removeChildren(\Flyers\PlanITBundle\Entity\Task $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Flyers\PlanITBundle\Entity\Task $parent
+     * @return Task
+     */
+    public function setParent(\Flyers\PlanITBundle\Entity\Task $parent = null)
+    {
+        $this->parent = $parent;
+    
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Flyers\PlanITBundle\Entity\Task 
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }

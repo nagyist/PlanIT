@@ -18,6 +18,10 @@ class TaskType extends AbstractType
                 'class' => 'PlanITBundle:Project',
                 'property' => 'id'
                 ))
+            ->add('parent', 'entity', array(
+                'class' => 'PlanITBundle:Task',
+                'property' => 'id'
+                ))
             ->add('employees', 'entity', array(
                 'class' => 'PlanITBundle:Employee',
                 'property' => 'id',

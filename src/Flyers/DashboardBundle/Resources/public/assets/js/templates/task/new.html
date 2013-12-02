@@ -9,6 +9,9 @@
 	              <p class="text-notice">{[{notice}]}</p>
 	            </div>
 	            <form ng-submit="addTask()">
+	            	<label for="parent">Parent Task : </label>
+		            <select class="input-xxlarge" name="parent" ng-model="task.parent" ng-options="task.id as task.name for task in tasks">
+		            </select>
 		            <label for="name">Name : </label>
 		            <input type="text" placeholder="Create Website architecture" name="name" class="input-xxlarge" ng-model="task.name" id="name">
 		            <label for="description">Description : </label>

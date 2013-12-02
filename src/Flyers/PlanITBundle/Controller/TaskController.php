@@ -113,6 +113,7 @@ class TaskController extends FOSRestController implements ClassResourceInterface
 
         $userId = intval($request->request->get('user'));
         $projectId = intval($request->request->get('project'));
+        $parentId = intval($request->request->get('parent'));
 
         $data["name"] = $request->request->get('name');
         $data["description"] = $request->request->get('description');
@@ -137,6 +138,15 @@ class TaskController extends FOSRestController implements ClassResourceInterface
             return $this->handleView($view);
         }
 
+        $parent = $em->getRepository("PlanITBundle:Task")->find($parentId);
+        if (!$parent) {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Parent task not found !'
+                ), 200);
+            return $this->handleView($view);
+        }
+
         $project = $em->getRepository("PlanITBundle:Project")->find($projectId);
         if (!$project) {
             $view = $this->view(array(
@@ -149,6 +159,7 @@ class TaskController extends FOSRestController implements ClassResourceInterface
         $form->bind($data);
 
         if ($form->isValid()) {
+            $entity->setParent($parent);
             $entity->setProject($project);
             $em->persist($entity);
             $em->flush();

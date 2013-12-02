@@ -371,8 +371,28 @@
         if(typeof $scope.cur_user == "undefined") $location.path('/');
       };
 
-      $scope.loadEmployees = function() {
+      $scope.loadTasks = function() {
         $scope.checkUser();
+
+        $scope.projectId = $routeParams.projectId;
+
+        $http({method:'GET', url:Global.prefix+'/api/tasks/'+$scope.projectId})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+              $scope.tasks = data.tasks;
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
+      };
+
+      $scope.loadEmployees = function() {
+        $scope.loadTasks();
 
         $http({method:'GET', url:Global.prefix+'/api/employees/'+$scope.cur_user.id})
           .success(function(data,status,headers){
@@ -396,7 +416,7 @@
 
         $scope.projectId = $routeParams.projectId;
 
-        $http({method:'POST',url:Global.prefix+'/api/task',data:{user:$scope.cur_user.id,project:$scope.projectId,name:task.name,description:task.description,estimate:task.estimate,employees:task.employees}})
+        $http({method:'POST',url:Global.prefix+'/api/task',data:{user:$scope.cur_user.id,project:$scope.projectId,name:task.name,description:task.description,estimate:task.estimate,employees:task.employees,parent:task.parent}})
           .success(function(data,status,headers){
             if(data.error == "error") {
               $scope.error = data.message;
