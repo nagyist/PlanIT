@@ -34,9 +34,9 @@
         $routeProvider.when('/charge/new/:projectId', {templateUrl: prefix+'/assets/js/templates/charge/new.html', controller: 'ChargeCtrl'});
 
         // Graphics
-        $routeProvider.when('/gantt/:projectId', {templateUrl: prefix+'/assets/js/templates/gantt.html', controller: 'GanttCtrl'});
-        $routeProvider.when('/pert/:projectId', {templateUrl: prefix+'/assets/js/templates/pert.html', controller: 'PertCtrl'});
-        $routeProvider.when('/burndown/:projectId', {templateUrl: prefix+'/assets/js/templates/burndown.html', controller: 'BurndownCtrl'});
+        $routeProvider.when('/gantt/:projectId', {templateUrl: prefix+'/assets/js/templates/diagram/gantt.html', controller: 'GanttCtrl'});
+        $routeProvider.when('/pert/:projectId', {templateUrl: prefix+'/assets/js/templates/diagram/pert.html', controller: 'PertCtrl'});
+        $routeProvider.when('/burndown/:projectId', {templateUrl: prefix+'/assets/js/templates/diagram/burndown.html', controller: 'BurndownCtrl'});
 
         $routeProvider.otherwise({redirectTo: '/'});
         

@@ -36,6 +36,13 @@ class Charge
     private $duration;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="date")
+     */
+    private $created;
+
+    /**
      * @var Flyers\PlanITBundle\Entity\Employee $employee
      *
      * @ORM\ManyToOne(targetEntity="Employee", inversedBy="charges")
@@ -202,5 +209,28 @@ class Charge
     public function getDuration()
     {
         return $this->duration;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Charge
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
     }
 }

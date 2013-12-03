@@ -509,4 +509,59 @@
       }
 
     }])
+    .controller('BurndownCtrl', ['$scope', '$http', '$location', '$routeParams', 'Global', function($scope, $http, $location, $routeParams, Global){
+      $scope.checkUser = function() {
+        $scope.cur_user = Global.user;
+        if(typeof $scope.cur_user == "undefined") $location.path('/');
+      };
+
+
+      $scope.loadBurndown = function() {
+        $scope.hcValues = [];
+
+        $scope.checkUser();
+
+        $scope.projectId = $routeParams.projectId;
+
+        /* Load Tasks */
+        $http({method:'GET', url:Global.prefix+'/api/tasks/'+$scope.projectId})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+
+              $scope.tasks = data.tasks;
+
+              var total = 0;
+
+              for (var i = 0; i<data.tasks.length; i++) {
+                var task = data.tasks[i];
+                total += task.estimate;
+              }
+              for (var i = 0; i<data.tasks.length; i++) {
+                $scope.hcValues.push(total);
+
+                var task = data.tasks[i];
+                
+                if(task.charges.length > 0) {
+                  for (var j=0; j<task.charges.length;j++) {
+                    var charge = task.charges[j];
+                    total -= charge.duration;
+                  }
+                }
+              }
+
+              console.log($scope.hcValues);
+
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
+
+      }  
+
+    }])
 }())
