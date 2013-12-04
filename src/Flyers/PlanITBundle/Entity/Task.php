@@ -36,6 +36,13 @@ class Task
     private $description;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="begin", type="date")
+     */
+    private $begin;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="estimate", type="decimal")
@@ -343,5 +350,28 @@ class Task
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Set begin
+     *
+     * @param \DateTime $begin
+     * @return Task
+     */
+    public function setBegin($begin)
+    {
+        $this->begin = $begin;
+    
+        return $this;
+    }
+
+    /**
+     * Get begin
+     *
+     * @return \DateTime 
+     */
+    public function getBegin()
+    {
+        return $this->begin;
     }
 }

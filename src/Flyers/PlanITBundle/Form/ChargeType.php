@@ -13,7 +13,10 @@ class ChargeType extends AbstractType
         $builder
             ->add('description')
             ->add('duration')
-            ->add('created')
+            ->add('created', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy'
+                ))
             ->add('employee', 'entity', array(
                 'class' => 'PlanITBundle:Employee',
                 'property' => 'id'

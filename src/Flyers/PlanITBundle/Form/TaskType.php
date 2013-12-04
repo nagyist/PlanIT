@@ -14,6 +14,10 @@ class TaskType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('estimate')
+            ->add('begin', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy'
+                ))
             ->add('project', 'entity', array(
                 'class' => 'PlanITBundle:Project',
                 'property' => 'id'

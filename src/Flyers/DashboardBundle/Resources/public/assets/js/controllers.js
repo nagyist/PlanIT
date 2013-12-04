@@ -416,7 +416,7 @@
 
         $scope.projectId = $routeParams.projectId;
 
-        $http({method:'POST',url:Global.prefix+'/api/task',data:{user:$scope.cur_user.id,project:$scope.projectId,name:task.name,description:task.description,estimate:task.estimate,employees:task.employees,parent:task.parent}})
+        $http({method:'POST',url:Global.prefix+'/api/task',data:{user:$scope.cur_user.id,project:$scope.projectId,name:task.name,description:task.description,begin:task.begin,estimate:task.estimate,employees:task.employees,parent:task.parent}})
           .success(function(data,status,headers){
             if(data.error == "error") {
               $scope.error = data.message;
@@ -517,11 +517,11 @@
 
 
       $scope.loadBurndown = function() {
-        $scope.hcValues = [];
-
         $scope.checkUser();
 
         $scope.projectId = $routeParams.projectId;
+
+        $scope.hcValues = [];
 
         /* Load Tasks */
         $http({method:'GET', url:Global.prefix+'/api/tasks/'+$scope.projectId})
@@ -529,7 +529,6 @@
             if(data.error == "error") {
               $scope.error = data.message;
             } else {
-
               $scope.tasks = data.tasks;
 
               var total = 0;
@@ -563,5 +562,112 @@
 
       }  
 
+    }])
+    .controller('GanttCtrl', ['$scope', '$http', '$location', '$routeParams', 'Global', function($scope, $http, $location, $routeParams, Global){
+      $scope.checkUser = function() {
+        $scope.cur_user = Global.user;
+        if(typeof $scope.cur_user == "undefined") $location.path('/');
+      };
+
+      $scope.loadGantt = function() {
+        $scope.checkUser();
+
+        $scope.projectId = $routeParams.projectId;
+
+        $scope.ganttValues = [];
+
+/*
+        $scope.ganttValues = [{
+                  name: 'Test',
+                  desc: 'Test',
+                  values: [{
+                    to: "/Date(1328832000000)/",
+                    from: "/Date(1333411200000)/",
+                    desc: "Something",
+                    label: "Example Value"
+                  }]
+                }];
+*/                
+
+        $http({method:'GET', url:Global.prefix+'/api/tasks/'+$scope.projectId})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+              $scope.tasks = data.tasks;
+
+              for (var i = 0; i<data.tasks.length; i++)
+              {
+                var task = data.tasks[i];
+
+                var taskFrom = moment(task.begin);
+                var taskTo = taskFrom.add('minutes', task.estimate);
+
+                var itemTask = {
+                    name:task.name, 
+                    values: [{
+                      from:"/Date("+taskFrom.valueOf()+")/", 
+                      to:"/Date("+taskTo.valueOf()+")/", 
+                      desc: task.description, 
+                      label: task.name
+                    }]
+                  };
+
+                $scope.ganttValues.push(itemTask);
+
+              }
+
+              console.log($scope.ganttValues)
+
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
+      }
+    }])
+    .controller('PertCtrl', ['$scope', '$http', '$location', '$routeParams', 'Global', function($scope, $http, $location, $routeParams, Global){
+      $scope.checkUser = function() {
+        $scope.cur_user = Global.user;
+        if(typeof $scope.cur_user == "undefined") $location.path('/');
+      };
+
+      $scope.loadPert = function () {
+        $scope.checkUser();
+
+        $scope.projectId = $routeParams.projectId;
+
+        $scope.pertValues = [];
+
+        $scope.pertValues = {
+          begin: "Thu, 21 Dec 2000 16:01:07 +0200",
+          end: "Thu, 30 Dec 2000 16:01:07 +0200",
+          tasks: [{
+            id: 1,
+            name: 'Test',
+            duration: 150,
+            parent: null
+          }]
+        };
+
+        $http({method:'GET', url:Global.prefix+'/api/tasks/'+$scope.projectId})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+              $scope.tasks = data.tasks;
+
+
+
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
+      }
     }])
 }())

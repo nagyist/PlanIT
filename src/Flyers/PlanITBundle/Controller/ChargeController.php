@@ -120,8 +120,9 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
         $taskId = intval($request->request->get('task'));
         $employeeId = intval($request->request->get('employee'));
 
+
+        $data["created"] = date('d/m/Y');
         $data["description"] = $request->request->get('description');
-        $data["created"] = new \DateTime();
 
         $data["duration"] = floatval( $request->request->get('duration') );
 
@@ -133,7 +134,6 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
             $base = 3;
 
         $data["duration"] = $entity->convertDuration($data["duration"], $base);
-
 
         $employee = $em->getRepository("PlanITBundle:Employee")->find($employeeId);
         if (!$employee) {

@@ -30,13 +30,13 @@
         return {
           restrict: 'A',
           replace : true,
+          template: '<div id="container" style="margin:0 auto">not working</div>',
           scope: {
             items: '='
           },
           controller: function($scope, $element, $attrs) {
             console.log("hcBurndown")
           },
-          template: '<div id="container" style="margin:0 auto">not working</div>',
           link: function(scope, element, attrs) {
             console.log("hcBurndown")
             var chart = new Highcharts.Chart({
@@ -55,11 +55,63 @@
               }]
             });
 
-            scope.$watch("items", function(nValue){
-              console.log(nValue);
-              chart.series[0].setData(nValue, true);
+            scope.$watch("items", function(nVals){
+              chart.series[0].setData(nVals, true);
             }, true);
 
+          }
+        }
+      }])
+      .directive('jqGantt', [function(){
+        return {
+          restrict: 'A',
+          replace: true,
+          template: '<div id="container">not working</div>',
+          scope: {
+            items: '='
+          },
+          controller: function($scope, $element, $attrs) {
+          },
+          link: function(scope, element, attrs) {
+
+            scope.$watch("items", function(nVals){
+              
+              // TODO add (add Task and Edit Task events)
+              element.gantt({
+                scale: "weeks",
+                minScale: "hours",
+                maxScale: "months",
+                onItemClick: function(data) {
+                  console.log(data);
+                  alert("Item clicked - show some details");
+                },
+                onAddClick: function(dt, rowId) {
+                  console.log(dt);
+                  console.log(rowId);
+                  alert("Empty space clicked - add an item!");
+                },
+                source: nVals
+              });
+
+            }, true)
+          }
+        }
+      }])
+      .directive('raphPert',[function(){
+        return {
+          restrict: 'A',
+          replace: true,
+          template: '<div id="container" style="height:550px;width:100%;">not working</div>',
+          scope: {
+            items: '='
+          },
+          controller: function($scope, $element, $attrs) {
+          },
+          link: function(scope, element, attrs) {
+            scope.$watch("items", function(nVals){
+              console.log(nVals);
+              Raphael('container').pertChart(nVals,8);
+            }, true)
           }
         }
       }]);
