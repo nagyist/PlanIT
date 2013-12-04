@@ -1,6 +1,10 @@
 <div class="container-fluid" ng-controller="PertCtrl" ng-init="loadPert()">
 
 	<div class="row-fluid">
+		<div class="span12">
+          <h2>PERT diagram for project : {[{ tasks[0].project.name }]}</h2>
+          <p>You can edit view critical path in red</p>
+        </div>
         <div class="span12">
           <div raph-pert items="pertValues"></div>
         </div>

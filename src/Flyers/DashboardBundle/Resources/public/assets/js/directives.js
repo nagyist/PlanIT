@@ -30,7 +30,7 @@
         return {
           restrict: 'A',
           replace : true,
-          template: '<div id="container" style="margin:0 auto">not working</div>',
+          template: '<div id="container" style="width:100%;">not working</div>',
           scope: {
             items: '='
           },
@@ -66,7 +66,7 @@
         return {
           restrict: 'A',
           replace: true,
-          template: '<div id="container">not working</div>',
+          template: '<div id="container" style="width:100%;">not working</div>',
           scope: {
             items: '='
           },
