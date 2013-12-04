@@ -610,7 +610,7 @@
                       to:"/Date("+taskTo.valueOf()+")/", 
                       desc: task.description, 
                       label: task.name,
-                      dataObj: {project:task.project.id,task:task.id}
+                      dataObj: { project:task.project.id,task:task.id }
                     }]
                   };
 
