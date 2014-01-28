@@ -87,6 +87,10 @@ class TaskController extends FOSRestController implements ClassResourceInterface
                 ), 200);
             return $this->handleView($view);
         }
+        
+        $begin = $entity->getBegin()->format('d/m/Y');
+        
+        $entity->setBegin($begin);
 
         $view = $this->view(array(
             'error' => 'success',

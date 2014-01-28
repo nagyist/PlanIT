@@ -26,7 +26,7 @@
         // Tasks
         $routeProvider.when('/tasks/:projectId', {templateUrl: prefix+'/assets/js/templates/tasks.html', controller: 'TasksCtrl'});
         $routeProvider.when('/task/new/:projectId', {templateUrl: prefix+'/assets/js/templates/task/new.html', controller: 'TaskCtrl'});
-        $routeProvider.when('/task/edit/:taskId', {templateUrl: prefix+'/assets/js/templates/task/edit.html', controller: 'TaskCtrl'});
+        $routeProvider.when('/task/edit/:projectId/:taskId', {templateUrl: prefix+'/assets/js/templates/task/edit.html', controller: 'TaskCtrl'});
         $routeProvider.when('/calendar/:projectId', {templateUrl: prefix+'/assets/js/templates/calendar.html', controller: 'TaskCtrl'});
 
         // Charges

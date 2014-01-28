@@ -1,0 +1,32 @@
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12" ng-controller="TaskCtrl" ng-init="loadTask()">
+				<h2>Edit a task</h2>
+				<div class="alert alert-error" ng-show="error">
+	              <p class="text-error">{[{error}]}</p>
+	            </div>
+	            <div class="alert alert-notice" ng-show="notice">
+	              <p class="text-notice">{[{notice}]}</p>
+	            </div>
+	            <form ng-submit="editTask()">
+	            	<label for="parent">Parent Task : </label>
+		            <select class="input-xxlarge" name="parent" ng-model="task.parent" ng-options="task.id as task.name for task in tasks">
+		            </select>
+		            <label for="name">Name : </label>
+		            <input type="text" value="{[{ task.name }]}" name="name" class="input-xxlarge" ng-model="task.name" id="name">
+		            <label for="description">Description : </label>
+		            <textarea class="input-xxlarge" name="description" id="description" ng-model="task.description" value="{[{ task.description }]}"></textarea>
+		            <label for="begin">Beginning : </label>
+		            <input type="text" value="{[{ task.begin }]}" name="begin" class="input-xxlarge" ng-model="task.begin" id="begin" jqdatepicker>
+		            <label for="estimate">Estimated time : </label>
+		            <input type="text" value="{[{ task.estimate }]}" name="estimate" class="input-xxlarge" ng-model="task.estimate" id="estimate">
+		            <label for="employees">Assigned to : </label>
+		            <select class="input-xxlarge" name="employees" multiple ng-model="task.employees" ng-options="employee.id as (employee.firstname+' '+employee.lastname) for employee in employees">
+		            </select>
+		            <label></label>
+		            <input type="hidden" name="id" ng-model="employee.id" value="{[{ task.id }]}">
+		            <button class="btn btn-inverse">Save task</button>
+	            </form>
+			</div>
+		</div>
+	</div>

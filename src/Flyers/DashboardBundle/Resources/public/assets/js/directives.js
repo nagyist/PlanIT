@@ -3,7 +3,6 @@
 
     /* Directives */
 
-
     angular.module('PlanIT.directives', [])
       .directive('appVersion', ['version', function(version) {
         return function(scope, elm, attrs) {
@@ -62,42 +61,43 @@
           }
         }
       }])
-      .directive('jqGantt', [function(){
+      .directive('jqGantt', ['$location', function($location){
         return {
           restrict: 'A',
           replace: true,
           template: '<div id="container" style="width:100%;">not working</div>',
           scope: {
-            items: '='
+            items: '=',
+            project: '='
           },
           controller: function($scope, $element, $attrs) {
           },
           link: function(scope, element, attrs) {
-
-            scope.$watch("items", function(nVals){
-              
-              // TODO add (add Task and Edit Task events)
-              element.gantt({
-                scale: "weeks",
-                minScale: "hours",
-                maxScale: "months",
-                onItemClick: function(data) {
-                  console.log(data);
-                  alert("Item clicked - show some details");
-                },
-                onAddClick: function(dt, rowId) {
-                  console.log(dt);
-                  console.log(rowId);
-                  alert("Empty space clicked - add an item!");
-                },
-                source: nVals
-              });
-
+          
+          	scope.$watch("project", function(projectId){
+          	
+	            scope.$watch("items", function(nVals){
+	              
+	              element.gantt({
+	                scale: "weeks",
+	                minScale: "hours",
+	                maxScale: "months",
+	                onItemClick: function(data) {
+	                  scope.$apply(function(){$location.path("/task/edit/"+projectId+"/"+data.task);});
+	                },
+	                onAddClick: function(dt, rowId) {
+	                  scope.$apply(function(){$location.path("/task/add/"+projectId);});
+	                },
+	                source: nVals
+	              });
+	
+	            }, true)
+	            
             }, true)
           }
         }
       }])
-      .directive('raphPert',[function(){
+      .directive('graphPert',[function(){
         return {
           restrict: 'A',
           replace: true,

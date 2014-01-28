@@ -408,6 +408,28 @@
             }
           })
       }
+      
+      $scope.loadTask = function() {
+	      $scope.taskId = $routeParams.taskId;
+	
+	      $scope.loadEmployees();
+	      
+	      $http({method:'GET', url:Global.prefix+'/api/task/'+$scope.taskId})
+          .success(function(data,status,headers){
+            if(data.error == "error") {
+              $scope.error = data.message;
+            } else {
+              $scope.task = data.task;
+            }
+          })
+          .error(function(data,status,headers){
+            if (data.error == "error") {
+              $scope.error = data.message;
+            }
+          })
+
+	      
+      }
 
       $scope.addTask = function() {
         var task = $scope.task;
@@ -430,7 +452,26 @@
             }
           })
       }
-
+      
+      $scope.editTask = function () {
+	      var task = $scope.task;
+	      
+	      $scope.checkUser();
+	      
+	      $http({method:'PUT', url:Global.prefix+'/api/task/'+task.id, data:{user:$scope.cur_user.id,project:$scope.projectId,name:task.name,description:task.description,begin:task.begin,estimate:task.estimate,employees:task.employees,parent:task.parent}})
+	      .success(function(data,status,headers){
+		      if(data.error == "error") {
+			      $scope.error = data.message;
+		      } else {
+			      $scope.notice = data.message;
+		      }
+	      })
+	      .error(function(data,status,headers){
+		      if(data.error == "error") {
+			      $scope.error = data.message;
+		      }
+	      })
+      }
       
     }])
     .controller('ChargesCtrl', ['$scope', '$http', '$location', '$routeParams', 'Global', function($scope, $http, $location, $routeParams, Global){
@@ -574,20 +615,7 @@
 
         $scope.projectId = $routeParams.projectId;
 
-        $scope.ganttValues = [];
-
-/*
-        $scope.ganttValues = [{
-                  name: 'Test',
-                  desc: 'Test',
-                  values: [{
-                    to: "/Date(1328832000000)/",
-                    from: "/Date(1333411200000)/",
-                    desc: "Something",
-                    label: "Example Value"
-                  }]
-                }];
-*/                
+        $scope.ganttValues = [];          
 
         $http({method:'GET', url:Global.prefix+'/api/tasks/'+$scope.projectId})
           .success(function(data,status,headers){
@@ -615,11 +643,7 @@
                   };
 
                 $scope.ganttValues.push(itemTask);
-
               }
-
-              console.log($scope.ganttValues)
-
             }
           })
           .error(function(data,status,headers){
