@@ -38,27 +38,41 @@
           link: function(scope, element, attrs) {
             
             scope.$watch("items", function(nVals){
-                        	
-            	if (nVals.length > 0) {
-            	
-	            	console.log(nVals)          		
-            	
+                                    	
+            	if (typeof nVals !== "undefined") {
+            	            	
 		            var chart = new Highcharts.Chart({
 		            chart: {
 		              renderTo: 'container',
 		              plotBackgroundColor: null,
 		              plotBorderWidth: null,
-		              plotShadow: false
+		              plotShadow: false,
+		              type: 'area'
 		            },
 		            title: {
 		              text: 'Burndown'
 		            },
 		            xAxis: {
 			            type:'datetime',
+			            title: {
+				            enabled: true,
+				            text: "Timeline"
+			            }
+		            },
+		            yAxis: {
+			            title: {
+				            enabled: true,
+				            text: "Remaining effort in hours"
+			            }
 		            },
 		            series: [{
-		                name:'Project Burndown',
-		                data: nVals
+		                name:'Project Charges',
+		                type: "area",
+		                data: nVals['charge']
+		              }, {
+			              name: 'Project Timeline',
+			              type: "line",
+			              data: nVals['timeline']
 		              }]
 		            });	
 		            
@@ -121,7 +135,6 @@
           },
           link: function(scope, element, attrs) {
             scope.$watch("items", function(nVals){
-              console.log(nVals);
               
               if (typeof nVals !== "undefined") {
               	Raphael('container').pertChart(nVals,8);	              

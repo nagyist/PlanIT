@@ -121,7 +121,7 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
         $employeeId = intval($request->request->get('employee'));
 
 
-        $data["created"] = date('d/m/Y');
+        $data["created"] = $request->request->get('created');
         $data["description"] = $request->request->get('description');
 
         $data["duration"] = floatval( $request->request->get('duration') );

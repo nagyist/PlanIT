@@ -6,7 +6,7 @@ By order of importance
 * Gantt Directive - OK
 * Burndown Directive - OK
 * PERT Directive - OK
-* Add Charge Date Time custom definition
+* Add Charge Date Time custom definition - OK
 * Unit Tests
 * e2e Tests
 * Update source code to use Angular Services

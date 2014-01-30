@@ -111,7 +111,6 @@
             if(data.error == "error") {
               $scope.error = data.message;
             } else {
-              console.log(data);
               $scope.jobs = data.jobs;
             }
           })
@@ -535,7 +534,7 @@
 
         $scope.projectId = $routeParams.projectId;
 
-        $http({method:'POST',url:Global.prefix+'/api/charge',data:{user:$scope.cur_user.id,project:$scope.projectId,task:charge.task,description:charge.description,duration:charge.duration,employee:charge.employee}})
+        $http({method:'POST',url:Global.prefix+'/api/charge',data:{user:$scope.cur_user.id,project:$scope.projectId,task:charge.task,description:charge.description,duration:charge.duration,employee:charge.employee,created:charge.created}})
           .success(function(data,status,headers){
             if(data.error == "error") {
               $scope.error = data.message;
@@ -563,8 +562,6 @@
 
         $scope.projectId = $routeParams.projectId;
 
-        $scope.hcValues = [];
-
         /* Load Tasks */
         $http({method:'GET', url:Global.prefix+'/api/tasks/'+$scope.projectId})
           .success(function(data,status,headers){
@@ -573,20 +570,27 @@
             } else {
               var tasks = data.tasks;
 
-              var total = 0;
+							var result = {'charge':[], 'timeline':[]};
 
+              var total = 0;
+              
               for (var i = 0; i<tasks.length; i++) {
                 var task = tasks[i];
                 total += task.estimate / 60;
               }
+              
+              var pbegin = moment(tasks[0].project.begin);
+							var pend   = moment(tasks[0].project.end);
+							result.timeline.push([pbegin.valueOf(), total]);
+							result.timeline.push([pend.valueOf(), 0]);	
+							
+							result.charge.push([pbegin.valueOf(), total]);						
               for (var i = 0; i<data.tasks.length; i++) {
               	var task = tasks[i];
               	
               	var begin = moment(task.begin);
-              	
-              	console.log(begin);
-              
-                $scope.hcValues.push([begin.valueOf(), total]);
+              	              
+                result.charge.push([begin.valueOf(), total]);
 
                 var task = data.tasks[i];
                 
@@ -597,8 +601,8 @@
                   }
                 }
               }
-
-              console.log($scope.hcValues);
+              
+              $scope.hcValues = result;
 
             }
           })
@@ -684,21 +688,19 @@
 	            tasks: []
               };
 			  
-			  for (var i=0; i<tasks.length; i++) {
-				var task = tasks[i];
-				var t_task = {
-					id: task.id,
-					name: task.name,
-					duration: task.estimate,
-				}
-				
-				if (typeof task.parent !== 'undefined')
-					t_task['parent'] = task.parent.id
-				
-				pertValues.tasks.push(t_task);
-			  }
-			  console.log(pertValues);
-			  $scope.pertValues = pertValues;
+					  for (var i=0; i<tasks.length; i++) {
+							var task = tasks[i];
+							var t_task = {
+								id: task.id,
+								name: task.name,
+								duration: task.estimate,
+							}
+							
+							if (typeof task.parent !== 'undefined')
+								t_task['parent'] = task.parent.id
+								pertValues.tasks.push(t_task);
+						  }
+						  $scope.pertValues = pertValues;
             }
           })
           .error(function(data,status,headers){

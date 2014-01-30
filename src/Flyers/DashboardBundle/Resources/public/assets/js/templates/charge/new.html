@@ -12,13 +12,15 @@
 	            	<label for="task">Task : </label>
 		            <select class="input-xxlarge" name="task" ng-model="charge.task" ng-options="task.id as task.name for task in tasks">
 		            </select>
-		            <label for="description">Description : </label>
-		            <textarea class="input-xxlarge" name="description" id="description" ng-model="charge.description" placeholder="Database generation and deployment"></textarea>
+		            <label for="created">When did you work on this ? </label>
+		            <input type="text" name="created" class="input-xxlarge datepicker" ng-model="charge.created" id="created" placeholder="01/02/2012" jqdatepicker>
 		            <label for="duration">Duration : </label>
 		            <input type="text" placeholder="2.15 hours" name="duration" class="input-xxlarge" ng-model="charge.duration" id="duration">
 		            <label for="employee">Who's charging : </label>
 		            <select class="input-xxlarge" name="employee" ng-model="charge.employee" ng-options="employee.id as (employee.firstname+' '+employee.lastname) for employee in employees">
 		            </select>
+		            <label for="description">Description : </label>
+		            <textarea class="input-xxlarge" name="description" id="description" ng-model="charge.description" placeholder="Database generation and deployment"></textarea>
 		            <label></label>
 		            <button class="btn btn-inverse">Add charge</button>
 	            </form>
