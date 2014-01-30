@@ -187,7 +187,81 @@ class TaskController extends FOSRestController implements ClassResourceInterface
     {
         $em = $this->container->get("doctrine")->getManager();
         $entityRepository = $this->container->get("doctrine")->getRepository('PlanITBundle:Task');
+				
+				$entity = $entityRepository->find($id);
+				if (!$entity) {
+					$view = $this->view(array(
+              'error' => 'error',
+              'message' => 'Task not found !'
+              ), 200);
+          return $this->handleView($view);
+				}
+				
+				$form = $this->createForm(new TaskType(), $entity);
+				
+				$data = array();
 
+        $userId = intval($request->request->get('user'));
+        $projectId = intval($request->request->get('project'));
+        $parentId = intval($request->request->get('parent', 0));
+        
+        $data["name"] = $request->request->get('name');
+        $data["description"] = $request->request->get('description');
+        $data["employees"] = $request->request->get('employees');
+        $data["begin"] = $request->request->get('begin');
+        $data["estimate"] = floatval($request->request->get('estimate'));
+
+        if ( ( strpos($request->request->get('estimate'), 'h') ) !== FALSE )
+            $base = 1;
+        if ( ( strpos($request->request->get('estimate'), 'd') ) !== FALSE )
+            $base = 2;
+        if ( ( strpos($request->request->get('estimate'), 'm') ) !== FALSE )
+            $base = 3;
+
+        $data["estimate"] = $entity->convertEstimate($data["estimate"], $base);
+
+        $user = $em->getRepository("PlanITBundle:User")->find($userId);
+        if (!$user) {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'User not found !'
+                ), 200);
+            return $this->handleView($view);
+        }
+
+        $parent = $em->getRepository("PlanITBundle:Task")->find($parentId);
+
+        $project = $em->getRepository("PlanITBundle:Project")->find($projectId);
+        if (!$project) {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Project not found !'
+                ), 200);
+            return $this->handleView($view);
+        }
+                
+        $form->bind($data);
+
+        if ($form->isValid()) {
+            $entity->setParent($parent);
+            $entity->setProject($project);
+            $em->persist($entity);
+            $em->flush();
+
+            $view = $this->view(array(
+                'error' => 'success',
+                'message' => 'Task saved with success',
+                'task' => $entity
+                ), 200);
+            return $this->handleView($view);
+        } else {
+            $view = $this->view(array(
+                'error' => 'error',
+                'message' => $form->getErrorsAsString()
+                ), 200);
+            return $this->handleView($view);
+        }
+				
     }
 
     /**

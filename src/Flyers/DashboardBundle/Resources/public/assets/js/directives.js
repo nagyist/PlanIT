@@ -95,27 +95,29 @@
           controller: function($scope, $element, $attrs) {
           },
           link: function(scope, element, attrs) {
-          
+                    
           	scope.$watch("project", function(projectId){
           	
 	            scope.$watch("items", function(nVals){
 	            
-	            if (nVals.length > 0 ) {
-	              
-	              element.gantt({
-	                scale: "weeks",
-	                minScale: "hours",
-	                maxScale: "months",
-	                onItemClick: function(data) {
-	                  scope.$apply(function(){$location.path("/task/edit/"+projectId+"/"+data.task);});
-	                },
-	                onAddClick: function(dt, rowId) {
-	                  scope.$apply(function(){$location.path("/task/new/"+projectId);});
-	                },
-	                source: nVals
-	              });
-				  
-				}
+		            if ( (typeof nVals !== "undefined") && (nVals.length > 0) ) {
+		            		              
+		              element.gantt({
+		                scale: "hours",
+		                minScale: "hours",
+		                maxScale: "months",
+		                onItemClick: function(data) {
+		                  // Bug Gantt hint
+		                	$('body').find('.fn-gantt-hint').remove();
+		                  scope.$apply(function(){$location.path("/task/edit/"+projectId+"/"+data.task);});
+		                },
+		                onAddClick: function(dt, rowId) {
+		                  scope.$apply(function(){$location.path("/task/new/"+projectId);});
+		                },
+		                source: nVals
+		              });
+					  
+								}
 				  
 	            }, true)
 	            

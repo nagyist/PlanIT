@@ -420,6 +420,7 @@
               $scope.error = data.message;
             } else {
               $scope.task = data.task;
+              $scope.task.estimate = Global.durationTransform($scope.task.estimate);
             }
           })
           .error(function(data,status,headers){
@@ -456,9 +457,15 @@
       $scope.editTask = function () {
 	      var task = $scope.task;
 	      
+	      var employees = [];
+	      for(var i = 0; i<task.employees.length; i++) {
+		      var employee = task.employees[i];
+		      employees.push(employee.id);
+	      }
+	      	      
 	      $scope.checkUser();
 	      
-	      $http({method:'PUT', url:Global.prefix+'/api/task/'+task.id, data:{user:$scope.cur_user.id,project:$scope.projectId,name:task.name,description:task.description,begin:task.begin,estimate:task.estimate,employees:task.employees,parent:task.parent}})
+	      $http({method:'PUT', url:Global.prefix+'/api/task/'+task.id, data:{user:$scope.cur_user.id,project:$scope.projectId,name:task.name,description:task.description,begin:task.begin,estimate:task.estimate,employees:employees,parent:task.parent.id}})
 	      .success(function(data,status,headers){
 		      if(data.error == "error") {
 			      $scope.error = data.message;
@@ -640,14 +647,15 @@
                 var task = data.tasks[i];
 
                 var taskFrom = moment(task.begin);
-                var taskTo = taskFrom.add('minutes', task.estimate);
-
+                var taskTo   = moment(task.begin);
+                taskTo.add('minutes', task.estimate);
+                
                 var itemTask = {
                     name:task.name, 
                     values: [{
                       from:"/Date("+taskFrom.valueOf()+")/", 
                       to:"/Date("+taskTo.valueOf()+")/", 
-                      desc: task.description, 
+                      desc: "<p><strong>"+task.name+"</strong></p>"+"<p>"+task.description+"</p>", 
                       label: task.name,
                       dataObj: { project:task.project.id,task:task.id }
                     }]

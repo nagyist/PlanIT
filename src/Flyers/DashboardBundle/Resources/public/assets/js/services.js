@@ -9,7 +9,33 @@
     }])
     .factory('Global', [function(){
       return {
-        prefix: '/planit/app_dev.php'
+        prefix: '/planit/app_dev.php',
+        durationTransform: function(tr) {
+        	var bmonth = moment().startOf('month');
+        	var emonth = moment().endOf('month');
+        	
+        	var ddmonth = emonth.diff(bmonth, 'days');
+        
+	        var tr = parseFloat(tr);
+	        var un = "";
+	        
+	        //Month
+	        if (tr > (60 * 24 * ddmonth)) {
+		        tr = tr / (60*24*ddmonth);
+		        un = "months";
+	        }
+	        // Day
+	        if (tr > (60 * 24)) {
+		        tr = tr / (60*24);
+		        un = "days";
+	        }
+	        // Hours
+	        if (tr > 60 ) {
+		        tr = tr / 60;
+		        un = "hours";
+	        }
+	        return tr+" "+un;
+        }
       }
     }])
     .factory('User', ['$resource', 'Global', function($resource, Global) {

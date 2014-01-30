@@ -197,26 +197,6 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
 
         if ( !is_null($begin) ) $data['begin'] = $begin;
         if ( !is_null($end) ) $data['end'] = $end;
-        
-/*        
-        $tmpDatetime = new \DateTime($request->request->get('begin'));
-        $project["begin"] = array();
-        $project["begin"]["year"] = $tmpDatetime->format('Y');
-        $project["begin"]["month"] = $tmpDatetime->format('m');
-        $project["begin"]["day"] = $tmpDatetime->format('d');
-        $project["begin"]["hour"] = $tmpDatetime->format('H');
-        $project["begin"]["minute"] = $tmpDatetime->format('i');
-        $project["begin"]["second"] = $tmpDatetime->format('s');
-
-        $tmpDatetime = new \DateTime($request->request->get('end'));
-        $project["end"] = array();
-        $project["end"]["year"] = $tmpDatetime->format('Y');
-        $project["end"]["month"] = $tmpDatetime->format('m');
-        $project["end"]["day"] = $tmpDatetime->format('d');
-        $project["end"]["hour"] = $tmpDatetime->format('H');
-        $project["end"]["minute"] = $tmpDatetime->format('i');
-        $project["end"]["second"] = $tmpDatetime->format('s');
-*/        
 
         $form->bind($data);
 
