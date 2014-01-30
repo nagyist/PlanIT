@@ -20,7 +20,7 @@
 		            <label for="salary">Salary :</label>
 		            <input type="text" placeholder="100 $" name="salary" id="salary" class="input-xxlarge" ng-model="employee.salary" value="{[{ employee.salary }]}">
 		            <label for="job">Job :</label>
-		            <select class="input-xxlarge" id="job" name="job" ng-model="employee.job" ng-options="job.id as job.name for job in jobs" ng-selected="">
+		            <select class="input-xxlarge" id="job" name="job" ng-model="employee.job" ng-options="job.id as job.name for job in jobs track by job.id">
 		            </select>
 		            <!-- TODO remove prefix -->
 		            <a href="/planit/app_dev.php#/job/new">Create a new job</a>

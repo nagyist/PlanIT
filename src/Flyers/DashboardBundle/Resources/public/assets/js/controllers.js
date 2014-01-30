@@ -279,6 +279,7 @@
       }
 
       $scope.loadEmployee = function() {
+
         $scope.employeeId = $routeParams.employeeId;
 
         $scope.loadJob();
@@ -570,23 +571,29 @@
             if(data.error == "error") {
               $scope.error = data.message;
             } else {
-              $scope.tasks = data.tasks;
+              var tasks = data.tasks;
 
               var total = 0;
 
-              for (var i = 0; i<data.tasks.length; i++) {
-                var task = data.tasks[i];
-                total += task.estimate;
+              for (var i = 0; i<tasks.length; i++) {
+                var task = tasks[i];
+                total += task.estimate / 60;
               }
               for (var i = 0; i<data.tasks.length; i++) {
-                $scope.hcValues.push(total);
+              	var task = tasks[i];
+              	
+              	var begin = moment(task.begin);
+              	
+              	console.log(begin);
+              
+                $scope.hcValues.push([begin.valueOf(), total]);
 
                 var task = data.tasks[i];
                 
                 if(task.charges.length > 0) {
                   for (var j=0; j<task.charges.length;j++) {
                     var charge = task.charges[j];
-                    total -= charge.duration;
+                    total -= charge.duration / 60;
                   }
                 }
               }
@@ -664,28 +671,34 @@
 
         $scope.projectId = $routeParams.projectId;
 
-        $scope.pertValues = [];
-
-        $scope.pertValues = {
-          begin: "Thu, 21 Dec 2000 16:01:07 +0200",
-          end: "Thu, 30 Dec 2000 16:01:07 +0200",
-          tasks: [{
-            id: 1,
-            name: 'Test',
-            duration: 150,
-            parent: null
-          }]
-        };
-
         $http({method:'GET', url:Global.prefix+'/api/tasks/'+$scope.projectId})
           .success(function(data,status,headers){
             if(data.error == "error") {
               $scope.error = data.message;
             } else {
-              $scope.tasks = data.tasks;
-
-
-
+              var tasks = data.tasks;
+              
+              var pertValues = {
+	            begin: tasks[0].project.begin,
+	            end: tasks[0].project.end,
+	            tasks: []
+              };
+			  
+			  for (var i=0; i<tasks.length; i++) {
+				var task = tasks[i];
+				var t_task = {
+					id: task.id,
+					name: task.name,
+					duration: task.estimate,
+				}
+				
+				if (typeof task.parent !== 'undefined')
+					t_task['parent'] = task.parent.id
+				
+				pertValues.tasks.push(t_task);
+			  }
+			  console.log(pertValues);
+			  $scope.pertValues = pertValues;
             }
           })
           .error(function(data,status,headers){

@@ -34,28 +34,36 @@
             items: '='
           },
           controller: function($scope, $element, $attrs) {
-            console.log("hcBurndown")
           },
           link: function(scope, element, attrs) {
-            console.log("hcBurndown")
-            var chart = new Highcharts.Chart({
-              chart: {
-                renderTo: 'container',
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false
-              },
-              title: {
-                text: 'Burndown'
-              },
-              series: [{
-                name:'Project Burndown',
-                data: scope.items
-              }]
-            });
-
+            
             scope.$watch("items", function(nVals){
-              chart.series[0].setData(nVals, true);
+                        	
+            	if (nVals.length > 0) {
+            	
+	            	console.log(nVals)          		
+            	
+		            var chart = new Highcharts.Chart({
+		            chart: {
+		              renderTo: 'container',
+		              plotBackgroundColor: null,
+		              plotBorderWidth: null,
+		              plotShadow: false
+		            },
+		            title: {
+		              text: 'Burndown'
+		            },
+		            xAxis: {
+			            type:'datetime',
+		            },
+		            series: [{
+		                name:'Project Burndown',
+		                data: nVals
+		              }]
+		            });	
+		            
+            	}
+            	
             }, true);
 
           }
@@ -77,6 +85,8 @@
           	scope.$watch("project", function(projectId){
           	
 	            scope.$watch("items", function(nVals){
+	            
+	            if (nVals.length > 0 ) {
 	              
 	              element.gantt({
 	                scale: "weeks",
@@ -86,11 +96,13 @@
 	                  scope.$apply(function(){$location.path("/task/edit/"+projectId+"/"+data.task);});
 	                },
 	                onAddClick: function(dt, rowId) {
-	                  scope.$apply(function(){$location.path("/task/add/"+projectId);});
+	                  scope.$apply(function(){$location.path("/task/new/"+projectId);});
 	                },
 	                source: nVals
 	              });
-	
+				  
+				}
+				  
 	            }, true)
 	            
             }, true)
@@ -110,7 +122,11 @@
           link: function(scope, element, attrs) {
             scope.$watch("items", function(nVals){
               console.log(nVals);
-              Raphael('container').pertChart(nVals,8);
+              
+              if (typeof nVals !== "undefined") {
+              	Raphael('container').pertChart(nVals,8);	              
+              }
+
             }, true)
           }
         }

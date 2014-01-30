@@ -1,0 +1,16 @@
+TODOS 
+======
+
+By order of importance
+
+* Gantt Directive - OK
+* Burndown Directive - OK
+* PERT Directive - OK
+* Add Charge Date Time custom definition
+* Unit Tests
+* e2e Tests
+* Update source code to use Angular Services
+* Refactoring
+* Jenkins Continuous Integration
+* PHPDoc integration
+* OAuth API integration

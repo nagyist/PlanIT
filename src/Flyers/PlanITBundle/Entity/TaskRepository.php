@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class TaskRepository extends EntityRepository
 {
+	public function findAll()
+  {
+		return $this->findBy(array(), array('begin' => 'ASC'));
+  }
+  
+  public function findByProject($project)
+  {
+	  return $this->findBy(array('project'=>$project), array('begin' => 'ASC'));
+  }
 }

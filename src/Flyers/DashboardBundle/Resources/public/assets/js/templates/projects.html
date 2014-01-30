@@ -8,7 +8,7 @@
             <h3>{[{project.name}]}</h3>
             <p>{[{project.description}]}</p>
             <!-- TODO remove prefix -->
-            <p><a ng-href="/planit/app_dev.php#/project/{[{project.id}]}" ng-click="openProject({[{project.id}]})">Go to Project</a></p>
+            <p><a ng-href="/planit/app_dev.php#/project/{[{project.id}]}" ng-click="openProject(project.id)">Go to Project</a></p>
             <p><a href="/planit/app_dev.php#/project/edit/{[{project.id}]}">Edit Project</a></p>
           </div>
         </div>
