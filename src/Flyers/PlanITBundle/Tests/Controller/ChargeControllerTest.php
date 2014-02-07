@@ -4,13 +4,13 @@ namespace Flyers\PlanITBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ProjectControllerTest extends WebTestCase
+class ChargeControllerTest extends WebTestCase
 {
     public function testCGet()
     {
       $client = static::createClient();
 
-      $crawler = $client->request('GET', '/api/projects');
+      $crawler = $client->request('GET', '/api/charges');
       
       $this->assertTrue(
       						$client->getResponse()->headers->contains(
@@ -24,32 +24,28 @@ class ProjectControllerTest extends WebTestCase
             
       $this->assertEquals( $json->{'error'}, "success" );
       
-      $this->assertInternalType( "array", $json->{'projects'}  );
+      $this->assertInternalType( "array", $json->{'charges'}  );
       
-      foreach($json->{'projects'} as $project) {
-        
-        $this->assertInternalType( "integer", $project->{'id'} );
-        $this->assertInternalType( "string", $project->{'name'} );
-        $this->assertInternalType( "string", $project->{'description'} );
-        $this->assertInternalType( "string", $project->{'begin'} );
-        $this->assertInternalType( "string", $project->{'end'} );
-        $this->assertInternalType( "array", $project->{'tasks'} );
-        $this->assertInternalType( "array", $project->{'users'} );
-        
-        $this->assertNull($project->{'users'});
-        
-        $this->assertFalse( date_create($project->{'begin'}) === FALSE );
-        $this->assertFalse( date_create($project->{'end'}) === FALSE );
+      foreach($json->{'charges'} as $charge) {
+      
+      	$this->assertInternalType( "integer", $charge->{'id'} );
+      	$this->assertInternalType( "string", $charge->{'description'} );
+      	$this->assertInternalType( "float", $charge->{'duration'} );
+      	$this->assertInternalType( "string", $charge->{'created'} );
+      	$this->assertInternalType( "object", $charge->{'employee'} );
+      	$this->assertInternalType( "object", $charge->{'task'} );      	
+      	
+        $this->assertFalse( date_create($charge->{'created'}) === FALSE );
         
       }        
     }
     
-    public function testGetProjectsUser()
+    public function testGetChargesTask()
     {
 	    $client = static::createClient();
 	    
 	    // Test when it works
-	    $crawler = $client->request('GET', '/api/projects/1');
+	    $crawler = $client->request('GET', '/api/charges/11');
 	    
 	    $this->assertTrue(
       						$client->getResponse()->headers->contains(
@@ -61,11 +57,11 @@ class ProjectControllerTest extends WebTestCase
       
       $this->assertEquals( $json->{'error'}, "success", $json->{'message'} );
       
-      $this->assertInternalType( "array", $json->{'projects'}  );
+      $this->assertInternalType( "array", $json->{'charges'}  );
       
       
       // Test wen it don't
-      $crawler = $client->request('GET', '/api/projects/0');
+      $crawler = $client->request('GET', '/api/charges/0');
 	    
 	    $this->assertTrue(
       						$client->getResponse()->headers->contains(
@@ -77,7 +73,7 @@ class ProjectControllerTest extends WebTestCase
             
       $this->assertEquals( $json->{'error'}, "error", $json->{'message'} );
       
-      $this->assertFalse( property_exists( $json, 'projects' ) );
+      $this->assertFalse( property_exists( $json, 'charges' ) );
 	    
     }
     
@@ -86,7 +82,7 @@ class ProjectControllerTest extends WebTestCase
 	    $client = static::createClient();
 	    
 	    // Test when it works
-	    $crawler = $client->request('GET', '/api/project/1');
+	    $crawler = $client->request('GET', '/api/charge/1');
 	    
 	    $this->assertTrue(
       						$client->getResponse()->headers->contains(
@@ -98,10 +94,10 @@ class ProjectControllerTest extends WebTestCase
       
       $this->assertEquals( $json->{'error'}, "success", $json->{'message'} );
       
-      $this->assertInternalType( "object", $json->{'project'}  );
+      $this->assertInternalType( "object", $json->{'charge'}  );
       
       // Then when it won't
-      $crawler = $client->request('GET', '/api/project/0');
+      $crawler = $client->request('GET', '/api/charge/0');
 	    
 	    $this->assertTrue(
       						$client->getResponse()->headers->contains(
@@ -113,16 +109,7 @@ class ProjectControllerTest extends WebTestCase
       
       $this->assertEquals( $json->{'error'}, "error", $json->{'message'} );
       
-      $this->assertFalse( property_exists( $json, 'project' ) );
+      $this->assertFalse( property_exists( $json, 'charge' ) );
 
-    }
-    
-    public function testCpost()
-    {
-	    $client = static::createClient();
-	    
-	    $crawler = $client->request('POST', '/api/project');
-	    
-	    $fields = array();
     }
 }

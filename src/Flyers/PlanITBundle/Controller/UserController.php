@@ -26,9 +26,12 @@ class UserController extends FOSRestController implements ClassResourceInterface
         
         $entities = $em->getRepository("PlanITBundle:User")->findAll();
         
-        return array(
-            'entities' => $entities,
-        );
+        $view = $this->view(array(
+            'error' => 'success',
+            'message' => '',
+            'users' => $entities
+            ), 200);
+        return $this->handleView($view);
     }
 
     /**
@@ -41,12 +44,20 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
         $entity = $em->getRepository("PlanITBundle:User")->find($id);
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find album entity');
+            $view = $this->view(array(
+                    'error' => 'error',
+                    'message' => 'No User Found !'
+                ), 200);
+            return $this->handleView($view);
         }
+        
+        $view = $this->view(array(
+            'error' => 'success',
+            'message' => '',
+            'user' => $entity
+            ), 200);
+        return $this->handleView($view);
 
-        return array(
-            'entity' => $entity,
-        );
     }
 
     /**
