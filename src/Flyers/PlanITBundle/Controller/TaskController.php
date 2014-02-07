@@ -275,13 +275,23 @@ class TaskController extends FOSRestController implements ClassResourceInterface
         
         $entity = $entityRepository->find($id);
 
-        if (!is_null($entity))
+        if (is_null($entity))
         {
-            $em->remove($entity);
-            $em->flush();
+          $view = $this->view(array(
+	            'error' => 'error',
+	            'message' => 'Task not found !'
+	            ), 200);
+	        return $this->handleView($view);
         }
+        
+        $em->remove($entity);
+        $em->flush();
 
-        return $this->view(null, Codes::HTTP_NO_CONTENT);
+        $view = $this->view(array(
+            'error' => 'success',
+            'message' => 'Task deleted with success'
+            ), 200);
+        return $this->handleView($view);
     }
 
 

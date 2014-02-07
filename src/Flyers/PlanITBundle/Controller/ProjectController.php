@@ -129,7 +129,23 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
         $end    = ($end) ? $end->format('d/m/Y') : null;
 
         if ( !is_null($begin) ) $data['begin'] = $begin;
+        else
+        {
+	        $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Begin null or malformed (format : d/m/Y) !'
+                ), 200);
+          return $this->handleView($view);
+        }
         if ( !is_null($end) ) $data['end'] = $end;
+        else
+        {
+	        $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'End null or malformed (format : d/m/Y) !'
+                ), 200);
+          return $this->handleView($view);
+        }
 
         $user = $em->getRepository("PlanITBundle:User")->find($userId);
         if (!$user) {
@@ -196,7 +212,23 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
         $end    = ($end) ? $end->format('d/m/Y') : null;
 
         if ( !is_null($begin) ) $data['begin'] = $begin;
+        else
+        {
+	        $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Begin null or malformed (format : d/m/Y) !'
+                ), 200);
+          return $this->handleView($view);
+        }
         if ( !is_null($end) ) $data['end'] = $end;
+        else
+        {
+	        $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'End null or malformed (format : d/m/Y) !'
+                ), 200);
+          return $this->handleView($view);
+        }
 
         $form->bind($data);
 
@@ -230,13 +262,23 @@ class ProjectController extends FOSRestController implements ClassResourceInterf
         
         $entity = $entityRepository->find($id);
 
-        if (!is_null($entity))
+        if (is_null($entity))
         {
-            $em->remove($entity);
-            $em->flush();
+	        $view = $this->view(array(
+            'error' => 'error',
+            'message' => 'Project not found !',
+            ), 200);
+					return $this->handleView($view);
         }
+        
+        $em->remove($entity);
+        $em->flush();
 
-        return $this->view(null, Codes::HTTP_NO_CONTENT);
+        $view = $this->view(array(
+            'error' => 'success',
+            'message' => 'Project deleted with success',
+            ), 200);
+        return $this->handleView($view);
     }
 
 }

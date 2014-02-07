@@ -115,7 +115,6 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
 
         $data = array();
 
-        $userId = intval($request->request->get('user'));
         $projectId = intval($request->request->get('project'));
         $taskId = intval($request->request->get('task'));
         $employeeId = intval($request->request->get('employee'));
@@ -200,13 +199,23 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
         
         $entity = $entityRepository->find($id);
 
-        if (!is_null($entity))
+        if (is_null($entity))
         {
-            $em->remove($entity);
-            $em->flush();
+        	$view = $this->view(array(
+	            'error' => 'error',
+	            'message' => 'Charge not found !'
+	            ), 200);
+	        return $this->handleView($view);
         }
+        
+        $em->remove($entity);
+        $em->flush();
 
-        return $this->view(null, Codes::HTTP_NO_CONTENT);
+        $view = $this->view(array(
+            'error' => 'success',
+            'message' => 'Charge deleted with success'
+            ), 200);
+        return $this->handleView($view);
     }
 
 
