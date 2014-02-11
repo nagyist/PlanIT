@@ -33,6 +33,8 @@ class TaskControllerTest extends WebTestCase
       
       	$this->assertInternalType( "integer", $task->{'id'} );
       	$this->assertInternalType( "string", $task->{'name'} );
+      	
+      	if (property_exists($task, 'description'))
       	$this->assertInternalType( "string", $task->{'description'} );
       	$this->assertInternalType( "string", $task->{'begin'} );
       	$this->assertInternalType( "integer", $task->{'estimate'} );

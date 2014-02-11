@@ -134,6 +134,16 @@ class UserController extends FOSRestController implements ClassResourceInterface
         $password = $request->request->get('password');
         $password_confirm = $request->request->get('password_confirm');
 
+				if (empty($email))
+				{
+					$view = $this->view(
+                array(
+                    'error' => 'error',
+                    'message' => 'Please provide a user email'
+                ), 200);
+            return $this->handleView($view);
+				}
+
         $check = $um->findUserByUsername($email);
         if (!is_null($check))
         {

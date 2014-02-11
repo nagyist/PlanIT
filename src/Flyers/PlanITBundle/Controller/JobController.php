@@ -78,6 +78,17 @@ class JobController extends FOSRestController implements ClassResourceInterface
         $form->bind($job);
 
         if ($form->isValid()) {
+        
+        		$confirm = $em->getRepository('PlanITBundle:Job')->findByName($job["name"]);
+        		if (!is_null($confirm))
+        		{
+	        		$view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Job already created',
+                ), 200);
+							return $this->handleView($view);
+        		}
+        
             $em->persist($entity);
             $em->flush();
 
@@ -87,6 +98,7 @@ class JobController extends FOSRestController implements ClassResourceInterface
                 'job' => $entity
                 ), 200);
             return $this->handleView($view);
+        
         } else {
             $view = $this->view(array(
                 'error' => 'error',
@@ -124,6 +136,17 @@ class JobController extends FOSRestController implements ClassResourceInterface
         $form->bind($job);
 
         if ($form->isValid()) {
+        
+        		$confirm = $em->getRepository('PlanITBundle:Job')->findByName($job["name"]);
+        		if (!is_null($confirm))
+        		{
+	        		$view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Job already created',
+                ), 200);
+							return $this->handleView($view);
+        		}
+        
             $em->persist($entity);
             $em->flush();
 

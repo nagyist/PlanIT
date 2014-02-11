@@ -177,18 +177,6 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
     }
 
     /**
-     * params: name,description,begin,end
-     * @Rest\Put("/api/charge/{id}")
-     * @Rest\View()
-     */
-    public function putAction(Request $request, $id)
-    {
-        $em = $this->container->get("doctrine")->getManager();
-        $entityRepository = $this->container->get("doctrine")->getRepository('PlanITBundle:Charge');
-
-    }
-
-    /**
      * @Rest\Delete("/api/charge/{id}")
      * @Rest\View()
      */

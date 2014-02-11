@@ -6,11 +6,15 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+
 /**
  * Project
  *
  * @ORM\Table(name="project")
  * @ORM\Entity(repositoryClass="Flyers\PlanITBundle\Entity\ProjectRepository")
+ * @ExclusionPolicy("none")
  */
 class Project
 {
@@ -61,6 +65,7 @@ class Project
      *      joinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
      * )
+     * @Exclude
      */
     private $users;
 

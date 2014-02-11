@@ -4,11 +4,15 @@ namespace Flyers\PlanITBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+
 /**
  * Job
  *
  * @ORM\Table(name="job")
  * @ORM\Entity(repositoryClass="Flyers\PlanITBundle\Entity\JobRepository")
+ * @ExclusionPolicy("none") 
  */
 class Job
 {
@@ -39,6 +43,7 @@ class Job
      * @var ArrayCollection $employees
      *
      * @ORM\OneToMany(targetEntity="Employee", mappedBy="job")
+     * @Exclude
      */
     private $employees;
 

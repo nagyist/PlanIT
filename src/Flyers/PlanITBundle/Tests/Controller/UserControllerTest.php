@@ -39,7 +39,7 @@ class UserControllerTest extends WebTestCase
         $this->assertFalse( property_exists( $user, 'projects' ) );
         $this->assertFalse( property_exists( $user, 'employees' ) );        
         
-        $this->assertTrue( $user->{'enabled'}, $user->{'username'} );
+//        $this->assertTrue( $user->{'enabled'}, $user->{'username'} );
         $this->assertFalse( $user->{'expired'} );
                 
       }        
@@ -79,5 +79,173 @@ class UserControllerTest extends WebTestCase
       
       $this->assertFalse( property_exists( $json, 'user' ) );
 
+    }
+    
+    public function authTest()
+    {
+	    $client = static::createClient();
+	    
+	    $fields = array();
+	    
+	    // Test with empty data
+	    $crawler = $client->request('POST', 
+												    '/user/auth',
+												    $fields,
+												    array(),
+												    array('Content-Type' => 'application/json'));
+												    
+			$this->assertTrue(
+      						$client->getResponse()->headers->contains(
+      							'Content-Type', 'application/json'
+      						)
+      					);
+      
+      $json = json_decode($client->getResponse()->getContent());
+      
+      $this->assertEquals( $json->{'error'}, "error", $json->{'message'} );
+      
+      $client->insulate();
+	    
+	    // Test with inexistant user
+	    $fields['email'] = "john.doe";
+	    $fields['password'] = "john.doe";
+	    
+	    $crawler = $client->request('POST', 
+												    '/user/auth',
+												    $fields,
+												    array(),
+												    array('Content-Type' => 'application/json'));
+												    
+			$this->assertTrue(
+      						$client->getResponse()->headers->contains(
+      							'Content-Type', 'application/json'
+      						)
+      					);
+      
+      $json = json_decode($client->getResponse()->getContent());
+      
+      $this->assertEquals( $json->{'error'}, "error", $json->{'message'} );
+      
+      $client->insulate();
+	    
+	    // Test working	    
+	    $fields['email'] = "test@test.com";
+	    $fields['password'] = "test";
+	    
+	    $crawler = $client->request('POST', 
+												    '/user/auth',
+												    $fields,
+												    array(),
+												    array('Content-Type' => 'application/json'));
+												    
+			$this->assertTrue(
+      						$client->getResponse()->headers->contains(
+      							'Content-Type', 'application/json'
+      						)
+      					);
+      
+      $json = json_decode($client->getResponse()->getContent());
+      
+      $this->assertEquals( $json->{'error'}, "success", $json->{'message'} );
+      $this->assertFalse( property_exists($json, 'token') );
+      
+      $client->insulate();
+    }
+    
+    public function testCreate()
+    {
+	    $client = static::createClient();
+	    
+	    $fields = array();
+	    
+	    
+	    // Test without data
+	    $crawler = $client->request('POST', 
+												    '/user/create',
+												    $fields,
+												    array(),
+												    array('Content-Type' => 'application/json'));
+												    
+			$this->assertTrue(
+      						$client->getResponse()->headers->contains(
+      							'Content-Type', 'application/json'
+      						)
+      					);
+      
+      $json = json_decode($client->getResponse()->getContent());
+      
+      if (is_null($json)) print_r($client->getResponse()->getContent());
+      $this->assertEquals( $json->{'error'}, "error", $json->{'message'} );
+      
+      $client->insulate();
+      
+      // Test with unvalid password confirmation
+      $fields["email"] = "john.doe@doe.com";
+      $fields["password"] = "john.doe";
+      $fields["password_confirm"] = "john.doe.";
+            
+      $crawler = $client->request('POST', 
+												    '/user/create',
+												    $fields,
+												    array(),
+												    array('Content-Type' => 'application/json'));
+												    
+			$this->assertTrue(
+      						$client->getResponse()->headers->contains(
+      							'Content-Type', 'application/json'
+      						)
+      					);
+      
+      $json = json_decode($client->getResponse()->getContent());
+      
+      $this->assertEquals( $json->{'error'}, "error", $json->{'message'} );
+      
+      $client->insulate();
+      
+      // Test with unvalid email
+      $fields["email"] = "john.doe";
+      $fields["password"] = "john.doe";
+      $fields["password_confirm"] = "john.doe";
+            
+      $crawler = $client->request('POST', 
+												    '/user/create',
+												    $fields,
+												    array(),
+												    array('Content-Type' => 'application/json'));
+												    
+			$this->assertTrue(
+      						$client->getResponse()->headers->contains(
+      							'Content-Type', 'application/json'
+      						)
+      					);
+      
+      $json = json_decode($client->getResponse()->getContent());
+      
+      $this->assertEquals( $json->{'error'}, "error", $json->{'message'} );
+      
+      $client->insulate();
+      
+      
+      // Test with valid data
+      $fields["email"] = "john.doe@doe.com";
+      
+      $crawler = $client->request('POST', 
+												    '/user/create',
+												    $fields,
+												    array(),
+												    array('Content-Type' => 'application/json'));
+												    
+			$this->assertTrue(
+      						$client->getResponse()->headers->contains(
+      							'Content-Type', 'application/json'
+      						)
+      					);
+      
+      $json = json_decode($client->getResponse()->getContent());
+      
+      $this->assertEquals( $json->{'error'}, "success", $json->{'message'} );
+      $this->assertTrue( property_exists($json, 'user') );
+      
+      $client->insulate();
     }
 }

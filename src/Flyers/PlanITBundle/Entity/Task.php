@@ -4,11 +4,15 @@ namespace Flyers\PlanITBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+
 /**
  * Task
  *
  * @ORM\Table(name="task")
  * @ORM\Entity(repositoryClass="Flyers\PlanITBundle\Entity\TaskRepository")
+ * @ExclusionPolicy("none") 
  */
 class Task
 {
@@ -31,7 +35,7 @@ class Task
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -78,15 +82,17 @@ class Task
     /**
      * @var ArrayCollection $children
      *
-     * @ORM\OneToMany(targetEntity="Task", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="parent", cascade={"remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"begin" = "ASC"})
+     * @Exclude
      */
     private $children;
 
     /**
      * @var Flyers\PlanITBundle\Entity\Task $parent
      *
-     * @ORM\ManyToOne(targetEntity="Task", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Task", inversedBy="children", cascade={"persist"})
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $parent;
 

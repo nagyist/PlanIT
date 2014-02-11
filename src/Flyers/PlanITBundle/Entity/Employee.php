@@ -4,11 +4,15 @@ namespace Flyers\PlanITBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+
 /**
  * Employee
  *
  * @ORM\Table(name="employee")
  * @ORM\Entity(repositoryClass="Flyers\PlanITBundle\Entity\EmployeeRepository")
+ * @ExclusionPolicy("none") 
  */
 class Employee
 {
@@ -76,13 +80,15 @@ class Employee
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="employees")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @Exclude
      */
     private $user;
 
     /**
      * @var ArrayCollection $charges
      *
-     * @ORM\OneToMany(targetEntity="Charge", mappedBy="employee")
+     * @ORM\OneToMany(targetEntity="Charge", mappedBy="employee", cascade={"remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"created" = "ASC"})
      */
     private $charges;
 

@@ -34,11 +34,12 @@ class ProjectControllerTest extends WebTestCase
         
         $this->assertInternalType( "integer", $project->{'id'} );
         $this->assertInternalType( "string", $project->{'name'} );
+        
+        if (property_exists($project, 'description'))
         $this->assertInternalType( "string", $project->{'description'} );
         $this->assertInternalType( "string", $project->{'begin'} );
         $this->assertInternalType( "string", $project->{'end'} );
         $this->assertInternalType( "array", $project->{'tasks'} );
-        $this->assertInternalType( "array", $project->{'users'} );
         
 				$this->assertFalse( property_exists($project, 'users') );
         

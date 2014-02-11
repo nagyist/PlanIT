@@ -4,10 +4,11 @@ namespace Flyers\PlanITBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
 
 use Symfony\Component\Validator\Constraints;
+
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Table(name="user")
@@ -25,6 +26,17 @@ class User extends BaseUser
      * @Expose
      */
     protected $id;
+    
+    /**
+     * @var string email
+     *
+     * @Constraints\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
+     *
+     */
+    protected $email;
 
     /**
      * @var ArrayCollection $projects

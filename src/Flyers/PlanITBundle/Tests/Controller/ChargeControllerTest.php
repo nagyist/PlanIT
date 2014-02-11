@@ -52,6 +52,23 @@ class ChargeControllerTest extends WebTestCase
     {
 	    $client = static::createClient();
 	    
+			$crawler = $client->request('GET', '/api/charges');
+      
+      $json = json_decode($client->getResponse()->getContent());
+      
+      if (!is_null($json))
+      {
+      	$charges = $json->{'charges'};
+	      $charges_length = count($charges);
+	      if ($charges_length > 0)
+	      {
+	      	$charge = $charges[$charges_length];
+	      	$this->{'id_task'} = $charge->{'task'}->{'id'};
+	      }
+      }
+      
+      $client->insulate();
+	    
 	    // Test when it works
 	    $crawler = $client->request('GET', '/api/charges/'.$this->{'id_task'});
 	    
@@ -92,6 +109,23 @@ class ChargeControllerTest extends WebTestCase
     public function testGet()
     {
 	    $client = static::createClient();
+	    
+	    $crawler = $client->request('GET', '/api/charges');
+      
+      $json = json_decode($client->getResponse()->getContent());
+      
+      if (!is_null($json))
+      {
+      	$charges = $json->{'charges'};
+	      $charges_length = count($charges);
+	      if ($charges_length > 0)
+	      {
+		      $charge = $charges[$charges_length];
+		      $this->{'id_charge'} = $charge->{'id'};
+	      }
+      }
+      
+      $client->insulate();
 	    
 	    // Test when it works
 	    $crawler = $client->request('GET', '/api/charge/'.$this->{'id_charge'});
@@ -272,168 +306,7 @@ class ChargeControllerTest extends WebTestCase
       $client->insulate();
       
     }
-    
-    public function testPut()
-    {
-    	$client = static::createClient();
-    	
-    	$fields = array();  
-    	
-    	
-    	
-    	$crawler = $client->request('GET', '/api/charges');
-      
-      $json = json_decode($client->getResponse()->getContent());
-                  
-      $this->assertEquals( $json->{'error'}, "success" );
-      
-      $charges_length = count($json->{'charges'});
-      
-      $charge = $json->{'charges'}[$charges_length-1];
-      
-      $this->{'id_charge'} = $charge->id;
-            
-      $client->insulate();
-    	
-    	
-    	
-    	$crawler = $client->request('GET', '/api/tasks');
-      
-      $json = json_decode($client->getResponse()->getContent());
-                  
-      $this->assertEquals( $json->{'error'}, "success" );
-      
-      $tasks_length = count($json->{'tasks'});
-      
-      $task = $json->{'tasks'}[$tasks_length-1];
-      
-      $this->{'id_task'} = $task->id;
-            
-      $client->insulate();
-      
-      
-      
-      $crawler = $client->request('GET', '/api/employees');
-      
-      $json = json_decode($client->getResponse()->getContent());
-                  
-      $this->assertEquals( $json->{'error'}, "success" );
-      
-      $employees_length = count($json->{'employees'});
-      
-      $employee = $json->{'employees'}[$employees_length-1];
-      
-      $this->{'id_employee'} = $employee->{'id'};
-            
-      $client->insulate();
-      
-      
-      
-      $crawler = $client->request('GET', '/api/projects');
-      
-      $json = json_decode($client->getResponse()->getContent());
-                  
-      $this->assertEquals( $json->{'error'}, "success" );
-      
-      $projects_length = count($json->{'projects'});
-      
-      $project = $json->{'projects'}[$projects_length-1];
-      
-      $this->{'id_project'} = $project->{'id'};
-            
-      $client->insulate();
-      
-      // Test without data
-			$crawler = $client->request('PUT', 
-												    '/api/charge/'.$this->{'id_charge'},
-												    $fields,
-												    array(),
-												    array('Content-Type' => 'application/json'));
-												    
-			$this->assertTrue(
-      						$client->getResponse()->headers->contains(
-      							'Content-Type', 'application/json'
-      						)
-      					);
-      
-      $json = json_decode($client->getResponse()->getContent());
-            
-      $this->assertEquals( $json->{'error'}, "error", $json->{'message'} );
-      
-      $client->insulate();
-      
-      // Test without duration
-      $created = new \DateTime();
-      
-      $fields["task"] = $this->{'id_task'};
-      $fields["employee"] = $this->{'id_employee'};
-      $fields["created"] = $created->format("d/m/Y");
-      
-      $crawler = $client->request('PUT', 
-												    '/api/charge/'.$this->{'id_charge'},
-												    $fields,
-												    array(),
-												    array('Content-Type' => 'application/json'));
-												    
-			$this->assertTrue(
-      						$client->getResponse()->headers->contains(
-      							'Content-Type', 'application/json'
-      						)
-      					);
-      
-      $json = json_decode($client->getResponse()->getContent());
-      
-      if (is_null($json)) print_r($client->getResponse()->getContent());
-      $this->assertEquals( $json->{'error'}, "error", $json->{'message'} );
-      
-      $client->insulate();
-      
-      // Test without project / description
-      $fields["duration"] = "1.5 days";
-      
-      $crawler = $client->request('PUT', 
-												    '/api/charge/'.$this->{'id_charge'},
-												    $fields,
-												    array(),
-												    array('Content-Type' => 'application/json'));
-												    
-			$this->assertTrue(
-      						$client->getResponse()->headers->contains(
-      							'Content-Type', 'application/json'
-      						)
-      					);
-      
-      $json = json_decode($client->getResponse()->getContent());
-      
-      if (is_null($json)) print_r($client->getResponse()->getContent());
-      $this->assertEquals( $json->{'error'}, "success", $json->{'message'} );
-      
-      $client->insulate();
-      
-      // Test with all data
-      $fields["project"] = $this->{'id_project'};
-      $fields["description"] = "Test charge description";
-      
-      $crawler = $client->request('PUT', 
-												    '/api/charge/'.$this->{'id_charge'},
-												    $fields,
-												    array(),
-												    array('Content-Type' => 'application/json'));
-												    
-			$this->assertTrue(
-      						$client->getResponse()->headers->contains(
-      							'Content-Type', 'application/json'
-      						)
-      					);
-      
-      $json = json_decode($client->getResponse()->getContent());
-            
-      $this->assertEquals( $json->{'error'}, "success", $json->{'message'} );
-      
-      $client->insulate();  
-	    
-    }
-    
+        
     public function testDelete()
     {
     	$client = static::createClient();

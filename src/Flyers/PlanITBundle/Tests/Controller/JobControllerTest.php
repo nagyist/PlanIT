@@ -34,7 +34,8 @@ class JobControllerTest extends WebTestCase
       	$this->assertInternalType( "integer", $job->{'id'} );
       	$this->assertInternalType( "string", $job->{'name'} );
       	$this->assertInternalType( "string", $job->{'description'} );
-      	$this->assertInternalType( "array", $job->{'employees'} );      	
+
+      	$this->assertFalse( property_exists($job, "employees"));
       	        
       }
       
@@ -161,7 +162,7 @@ class JobControllerTest extends WebTestCase
       
       // Test without description
       $fields["name"] = "Test Job";
-      delete($fields["description"]);
+      unset($fields["description"]);
       
       $crawler = $client->request('POST', 
 												    '/api/job',
@@ -265,7 +266,7 @@ class JobControllerTest extends WebTestCase
       
       // Test without description
       $fields["name"] = "Test Job";
-      delete($fields["description"]);
+      unset($fields["description"]);
       
       $crawler = $client->request('PUT', 
 												    '/api/job/'.$this->{'id_job'},

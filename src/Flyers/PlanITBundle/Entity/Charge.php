@@ -4,11 +4,15 @@ namespace Flyers\PlanITBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+
 /**
  * Charge
  *
  * @ORM\Table(name="charge")
  * @ORM\Entity(repositoryClass="Flyers\PlanITBundle\Entity\ChargeRepository")
+ * @ExclusionPolicy("none") 
  */
 class Charge
 {
@@ -24,7 +28,7 @@ class Charge
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -45,8 +49,8 @@ class Charge
     /**
      * @var Flyers\PlanITBundle\Entity\Employee $employee
      *
-     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="charges")
-     * @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="charges", cascade={"persist"})
+     * @ORM\JoinColumn(name="employee_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      **/
     private $employee;
 
