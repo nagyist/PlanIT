@@ -123,7 +123,9 @@ class ChargeController extends FOSRestController implements ClassResourceInterfa
         $data["created"] = $request->request->get('created');
         $data["description"] = $request->request->get('description');
 
-        $data["duration"] = floatval( $request->request->get('duration') );
+				$data["duration"] = $request->request->get('duration');
+				
+				if ($data["duration"]) $data["duration"] = floatval( $data["duration"] );
 
         if ( ( strpos($request->request->get('duration'), 'h') ) !== FALSE )
             $base = 1;

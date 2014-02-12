@@ -4,6 +4,8 @@ namespace Flyers\PlanITBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints;
+
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Exclude;
 
@@ -36,6 +38,7 @@ class Charge
      * @var float
      *
      * @ORM\Column(name="duration", type="decimal")
+     * @Constraints\NotBlank()
      */
     private $duration;
 
@@ -43,6 +46,8 @@ class Charge
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="date")
+     * @Constraints\NotBlank()
+     * @Constraints\Type("\DateTime")
      */
     private $created;
 
@@ -57,8 +62,8 @@ class Charge
     /**
      * @var Flyers\PlanITBundle\Entity\Task $task
      *
-     * @ORM\ManyToOne(targetEntity="Task", inversedBy="charges")
-     * @ORM\JoinColumn(name="task_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Task", inversedBy="charges", cascade={"persist"})
+     * @ORM\JoinColumn(name="task_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      **/
     private $task;
 

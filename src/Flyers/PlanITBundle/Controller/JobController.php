@@ -75,19 +75,21 @@ class JobController extends FOSRestController implements ClassResourceInterface
         $job["name"] = $request->request->get('name');
         $job["description"] = $request->request->get('description');
         
+        $confirm = $em->getRepository('PlanITBundle:Job')->findByName($job["name"]);
+    		if ($confirm)
+    		{
+      		$view = $this->view(array(
+            'error' => 'error',
+            'message' => 'Job already created',
+            ), 200);
+					return $this->handleView($view);
+    		}
+        
         $form->bind($job);
 
         if ($form->isValid()) {
         
-        		$confirm = $em->getRepository('PlanITBundle:Job')->findByName($job["name"]);
-        		if (!is_null($confirm))
-        		{
-	        		$view = $this->view(array(
-                'error' => 'error',
-                'message' => 'Job already created',
-                ), 200);
-							return $this->handleView($view);
-        		}
+        		
         
             $em->persist($entity);
             $em->flush();
@@ -133,19 +135,19 @@ class JobController extends FOSRestController implements ClassResourceInterface
         $job["name"] = $request->request->get('name');
         $job["description"] = $request->request->get('description');
         
+        $confirm = $em->getRepository('PlanITBundle:Job')->findByName($job["name"]);
+    		if ($confirm)
+    		{
+      		$view = $this->view(array(
+            'error' => 'error',
+            'message' => 'Job already created',
+            ), 200);
+					return $this->handleView($view);
+    		}
+        
         $form->bind($job);
 
         if ($form->isValid()) {
-        
-        		$confirm = $em->getRepository('PlanITBundle:Job')->findByName($job["name"]);
-        		if (!is_null($confirm))
-        		{
-	        		$view = $this->view(array(
-                'error' => 'error',
-                'message' => 'Job already created',
-                ), 200);
-							return $this->handleView($view);
-        		}
         
             $em->persist($entity);
             $em->flush();

@@ -56,8 +56,8 @@ class Task
     /**
      * @var Flyers\PlanITBundle\Entity\Project $project
      *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="tasks")
-     * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="tasks", cascade={"persist"})
+     * @ORM\JoinColumn(name="project_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      **/
     private $project;
 
@@ -75,7 +75,8 @@ class Task
     /**
      * @var ArrayCollection $charges
      *
-     * @ORM\OneToMany(targetEntity="Charge", mappedBy="task")
+     * @ORM\OneToMany(targetEntity="Charge", mappedBy="task", cascade={"remove"}, orphanRemoval=true)
+     * @Exclude
      */
     private $charges;
 

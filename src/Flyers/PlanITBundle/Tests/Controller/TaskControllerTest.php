@@ -39,7 +39,7 @@ class TaskControllerTest extends WebTestCase
       	$this->assertInternalType( "string", $task->{'begin'} );
       	$this->assertInternalType( "integer", $task->{'estimate'} );
       	$this->assertInternalType( "object", $task->{'project'} );
-      	$this->assertInternalType( "array", $task->{'charges'} );
+      	$this->assertFalse( property_exists($task, 'charges') );
       	
       	if (property_exists( $task, 'parent' ))
       	{
@@ -58,12 +58,23 @@ class TaskControllerTest extends WebTestCase
       $client->insulate();
     }
     
-    public function testGetTasksUser()
+    public function testGetTasksProject()
     {
 	    $client = static::createClient();
 	    
+	    
+	    $client->request('GET', '/api/projects');
+	    $json = json_decode($client->getResponse()->getContent());
+	    if(!property_exists($json, 'projects')) print_r($client->getResponse()->getContent());
+	    $projects_length = count($json->{'projects'});
+	    if ($projects_length > 0)
+	    {
+		    $project = $json->{'projects'}[$projects_length-1];
+		    $this->{'id_project'} = $project->{'id'};
+	    }
+	    
 	    // Test when it works
-	    $crawler = $client->request('GET', '/api/tasks/'.$this->{'id_user'});
+	    $crawler = $client->request('GET', '/api/tasks/'.$this->{'id_project'});
 	    
 	    $this->assertTrue(
       						$client->getResponse()->headers->contains(
@@ -102,6 +113,16 @@ class TaskControllerTest extends WebTestCase
     public function testGet()
     {
 	    $client = static::createClient();
+	    
+	    $client->request('GET', '/api/tasks');
+	    $json = json_decode($client->getResponse()->getContent());
+	    if(!property_exists($json, 'tasks')) print_r($client->getResponse()->getContent());
+	    $tasks_length = count($json->{'tasks'});
+	    if ($tasks_length > 0)
+	    {
+		    $task = $json->{'tasks'}[$tasks_length-1];
+		    $this->{'id_task'} = $task->{'id'};
+	    }
 	    
 	    // Test when it works
 	    $crawler = $client->request('GET', '/api/task/'.$this->{'id_task'});
@@ -146,18 +167,9 @@ class TaskControllerTest extends WebTestCase
 			$fields = array();
 			
 			$crawler = $client->request('GET', '/api/employees');
-      
-      $this->assertTrue(
-      						$client->getResponse()->headers->contains(
-      							'Content-Type', 'application/json'
-      						)
-      					);
-      
       $json = json_decode($client->getResponse()->getContent());
-                        
 			$employees = array();
       $employees_length = count($json->{'employees'});
-      
       for ( $i = $employees_length-1; $i >= $employees_length-4; $i-- )
       {
       	if ($i > 0) 
@@ -166,26 +178,34 @@ class TaskControllerTest extends WebTestCase
 		      array_push($employees, $cur_employee->{'id'});
 	      }
       }
-			      
 			$client->insulate();
 			
 			$crawler = $client->request('GET', '/api/tasks');
-      
-      $this->assertTrue(
-      						$client->getResponse()->headers->contains(
-      							'Content-Type', 'application/json'
-      						)
-      					);
-      
       $json = json_decode($client->getResponse()->getContent());
-                  
-      $this->assertEquals( $json->{'error'}, "success" );
-      
-      $tasks_length = count($json->{'tasks'});
-      
+      $tasks_length = count($json->{'tasks'});  
       $task = $json->{'tasks'}[$tasks_length-1];
-            
       $client->insulate();
+      
+      $client->request('GET', '/api/users');
+      $json = json_decode($client->getResponse()->getContent());
+      $users_length = count($json->{'users'});  
+      if ($users_length > 0) 
+      {
+      	$user = $json->{'users'}[$users_length-1];
+      	$this->{'id_user'} = $user->{'id'};
+      }
+      $client->insulate();
+      
+      $client->request('GET', '/api/projects');
+      $json = json_decode($client->getResponse()->getContent());
+      $projects_length = count($json->{'projects'});  
+      if ($projects_length > 0) 
+      {
+      	$project = $json->{'projects'}[$projects_length-1];
+      	$this->{'id_project'} = $project->{'id'};
+      }
+      $client->insulate();
+
 			
 			// Test without data
 			$crawler = $client->request('POST', 
@@ -274,19 +294,10 @@ class TaskControllerTest extends WebTestCase
 
 			$fields = array();
 			
-			$crawler = $client->request('GET', '/api/employees');
-      
-      $this->assertTrue(
-      						$client->getResponse()->headers->contains(
-      							'Content-Type', 'application/json'
-      						)
-      					);
-      
+			$crawler = $client->request('GET', '/api/employees');      
       $json = json_decode($client->getResponse()->getContent());
-                        
 			$employees = array();
       $employees_length = count($json->{'employees'});
-      
       for ( $i = $employees_length-1; $i >= $employees_length-4; $i-- )
       {
       	if ($i > 0) 
@@ -295,28 +306,38 @@ class TaskControllerTest extends WebTestCase
 		      array_push($employees, $cur_employee->{'id'});
 	      }
       }
-			      
 			$client->insulate();
 			
 			$crawler = $client->request('GET', '/api/tasks');
-      
-      $this->assertTrue(
-      						$client->getResponse()->headers->contains(
-      							'Content-Type', 'application/json'
-      						)
-      					);
-      
       $json = json_decode($client->getResponse()->getContent());
-                  
-      $this->assertEquals( $json->{'error'}, "success" );
-      
       $tasks_length = count($json->{'tasks'});
-      
-      $task = $json->{'tasks'}[$tasks_length-1];
-      
-      $this->{'id_task'} = $task->{'id'};
-			      
+      if ($tasks_length > 0)
+      {
+	      $task = $json->{'tasks'}[$tasks_length-1];
+	      $this->{'id_task'} = $task->{'id'};
+      }
 			$client->insulate();
+			
+			      $client->request('GET', '/api/users');
+      $json = json_decode($client->getResponse()->getContent());
+      $users_length = count($json->{'users'});  
+      if ($users_length > 0) 
+      {
+      	$user = $json->{'users'}[$users_length-1];
+      	$this->{'id_user'} = $user->{'id'};
+      }
+      $client->insulate();
+      
+      $client->request('GET', '/api/projects');
+      $json = json_decode($client->getResponse()->getContent());
+      $projects_length = count($json->{'projects'});  
+      if ($projects_length > 0) 
+      {
+      	$project = $json->{'projects'}[$projects_length-1];
+      	$this->{'id_project'} = $project->{'id'};
+      }
+      $client->insulate();
+
 			
 			// Test without description / parent
       $begin = new \DateTime();

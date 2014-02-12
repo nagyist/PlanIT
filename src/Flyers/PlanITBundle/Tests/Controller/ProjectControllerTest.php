@@ -39,7 +39,7 @@ class ProjectControllerTest extends WebTestCase
         $this->assertInternalType( "string", $project->{'description'} );
         $this->assertInternalType( "string", $project->{'begin'} );
         $this->assertInternalType( "string", $project->{'end'} );
-        $this->assertInternalType( "array", $project->{'tasks'} );
+        $this->assertFalse( property_exists($project, 'tasks') );
         
 				$this->assertFalse( property_exists($project, 'users') );
         
@@ -52,6 +52,16 @@ class ProjectControllerTest extends WebTestCase
     public function testGetProjectsUser()
     {
 	    $client = static::createClient();
+	    
+	    $client->request('GET', '/api/users');
+	    $json = json_decode($client->getResponse()->getContent());
+	    if(!property_exists($json, 'users')) print_r($client->getResponse()->getContent());
+	    $users_length = count($json->{'users'});
+	    if ($users_length > 0)
+	    {
+		    $user = $json->{'users'}[$users_length-1];
+		    $this->{'id_user'} = $user->{'id'};
+	    }
 	    
 	    // Test when it works
 	    $crawler = $client->request('GET', '/api/projects/'.$this->{'id_user'});
@@ -156,10 +166,20 @@ class ProjectControllerTest extends WebTestCase
     {
 	    $client = static::createClient();
 	    
-	    
-	    // Test without datas
 	    $fields = array();
 	    
+	    $client->request('GET', '/api/users');
+	    $json = json_decode($client->getResponse()->getContent());
+	    if(!property_exists($json, 'users')) print_r($client->getResponse()->getContent());
+	    $users_length = count($json->{'users'});
+	    if ($users_length > 0)
+	    {
+		    $user = $json->{'users'}[$users_length-1];
+		    $this->{'id_user'} = $user->{'id'};
+	    }
+	    
+	    
+	    // Test without datas
 	    $crawler = $client->request('POST', 
 												    '/api/project',
 												    $fields,
@@ -413,6 +433,7 @@ class ProjectControllerTest extends WebTestCase
       					      
       $json = json_decode($client->getResponse()->getContent());
       
+      if (is_null($json)) print_r($client->getResponse()->getContent());
       $this->assertEquals( $json->{'error'}, "success", $json->{'message'} );
             
       $client->insulate();

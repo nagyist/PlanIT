@@ -115,6 +115,16 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
         $data["email"] = $request->request->get('email');
         $data["phone"] = $request->request->get('phone');
         $data["salary"] = floatval( $request->request->get('salary') );
+        
+        $employee = $em->getRepository("PlanITBundle:Employee")->findByEmail($data["email"]);
+        if ($employee)
+        {
+	        $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Employee already exists !'
+                ), 200);
+            return $this->handleView($view);
+        }
 
         $user = $em->getRepository("PlanITBundle:User")->find($userId);
         if (!$user) {
@@ -127,11 +137,7 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
 
         $job = $em->getRepository("PlanITBundle:Job")->find($jobId);
         if (!$job) {
-            $view = $this->view(array(
-                'error' => 'error',
-                'message' => 'Job not found !'
-                ), 200);
-            return $this->handleView($view);
+            $job = null;
         }
 
         $form->bind($data);
@@ -186,6 +192,16 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
         $data["email"] = $request->request->get('email');
         $data["phone"] = $request->request->get('phone');
         $data["salary"] = floatval( $request->request->get('salary') );
+        
+        $employee = $em->getRepository("PlanITBundle:Employee")->findByEmail($data["email"]);
+        if ($employee)
+        {
+	        $view = $this->view(array(
+                'error' => 'error',
+                'message' => 'Employee already exists !'
+                ), 200);
+            return $this->handleView($view);
+        }
 
         $user = $em->getRepository("PlanITBundle:User")->find($userId);
         if (!$user) {
@@ -198,11 +214,7 @@ class EmployeeController extends FOSRestController implements ClassResourceInter
 
         $job = $em->getRepository("PlanITBundle:Job")->find($jobId);
         if (!$job) {
-            $view = $this->view(array(
-                'error' => 'error',
-                'message' => 'Job not found !'
-                ), 200);
-            return $this->handleView($view);
+            $job = null;
         }
 
 

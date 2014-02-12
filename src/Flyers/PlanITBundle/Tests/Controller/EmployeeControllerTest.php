@@ -37,11 +37,20 @@ class EmployeeControllerTest extends WebTestCase
         $this->assertInternalType( "string", $employee->{'lastname'} );
         $this->assertInternalType( "string", $employee->{'firstname'} );
         $this->assertInternalType( "string", $employee->{'email'} );
+        if (property_exists($employee, 'phone'))
         $this->assertInternalType( "string", $employee->{'phone'} );
-        $this->assertInternalType( "float", $employee->{'salary'} );
+        
+        if (property_exists($employee, 'salary'))
+        {
+	        if (is_double($employee->{'salary'}))
+		        $this->assertInternalType( "float", $employee->{'salary'} );
+	        else
+		        $this->assertInternalType( "integer", $employee->{'salary'} );
+        }
         $this->assertInternalType( "object", $employee->{'job'} );
-        $this->assertInternalType( "array", $employee->{'tasks'} );
-				$this->assertInternalType( "array", $employee->{'charges'} );
+        
+        $this->assertFalse( property_exists($employee, 'tasks') );
+				$this->assertFalse( property_exists($employee, 'charges') );
         
         $this->assertFalse( property_exists($employee, 'user') );
                 
@@ -53,6 +62,17 @@ class EmployeeControllerTest extends WebTestCase
     public function testGetEmployeesUser()
     {
 	    $client = static::createClient();
+	    
+	    $client->request('GET', '/api/users');
+	    $json = json_decode($client->getResponse()->getContent());
+	    
+	    if(!property_exists($json, 'users')) print_r($client->getResponse()->getContent());
+	    $users_length = count($json->{'users'});
+	    if ($users_length > 0)
+	    {
+		    $user = $json->{'users'}[$users_length-1];
+		    $this->{'id_user'} = $user->{'id'};
+	    }
 	    
 	    // Test when it works
 	    $crawler = $client->request('GET', '/api/employees/'.$this->{'id_user'});
@@ -159,6 +179,16 @@ class EmployeeControllerTest extends WebTestCase
 	    
 	    $fields = array();
 	    
+	    $client->request('GET', '/api/users');
+	    $json = json_decode($client->getResponse()->getContent());
+	    if(!property_exists($json, 'users')) print_r($client->getResponse()->getContent());
+	    $users_length = count($json->{'users'});
+	    if ($users_length > 0)
+	    {
+		    $user = $json->{'users'}[$users_length-1];
+		    $this->{'id_user'} = $user->{'id'};
+	    }
+	    
 	    $crawler = $client->request('POST', 
 												    '/api/employee',
 												    $fields,
@@ -198,7 +228,7 @@ class EmployeeControllerTest extends WebTestCase
 			      
 			$client->insulate();
 			
-			// Test without datas
+			// Test already existing employee
 			$fields["user"] 		= $this->{'id_user'};
 			$fields["lastname"] = $employee->{'lastname'};
 			$fields["firstname"] = $employee->{'firstname'};
@@ -223,7 +253,6 @@ class EmployeeControllerTest extends WebTestCase
       $client->insulate();
 			      
       // Test without job / salary / phone
-      
       $fields["lastname"] 		= "Doe";
       $fields["firstname"] 		= "John";
       $fields["email"] 		= "john.doe@doe.com";
@@ -288,23 +317,7 @@ class EmployeeControllerTest extends WebTestCase
       $json = json_decode($client->getResponse()->getContent());
             
       $this->assertEquals( $json->{'error'}, "success", $json->{'message'} );
-      
-      $employee = $json->{'employee'};
-      
-      $this->assertInternalType( "integer", $employee->{'id'} );
-      $this->assertInternalType( "string", $employee->{'lastname'} );
-      $this->assertInternalType( "string", $employee->{'firstname'} );
-      $this->assertInternalType( "string", $employee->{'email'} );
-      $this->assertInternalType( "string", $employee->{'phone'} );
-      $this->assertInternalType( "float", $employee->{'salary'} );
-      $this->assertInternalType( "object", $employee->{'job'} );
-      $this->assertInternalType( "array", $employee->{'tasks'} );
-			$this->assertInternalType( "array", $employee->{'charges'} );
-      
-      $this->assertFalse( property_exists($employee, 'user') );
-      
-      $this->{'id_employee'} = $employee->{'id'};
-            
+                  
       $client->insulate();
 	    
     }    
@@ -313,24 +326,24 @@ class EmployeeControllerTest extends WebTestCase
     {
 	    $client = static::createClient();
 	    
+	    $client->request('GET', '/api/users');
+	    $json = json_decode($client->getResponse()->getContent());
+	    if(!property_exists($json, 'users')) print_r($client->getResponse()->getContent());
+	    $users_length = count($json->{'users'});
+	    if ($users_length > 0)
+	    {
+		    $user = $json->{'users'}[$users_length-1];
+		    $this->{'id_user'} = $user->{'id'};
+	    }
+	    
 	    $crawler = $client->request('GET', '/api/employees');
-      
-      $this->assertTrue(
-      						$client->getResponse()->headers->contains(
-      							'Content-Type', 'application/json'
-      						)
-      					);
-      
-      $json = json_decode($client->getResponse()->getContent());
-                  
-      $this->assertEquals( $json->{'error'}, "success" );
-      
+      $json = json_decode($client->getResponse()->getContent());      
       $employees_length = count($json->{'employees'});
-      
-      $employee = $json->{'employees'}[$employees_length-1];
-      
-      $this->{'id_employee'} = $employee->{'id'};
-			      
+      if ($employees_length > 0)
+      {      
+	      $employee = $json->{'employees'}[$employees_length-1];	      
+	      $this->{'id_employee'} = $employee->{'id'};
+			}     
 			$client->insulate();
 	    
 	    // Test without datas
@@ -379,9 +392,9 @@ class EmployeeControllerTest extends WebTestCase
       $client->insulate();
 			      
       // Test without job / salary / phone
-      $fields["lastname"] 		= "Doe";
-      $fields["firstname"] 		= "John";
-      $fields["email"] 		= "john.doe@doe.com";
+      $fields["lastname"] 		= "Doey";
+      $fields["firstname"] 		= "Johnny";
+      $fields["email"] 		= "johnny.doey@doe.com";
       
 	    $crawler = $client->request('PUT', 
 												    '/api/employee/'.$this->{'id_employee'},
@@ -398,32 +411,30 @@ class EmployeeControllerTest extends WebTestCase
       $json = json_decode($client->getResponse()->getContent());
             
       $this->assertEquals( $json->{'error'}, "success", $json->{'message'} );
-      
+      /*
       if ( $json->{'error'} == "success" )
       {
 	      $employee = $json->{'employee'};
 	      
 	      $client->request('DELETE', '/api/employee/'.$employee->{'id'});
       }
-      
+      */
       $client->insulate();
       
       
       // Test success with all datas
       $client->request('GET', '/api/jobs');
-      
 			$json = json_decode($client->getResponse()->getContent());
-			
-			if( $json->{'error'} == "success" ) {
-      
-	      $jobs_length = count($json->{'jobs'});
-	      
+      $jobs_length = count($json->{'jobs'});
+      if ($jobs_length > 0)
+      {
 	      $job = $json->{'jobs'}[$jobs_length-1];
-				
 	      $this->{'id_job'} = $job->{'id'};
-
       }
 	    
+	    $fields["lastname"] 		= "Doeyy";
+      $fields["firstname"] 		= "Johnnyy";
+      $fields["email"] 		= "johnnyy.doeyy@doe.com";
 	    $fields["job"] 		 = $this->{'id_job'};
 	    $fields["phone"] 	 = "555-1234";
 	    $fields["salary"]  = 300.15;	    
@@ -443,23 +454,7 @@ class EmployeeControllerTest extends WebTestCase
       $json = json_decode($client->getResponse()->getContent());
             
       $this->assertEquals( $json->{'error'}, "success", $json->{'message'} );
-      
-      $employee = $json->{'employee'};
-      
-      $this->assertInternalType( "integer", $employee->{'id'} );
-      $this->assertInternalType( "string", $employee->{'lastname'} );
-      $this->assertInternalType( "string", $employee->{'firstname'} );
-      $this->assertInternalType( "string", $employee->{'email'} );
-      $this->assertInternalType( "string", $employee->{'phone'} );
-      $this->assertInternalType( "float", $employee->{'salary'} );
-      $this->assertInternalType( "object", $employee->{'job'} );
-      $this->assertInternalType( "array", $employee->{'tasks'} );
-			$this->assertInternalType( "array", $employee->{'charges'} );
-      
-      $this->assertFalse( property_exists($employee, 'user') );
-      
-      $this->{'id_employee'} = $employee->{'id'};
-            
+                  
       $client->insulate();
 	    
     } 

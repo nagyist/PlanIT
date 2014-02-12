@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserControllerTest extends WebTestCase
 {
+
+		private $id_user = 1;
+
     public function testCGet()
     {
       $client = static::createClient();
@@ -49,8 +52,18 @@ class UserControllerTest extends WebTestCase
     {
 	    $client = static::createClient();
 	    
+	    $client->request('GET', '/api/users');
+	    $json = json_decode($client->getResponse()->getContent());
+	    if(!property_exists($json, 'users')) print_r($client->getResponse()->getContent());
+	    $users_length = count($json->{'users'});
+	    if ($users_length > 0)
+	    {
+		    $user = $json->{'users'}[$users_length-1];
+		    $this->{'id_user'} = $user->{'id'};
+	    }
+	    
 	    // Test when it works
-	    $crawler = $client->request('GET', '/api/user/1');
+	    $crawler = $client->request('GET', '/api/user/'.$this->{'id_user'});
 	    
 	    $this->assertTrue(
       						$client->getResponse()->headers->contains(

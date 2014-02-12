@@ -33,6 +33,8 @@ class JobControllerTest extends WebTestCase
       
       	$this->assertInternalType( "integer", $job->{'id'} );
       	$this->assertInternalType( "string", $job->{'name'} );
+      	
+      	if(property_exists($job, 'description'))
       	$this->assertInternalType( "string", $job->{'description'} );
 
       	$this->assertFalse( property_exists($job, "employees"));
@@ -140,6 +142,7 @@ class JobControllerTest extends WebTestCase
       
       // Test already existing job
       $fields["name"] = $job->{'name'};
+      if (property_exists($job, 'description'))
       $fields["description"] = $job->{'description'};
       
       $crawler = $client->request('POST', 
@@ -183,8 +186,7 @@ class JobControllerTest extends WebTestCase
       if ( $json->{'error'} == "success" )
       {
 	      $job = $json->{'job'};
-	      
-	      $client->request('DELETE', '/api/employee/'.$job->{'id'});
+	      $client->request('DELETE', '/api/job/'.$job->{'id'});
       }
       
       $client->insulate();
@@ -244,6 +246,8 @@ class JobControllerTest extends WebTestCase
       
       // Test already existing job
       $fields["name"] = $job->{'name'};
+      
+      if (property_exists($job, 'description'))
       $fields["description"] = $job->{'description'};
       
       $crawler = $client->request('PUT', 
@@ -265,7 +269,7 @@ class JobControllerTest extends WebTestCase
       $client->insulate();
       
       // Test without description
-      $fields["name"] = "Test Job";
+      $fields["name"] = "Test Job #1";
       unset($fields["description"]);
       
       $crawler = $client->request('PUT', 
@@ -294,6 +298,7 @@ class JobControllerTest extends WebTestCase
       $client->insulate();
       
       // Test OK
+      $fields["name"] = "Test Job #2";
       $fields["description"] = "Test Job Description";
       
       $crawler = $client->request('PUT', 

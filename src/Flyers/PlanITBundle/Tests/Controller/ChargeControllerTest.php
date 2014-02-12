@@ -35,8 +35,14 @@ class ChargeControllerTest extends WebTestCase
       foreach($json->{'charges'} as $charge) {
       
       	$this->assertInternalType( "integer", $charge->{'id'} );
+      	
+      	if (property_exists($charge, 'description'))
       	$this->assertInternalType( "string", $charge->{'description'} );
+      	
+      	if (is_double($charge->{'duration'}))
       	$this->assertInternalType( "float", $charge->{'duration'} );
+      	else
+      	$this->assertInternalType( "integer", $charge->{'duration'} );      	
       	$this->assertInternalType( "string", $charge->{'created'} );
       	$this->assertInternalType( "object", $charge->{'employee'} );
       	$this->assertInternalType( "object", $charge->{'task'} );      	
@@ -62,7 +68,7 @@ class ChargeControllerTest extends WebTestCase
 	      $charges_length = count($charges);
 	      if ($charges_length > 0)
 	      {
-	      	$charge = $charges[$charges_length];
+	      	$charge = $charges[$charges_length-1];
 	      	$this->{'id_task'} = $charge->{'task'}->{'id'};
 	      }
       }
@@ -120,7 +126,7 @@ class ChargeControllerTest extends WebTestCase
 	      $charges_length = count($charges);
 	      if ($charges_length > 0)
 	      {
-		      $charge = $charges[$charges_length];
+		      $charge = $charges[$charges_length-1];
 		      $this->{'id_charge'} = $charge->{'id'};
 	      }
       }

@@ -49,14 +49,14 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=255)
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      */
     private $phone;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="salary", type="decimal")
+     * @ORM\Column(name="salary", type="decimal", nullable=true)
      */
     private $salary;
 
@@ -64,7 +64,7 @@ class Employee
      * @var Flyers\PlanITBundle\Entity\Job $job
      *
      * @ORM\ManyToOne(targetEntity="Job", inversedBy="employees")
-     * @ORM\JoinColumn(name="job_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="job_id", referencedColumnName="id", nullable=true)
      **/
     private $job;
 
@@ -72,6 +72,7 @@ class Employee
      * @var ArrayCollection $tasks
      *
      * @ORM\ManyToMany(targetEntity="Task", mappedBy="employees")
+     * @Exclude
      */
     private $tasks;
 
@@ -89,6 +90,7 @@ class Employee
      *
      * @ORM\OneToMany(targetEntity="Charge", mappedBy="employee", cascade={"remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"created" = "ASC"})
+     * @Exclude
      */
     private $charges;
 

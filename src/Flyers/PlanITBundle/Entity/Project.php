@@ -39,7 +39,7 @@ class Project
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -72,7 +72,8 @@ class Project
     /**
      * @var ArrayCollection $tasks
      *
-     * @ORM\OneToMany(targetEntity="Task", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="project", cascade={"remove"}, orphanRemoval=true)
+     * @Exclude
      */
     private $tasks;
 
