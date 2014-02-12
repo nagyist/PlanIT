@@ -1,0 +1,19 @@
+{
+  "name": "PlanIT",
+  "version": "0.0.1",
+  "description": "PlanIT Plan your projects with classic and agile project management",
+  "main": "assets/js/planit.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FlyersWeb/PlanIT"
+  },
+  "author": "Nassim Ben Ghmiss",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FlyersWeb/PlanIT/issues"
+  },
+  "homepage": "https://github.com/FlyersWeb/PlanIT"
+}
